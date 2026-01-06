@@ -1,25 +1,17 @@
 import * as THREE from "three";
-import { itemMeshes } from "../managers/ItemManager";
-import { triggerUIText } from "../UI/InformationalUI";
-import { useItemStore } from "../stores/useItemStore";
-import { useInventoryStore } from "../stores/useInventoryStore";
-import { menuOpenRef } from "./Player";
-import { otherMeshes } from "../managers/OtherInteractManager";
-import { handleUnlockDoor } from "../data/doorTable";
-import { getButton, handlMarkButtonUsed } from "../data/levelTabel";
+import { doorMeshes } from "../../managers/DoorManager";
+import { DOOR } from "../../constants/doorConstants";
+import { handleUseDoor } from "./actions/handleUseDoor";
 
 const interactionRaycaster = new THREE.Raycaster();
 const interactionDirection = new THREE.Vector3();
 
-export const tryInteract = (player, level, canOpenMenu) => {
-    if (!player) return;
+const CONE_ANGLE = (2 * Math.PI) / 3;
+const INTERACT_DISTANCE = 1;
+const DOOR_INTERACT_DISTANCE = 0.75
+const PICKUP_RADIUS = 0.5;
 
-    const origin = player.position.clone();
-    const CONE_ANGLE = (2 * Math.PI) / 3;
-    const INTERACT_DISTANCE = 1;
-    const DOOR_INTERACT_DISTANCE = 0.75
-    const PICKUP_RADIUS = 0.5;
-
+const tryFindDoor = (player, origin) => {
     const doorDirection = new THREE.Vector3(0, 0, -1)
         .applyEuler(player.rotation)
         .normalize();
@@ -34,18 +26,15 @@ export const tryInteract = (player, level, canOpenMenu) => {
     if (scene) {
         const doorHits = interactionRaycaster.intersectObjects(scene.children, true);
         for (const hit of doorHits) {
-            if (hit.object.userData?.type === "door") {
-                window.dispatchEvent(
-                    new CustomEvent("door:enter", {
-                        detail: hit.object.userData.door,
-                    })
-                );
-                return;
+            if (hit.object.userData?.type === DOOR) {
+                return hit.object.userData.door
             }
         }
     }
+}
 
-    const meshes = [...itemMeshes, ...otherMeshes]
+const tryFindOther = (player, origin) => {
+    const meshes = [...doorMeshes]
         .map(ref => ref.current)
         .filter(Boolean);
     let hitItem = null;
@@ -70,6 +59,8 @@ export const tryInteract = (player, level, canOpenMenu) => {
             hitItem = hits[0].object;
         }
     }
+    if (hitItem)
+        return hitItem
 
     // Fallback: check proximity sphere for pickup
     if (!hitItem) {
@@ -80,59 +71,29 @@ export const tryInteract = (player, level, canOpenMenu) => {
         for (const mesh of meshes) {
             const box = new THREE.Box3().setFromObject(mesh);
             if (box.intersectsSphere(sphere)) {
-                hitItem = mesh;
-                break;
+                return mesh
             }
         }
     }
 
-    if (!hitItem) return;
-    // Handle item pickup
-    if (hitItem.userData.type === "item") {
-        const itemStore = useItemStore.getState();
-        const inventoryStore = useInventoryStore.getState();
+    return false;
+}
 
-        const item = itemStore.itemTable[level]?.find(x => x.id === hitItem.userData.id);
-        if (!item) return;
+export const tryInteract = (player) => {
+    if (!player) return
 
-        if (inventoryStore.tryAddInventory(hitItem.userData)) {
-            itemStore.pickUpItem(hitItem.userData.id);
-            triggerUIText(`You picked up ${hitItem.userData.item}`);
+    const origin = player.position.clone();
 
-            hitItem.parent.remove(hitItem);
-
-            const refIndex = itemMeshes.findIndex(ref => ref.current === hitItem);
-            if (refIndex !== -1) itemMeshes[refIndex].current = null;
-        }
+    const door = tryFindDoor(player, origin)
+    if (door) {
+        handleUseDoor(door)
+        return
     }
 
-    // Custom items go here
-    if (hitItem.userData.type === "saveStation") {
-        if (canOpenMenu) {
-            menuOpenRef.current = "mainMenuSave";
-        } else {
-            console.log("too soon")
-        }
-    } else if (hitItem.userData.type === "puzzleStation") {
-        const puzzle = {
-            isPuzzle: true,
-            id: hitItem.userData.puzzle.puzzleId,
-            part: hitItem.userData.puzzle.part
-        }
-        window.dispatchEvent(
-            new CustomEvent("door:enter", {
-                detail: puzzle,
-            })
-        );
-    } else if (hitItem.userData.type === "buttonStation") {
-        const current = getButton(hitItem.userData.button.level, hitItem.userData.button.target);
-        if (current.isUsed) {
-            triggerUIText("You don't need to use this again")
-            return
-        }
-        handlMarkButtonUsed(current.level, current.target);
-        handleUnlockDoor(current.target)
-        triggerUIText("You hear a click")
-    };
+    const other = tryFindOther(player, origin)
+    if (other) {
+        console.log("handle other", other)
+    }
 
-};
+    console.log("no hit")
+}

@@ -62,7 +62,7 @@ export const Stair = ({ stair, ref }) => {
             {/* Interaction box */}
             <mesh
                 position={[interactionOffsetX, interactHeight, width / 2]}
-                userData={{ type: "door", door: stair }}
+                userData={{ type: "DOOR", door: stair }}
             >
                 <boxGeometry args={[depth * 0.3, height, width]} />
                 <meshBasicMaterial wireframe color="cyan" visible={isVisible} />
@@ -72,7 +72,6 @@ export const Stair = ({ stair, ref }) => {
             <mesh
                 ref={ref}
                 position={collisionMesh}
-                userData={{ type: "door", door: stair, isStair: true, stairDirection: stair.stairDirection }}
             >
                 <boxGeometry args={[collisionDepth, collisionHeight, collisionWidth]} />
                 <meshBasicMaterial wireframe visible={isVisible} />

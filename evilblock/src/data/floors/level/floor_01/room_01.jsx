@@ -19,7 +19,7 @@ export const room_01 = {
             id: DOOR_01,
             type: DOOR,
             position: [6, 11.8],
-            direction: 3,
+            direction: 1,
         }),
     ],
     enemies: [

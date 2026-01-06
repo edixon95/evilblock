@@ -8,7 +8,6 @@ export const doorMeshes = [];
 
 export const DoorManager = ({ doors }) => {
     if (!doors) return null;
-    console.log(doors)
     doorMeshes.length = 0;
 
     return (

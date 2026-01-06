@@ -2,6 +2,7 @@ import * as THREE from "three";
 import { useFrame } from "@react-three/fiber";
 import { useEffect, useRef, useState } from "react";
 import { canMove } from "../../helpers/canMove";
+import { tryInteract } from "./tryInteract";
 
 export const Player = ({ playerRef }) => {
   const aimingRef = useRef(false);
@@ -65,7 +66,7 @@ export const Player = ({ playerRef }) => {
     } else {
       if (spacePressed && !prevSpaceKeyRef.current) {
         // Player interact
-        console.log("Player interact")
+        tryInteract(playerRef.current)
       }
     }
 
@@ -166,7 +167,7 @@ export const Player = ({ playerRef }) => {
   return (
     <mesh
       ref={playerRef}
-      position={[6, 0.5, 0]}
+      position={[6, 0.5, 7]}
       rotation={[0, Math.PI / 2, 0]}
       castShadow
     >
