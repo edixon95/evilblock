@@ -1,3 +1,5 @@
+import { create } from "zustand"
+
 export const useGameStore = create((set, get) => ({
     gameState: {
         mode: "game", // game || cutscene

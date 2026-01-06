@@ -1,16 +1,21 @@
-# React + Vite
+New start to do things cleaner.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+TODO 1:
+    - Enemy Data
+    - Level Data
+    - Item Data
+    - Inventory Store
+    - Enemy Store
+    - Item Store
 
-Currently, two official plugins are available:
+Notes: All parts of a level should come from the same initial place
+levelTable.floor_01: {
+    ... all rooms under floor_01
+    room_01: {
+        ... all geometry, items, stations and enemies
+    }
+}
+This should then get split out so that each store only holds onto the parts they need
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+COMPLETE 1:
+    - Enemy Data
