@@ -1,5 +1,5 @@
-export const handleCreateGeometry = (position = [4, 0, 0], size = [10, 4]) => {
+export const handleCreateGeometry = (position = [4, 0, 0], size = [10, 4], skip = false) => {
     return {
-        position, size, color: "#999"
+        position, size, color: "#999", skip
     }
 }

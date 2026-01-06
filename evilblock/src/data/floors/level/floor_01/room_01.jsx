@@ -8,8 +8,9 @@ import { handleCreateGeometry } from "../../../creators/handleCreateGeometry";
 
 export const room_01 = {
     geometry: [
-        handleCreateGeometry([4, 0, 0], [10, 4]),
-        handleCreateGeometry([-3, 0, 3], [4, 10])
+        handleCreateGeometry([4, 0, 0], [8, 8]),
+        handleCreateGeometry([-3, 0, 2], [6, 4]),
+        handleCreateGeometry([6, 0, 8], [4, 8])
     ],
     props: [],
     stations: [],
@@ -17,7 +18,7 @@ export const room_01 = {
         handleCreateDoor({
             id: DOOR_01,
             type: DOOR,
-            position: [2, 5],
+            position: [6, 11.8],
             direction: 3,
         }),
     ],

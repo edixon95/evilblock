@@ -7,12 +7,13 @@ import { useGameStore } from "./stores/useGameStore"
 
 import "./index.css"
 import { LEVEL_TABLE } from './data/floors/levelTable';
+import { FLOOR_02, ROOM_02 } from './constants/floorConstants';
 function App() {
   const playerRef = useRef()
   const testFunc = () => {
-    useGameStore.getState().handleChangeMode("cutscene")
+    useGameStore.getState().handleChangeLevel(FLOOR_02, ROOM_02)
   }
-  console.log(LEVEL_TABLE)
+
   return (
     <div className="fullscreen-canvas">
       <Canvas

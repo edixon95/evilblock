@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import { useFrame } from "@react-three/fiber";
 import { useEffect, useRef, useState } from "react";
+import { canMove } from "../../helpers/canMove";
 
 export const Player = ({ playerRef }) => {
   const aimingRef = useRef(false);
@@ -129,13 +130,18 @@ export const Player = ({ playerRef }) => {
 
 
     // TODO: replace with move function
-    const canMove = true
 
     if (!aimingRef.current) {
       direction.current.set(0, 0, -1);
       if (window.keys["KeyW"]) {
+        console.log("p w")
         if (
-          canMove
+          canMove(
+            playerRef.current.position,
+            playerRef.current.rotation,
+            direction.current,
+            moveDistance
+          )
         ) {
           playerRef.current.translateZ(-moveDistance);
         }
@@ -144,7 +150,12 @@ export const Player = ({ playerRef }) => {
       direction.current.set(0, 0, 1);
       if (window.keys["KeyS"]) {
         if (
-          canMove
+          canMove(
+            playerRef.current.position,
+            playerRef.current.rotation,
+            direction.current,
+            moveDistance
+          )
         ) {
           playerRef.current.translateZ(moveDistance);
         }
@@ -155,7 +166,7 @@ export const Player = ({ playerRef }) => {
   return (
     <mesh
       ref={playerRef}
-      position={[8, 0.5, 0]}
+      position={[6, 0.5, 0]}
       rotation={[0, Math.PI / 2, 0]}
       castShadow
     >

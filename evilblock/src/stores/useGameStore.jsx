@@ -1,4 +1,5 @@
 import { create } from "zustand"
+import { FLOOR_01, ROOM_01 } from "../constants/floorConstants"
 
 export const useGameStore = create((set, get) => ({
     gameState: {
@@ -7,8 +8,8 @@ export const useGameStore = create((set, get) => ({
         game: {
             character: "Ben Lock",
             difficulty: 1,
-            level: "floor_1",
-            room: "room_1"
+            level: FLOOR_01,
+            room: ROOM_01
         },
         cutscene: {
             id: null
