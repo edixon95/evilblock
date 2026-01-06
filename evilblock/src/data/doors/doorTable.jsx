@@ -1,7 +1,7 @@
 export const DOOR_TABLE = {
     door_01: {
         leadsTo: {
-            level: "floor_01",
+            level: "floor_02",
             room: "room_02",
             door: "door_02"
         },
