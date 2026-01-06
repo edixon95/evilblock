@@ -19,3 +19,14 @@ This should then get split out so that each store only holds onto the parts they
 
 COMPLETE 1:
     - Enemy Data
+    - Grouped Data:
+        Level geometry
+        Props
+        Stations
+        Items
+        Camera
+        Camera Regions
+
+        Enemies should remain on their own? tbd
+
+    - Basic door data

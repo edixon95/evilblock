@@ -6,12 +6,13 @@ import { Experience } from './Experience';
 import { useGameStore } from "./stores/useGameStore"
 
 import "./index.css"
+import { LEVEL_TABLE } from './data/floors/levelTable';
 function App() {
   const playerRef = useRef()
   const testFunc = () => {
     useGameStore.getState().handleChangeMode("cutscene")
   }
-
+  console.log(LEVEL_TABLE)
   return (
     <div className="fullscreen-canvas">
       <Canvas
