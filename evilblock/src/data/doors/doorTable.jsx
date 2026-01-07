@@ -20,10 +20,7 @@ export const DOOR_TABLE = {
             type: 0,
             isLocked: true
         },
-        cutscene: {
-            id: null,
-            active: false,
-        }
+        cutscene: null
     },
     door_02: {
         to: {
@@ -35,10 +32,7 @@ export const DOOR_TABLE = {
             type: 0,
             isLocked: false
         },
-        cutscene: {
-            id: null,
-            active: false,
-        }
+        cutscene: null
     }
 }
 
