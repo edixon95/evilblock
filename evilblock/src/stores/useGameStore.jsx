@@ -92,6 +92,7 @@ export const useGameStore = create((set, get) => ({
         set((state) => ({
             gameState: {
                 ...state.gameState,
+                mode: "cutscene",
                 cutscene: {
                     ...state.gameState.cutscene,
                     id
@@ -103,6 +104,7 @@ export const useGameStore = create((set, get) => ({
         set((state) => ({
             gameState: {
                 ...state.gameState,
+                mode: "game",
                 cutscene: {
                     ...state.gameState.cutscene,
                     id: null

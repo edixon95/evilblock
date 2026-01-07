@@ -1,5 +1,6 @@
 import { create } from "zustand"
 import { CUTSCENE_TABLE } from "../data/cutscenes/cutsceneTable"
+import { useGameStore } from "./useGameStore";
 
 export const useCutsceneStore = create((set, get) => ({
     cutscenes: CUTSCENE_TABLE,
@@ -8,10 +9,10 @@ export const useCutsceneStore = create((set, get) => ({
         const { cutscenes } = get();
         const cutscene = cutscenes[id];
         if (!cutscene) return false
-
-        // Attach the id so it can be passed to data store
-        cutscene.id = id
-
-        return cutscene.active ? cutscene : false
+        if (cutscene.active) {
+            useGameStore.getState().handleChangeCutscene(id)
+            return true
+        }
+        return false
     }
 }))
