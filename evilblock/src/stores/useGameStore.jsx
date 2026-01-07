@@ -11,7 +11,7 @@ export const useGameStore = create((set, get) => ({
             level: FLOOR_01,
             room: ROOM_01
         },
-        cutscene: id,
+        cutscene: null,
         menu: {
             active: false,
             menuType: null,
