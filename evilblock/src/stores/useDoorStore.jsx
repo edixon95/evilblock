@@ -1,5 +1,5 @@
 import { create } from "zustand"
-import { extractFromLevelTable, LEVEL_TABLE } from "../data/floors/levelTable"
+import { extractFromLevelTable } from "../data/floors/levelTable"
 
 export const useDoorStore = create((set, get) => ({
     doors: extractFromLevelTable("doors"),

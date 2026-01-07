@@ -18,9 +18,9 @@ export const DOOR_TABLE = {
         },
         lock: {
             type: 0,
-            isLocked: true
+            isLocked: false
         },
-        cutscene: null
+        cutscene: "cutscene_01"
     },
     door_02: {
         to: {
