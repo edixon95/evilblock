@@ -7,6 +7,7 @@ import { useWorldStore } from "./stores/useWorldStore"
 import { DevCam } from "./tool/DevCam"
 import { countWallSegments } from "./helpers/countWallSegments"
 import { DoorManager } from "./managers/DoorManager"
+import { useDoorStore } from "./stores/useDoorStore"
 
 export const Experience = ({ playerRef }) => {
     // Can see the updates
@@ -36,9 +37,11 @@ export const Experience = ({ playerRef }) => {
     //     cameras: []
 
     const { level, room } = useGameStore((state) => state.gameState.game)
-    const world = useWorldStore((state) => state.world)
-    const floors = world[level][room].geometry
-    const doors = world[level][room].doors
+    const allWorlds = useWorldStore((state) => state?.world)
+    console.log(allWorlds)
+    const floors = allWorlds[level][room]
+    const allDoors = useDoorStore((state) => state?.doors)
+    const doors = allDoors[level][room]
 
     const shouldRender = (array) => {
         return array && array.length > 0

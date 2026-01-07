@@ -6,7 +6,7 @@ import { Experience } from './Experience';
 import { useGameStore } from "./stores/useGameStore"
 
 import "./index.css"
-import { LEVEL_TABLE } from './data/floors/levelTable';
+import { extractFromLevelTable, LEVEL_TABLE } from './data/floors/levelTable';
 import { FLOOR_02, ROOM_02 } from './constants/floorConstants';
 import { TransitionManager } from './managers/TransitionManager';
 function App() {
@@ -15,6 +15,7 @@ function App() {
     useGameStore.getState().handleChangeLevel(FLOOR_02, ROOM_02)
   }
 
+  console.log(extractFromLevelTable("doors"))
   return (
     <div className="fullscreen-canvas">
       <Canvas

@@ -5,6 +5,7 @@ import { handleSetPlayerPosition, handleSetPlayerRotation } from "../helpers/han
 import { getDoorData } from "../data/floors/levelTable";
 import { getSpawnPosition } from "../helpers/getSpawnPosition";
 import { DOOR, STAIR, UP } from "../constants/doorConstants";
+import { useDoorStore } from "../stores/useDoorStore";
 
 
 export const TransitionManager = ({ playerRef }) => {
@@ -17,14 +18,15 @@ export const TransitionManager = ({ playerRef }) => {
 
         // Check if the new data is a door event
         if (data.type === "DOOR" || data.type === "STAIR") {
-            const { level, room, door } = data.transferData
-            const tDoor = getDoorData(level, room, door)
-            const spawn = getSpawnPosition(tDoor)
-            // TOOD: Hide
-            const isUpDirectionStairs = tDoor.type === STAIR && tDoor.stairDirection === UP
+            console.log(data.type)
+            const { level, room, door } = data.extra.to
+            const destinationFromStore = useDoorStore.getState().handleGetDoorData(level, room, door)
+            const spawn = getSpawnPosition(destinationFromStore)
+            // // TOOD: Hide
+            const isUpDirectionStairs = destinationFromStore.type === STAIR && destinationFromStore.stairDirection === UP
             useGameStore.getState().handleChangeLevel(level, room)
             handleSetPlayerPosition(playerRef, spawn)
-            handleSetPlayerRotation(playerRef, tDoor.direction, tDoor.type === DOOR, isUpDirectionStairs)
+            handleSetPlayerRotation(playerRef, destinationFromStore.direction, destinationFromStore.type === DOOR, isUpDirectionStairs)
             useGameStore.getState().handleClearData()
             return;
         }
