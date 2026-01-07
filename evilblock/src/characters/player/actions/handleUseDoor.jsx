@@ -9,9 +9,8 @@ export const handleUseDoor = (door) => {
 
 
     if (cutscene) {
-        const shouldPlayCutscene = useCutsceneStore.getState().shouldCutscenePlay(cutscene)
-        if (shouldPlayCutscene) {
-            console.log("Cutscene is meant to be played", shouldPlayCutscene)
+        if (useCutsceneStore.getState().shouldCutscenePlay(cutscene)) {
+            console.log("Cutscene is meant to be played", cutscene)
             return;
         } else {
             console.log("No cutscene active for this door")

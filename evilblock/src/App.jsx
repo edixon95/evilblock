@@ -15,7 +15,9 @@ function App() {
     useGameStore.getState().handleChangeLevel(FLOOR_02, ROOM_02)
   }
 
-  console.log(extractFromLevelTable("doors"))
+  const gameState = useGameStore((state) => state.gameState)
+
+  console.log(gameState)
   return (
     <div className="fullscreen-canvas">
       <Canvas
