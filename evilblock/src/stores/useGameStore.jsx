@@ -11,9 +11,7 @@ export const useGameStore = create((set, get) => ({
             level: FLOOR_01,
             room: ROOM_01
         },
-        cutscene: {
-            id: null
-        },
+        cutscene: id,
         menu: {
             active: false,
             menuType: null,
@@ -93,10 +91,7 @@ export const useGameStore = create((set, get) => ({
             gameState: {
                 ...state.gameState,
                 mode: "cutscene",
-                cutscene: {
-                    ...state.gameState.cutscene,
-                    id
-                }
+                cutscene: id
             }
         }))
     },
@@ -105,10 +100,7 @@ export const useGameStore = create((set, get) => ({
             gameState: {
                 ...state.gameState,
                 mode: "game",
-                cutscene: {
-                    ...state.gameState.cutscene,
-                    id: null
-                }
+                cutscene: null
             }
         }))
     },
