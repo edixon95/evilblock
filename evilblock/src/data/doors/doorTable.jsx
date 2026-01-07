@@ -11,14 +11,34 @@ import {
 
 export const DOOR_TABLE = {
     door_01: {
-        level: FLOOR_02,
-        room: ROOM_02,
-        door: DOOR_02
+        to: {
+            level: FLOOR_02,
+            room: ROOM_02,
+            door: DOOR_02,
+        },
+        lock: {
+            type: 0,
+            isLocked: true
+        },
+        cutscene: {
+            id: null,
+            active: false,
+        }
     },
     door_02: {
-        level: FLOOR_01,
-        room: ROOM_01,
-        door: DOOR_01
+        to: {
+            level: FLOOR_01,
+            room: ROOM_01,
+            door: DOOR_01,
+        },
+        lock: {
+            type: 0,
+            isLocked: false
+        },
+        cutscene: {
+            id: null,
+            active: false,
+        }
     }
 }
 
