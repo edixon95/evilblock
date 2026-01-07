@@ -3,7 +3,7 @@ import { useGameStore } from "../stores/useGameStore";
 import { getDoorInfo } from "../data/doors/doorTable";
 import { handleSetPlayerPosition, handleSetPlayerRotation } from "../helpers/handleSetPlayer";
 import { getDoorData } from "../data/floors/levelTable";
-import { getSpawnPosition } from "../helpers/getSpawnPosition";
+import { getSpawnPosition, isUpDirectionStairs } from "../helpers/getSpawnPosition";
 import { DOOR, STAIR, UP } from "../constants/doorConstants";
 import { useDoorStore } from "../stores/useDoorStore";
 
@@ -21,12 +21,10 @@ export const TransitionManager = ({ playerRef }) => {
             console.log(data.type)
             const { level, room, door } = data.extra.to
             const destinationFromStore = useDoorStore.getState().handleGetDoorData(level, room, door)
-            const spawn = getSpawnPosition(destinationFromStore)
             // // TOOD: Hide
-            const isUpDirectionStairs = destinationFromStore.type === STAIR && destinationFromStore.stairDirection === UP
             useGameStore.getState().handleChangeLevel(level, room)
-            handleSetPlayerPosition(playerRef, spawn)
-            handleSetPlayerRotation(playerRef, destinationFromStore.direction, destinationFromStore.type === DOOR, isUpDirectionStairs)
+            handleSetPlayerPosition(playerRef, getSpawnPosition(destinationFromStore))
+            handleSetPlayerRotation(playerRef, destinationFromStore.direction, destinationFromStore.type === DOOR, isUpDirectionStairs(destinationFromStore))
             useGameStore.getState().handleClearData()
             return;
         }

@@ -1,5 +1,5 @@
 export const CUTSCENE_TABLE = {
     cutscene_01: {
-        active: true,
+        active: false,
     }
 }

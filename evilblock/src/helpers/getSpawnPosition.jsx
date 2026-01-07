@@ -1,3 +1,5 @@
+import { STAIR, UP } from "../constants/doorConstants";
+
 export const getSpawnPosition = (door) => {
     const { position, direction, type, size, stairDirection } = door;
     const [x, , z] = position;
@@ -53,3 +55,8 @@ export const getSpawnPosition = (door) => {
 
     return [x, y, z];
 };
+
+export const isUpDirectionStairs = (door) => {
+    const { type, stairDirection } = door
+    return type === STAIR && stairDirection === UP
+}
