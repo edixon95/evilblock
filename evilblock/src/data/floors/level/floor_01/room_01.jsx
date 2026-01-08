@@ -5,6 +5,8 @@ import { DOOR_01 } from "../../../../constants/floorConstants";
 import { handleCreateDoor } from "../../../creators/handleCreateDoor";
 import { handleCreateEnemy } from "../../../creators/handleCreateEnemy";
 import { handleCreateGeometry } from "../../../creators/handleCreateGeometry";
+import { handleCreateItem } from "../../../creators/handleCreateItem";
+import { consumableConstants } from "../../../interact/items/consumable/consumableConstants";
 
 export const room_01 = {
     geometry: [
@@ -25,6 +27,8 @@ export const room_01 = {
     enemies: [
         handleCreateEnemy([1, 0, 1], BASIC)
     ],
-    items: [],
+    items: [
+        handleCreateItem([5, 0.15, 2], consumableConstants.GREENHERB)
+    ],
     cameras: []
 }

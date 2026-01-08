@@ -8,6 +8,8 @@ import { DevCam } from "./tool/DevCam"
 import { countWallSegments } from "./helpers/countWallSegments"
 import { DoorManager } from "./managers/DoorManager"
 import { useDoorStore } from "./stores/useDoorStore"
+import { useItemStore } from "./stores/useItemStore"
+import { InteractManager } from "./managers/InteractManager"
 
 export const Experience = ({ playerRef }) => {
     // Can see the updates
@@ -38,10 +40,13 @@ export const Experience = ({ playerRef }) => {
 
     const { level, room } = useGameStore((state) => state.gameState.game)
     const allWorlds = useWorldStore((state) => state?.world)
-    console.log(allWorlds)
-    const floors = allWorlds[level][room]
     const allDoors = useDoorStore((state) => state?.doors)
+    const allItems = useItemStore((state) => state?.items)
+    const floors = allWorlds[level][room]
     const doors = allDoors[level][room]
+    const items = allItems[level][room]
+    const interacts = [...items]
+    console.log(interacts)
 
     const shouldRender = (array) => {
         return array && array.length > 0
@@ -52,14 +57,20 @@ export const Experience = ({ playerRef }) => {
             <DevCam />
             <ambientLight intensity={1.2} />
             <Player playerRef={playerRef} />
+
             {shouldRender(floors) &&
                 <>
                     <FloorManager floors={floors} />
                     <WallManager floors={floors} />
                 </>
             }
+
             {shouldRender(doors) &&
                 <DoorManager doors={doors} />
+            }
+
+            {shouldRender(interacts) &&
+                <InteractManager items={interacts} />
             }
         </>
     )
