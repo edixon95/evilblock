@@ -11,7 +11,7 @@ import {
 
 // TODO: Seperate into floors like the levels
 export const DOOR_TABLE = {
-    door_01: {
+    [DOOR_01]: {
         to: {
             level: FLOOR_02,
             room: ROOM_02,
@@ -23,7 +23,7 @@ export const DOOR_TABLE = {
         },
         cutscene: "cutscene_01"
     },
-    door_02: {
+    [DOOR_02]: {
         to: {
             level: FLOOR_01,
             room: ROOM_01,

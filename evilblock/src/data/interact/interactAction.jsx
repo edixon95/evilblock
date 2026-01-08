@@ -35,5 +35,9 @@ export const interactActionPreset = {
         EQUIP,
         COMBINE,
         EXAMINE
+    ],
+    AMMO: [
+        COMBINE,
+        EXAMINE
     ]
 }
