@@ -9,6 +9,7 @@ import {
     DOOR_02,
 } from "../../constants/floorConstants";
 
+// TODO: Seperate into floors like the levels
 export const DOOR_TABLE = {
     door_01: {
         to: {
