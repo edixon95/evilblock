@@ -3,11 +3,6 @@ const EQUIP = {
     action: ({ handleEquipItem }) => handleEquipItem()
 }
 
-const RELOAD = {
-    label: "Reload",
-    action: ({ handleReloadItem }) => handleReloadItem()
-}
-
 const USE = {
     label: "Use",
     action: ({ handleUseItem }) => handleUseItem()
@@ -25,7 +20,6 @@ const EXAMINE = {
 
 export const interactAction = {
     EQUIP,
-    RELOAD,
     USE,
     COMBINE,
     EXAMINE
@@ -39,7 +33,7 @@ export const interactActionPreset = {
     ],
     WEAPON: [
         EQUIP,
-        RELOAD,
+        COMBINE,
         EXAMINE
     ]
 }

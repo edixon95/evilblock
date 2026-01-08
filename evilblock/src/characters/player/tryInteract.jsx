@@ -1,8 +1,8 @@
 import * as THREE from "three";
-import { doorMeshes } from "../../managers/DoorManager";
 import { DOOR } from "../../constants/doorConstants";
 import { handleUseDoor } from "./actions/handleUseDoor";
 import { interactMeshes } from "../../managers/InteractManager";
+import { handleUserOther } from "./actions/handleUseOther";
 
 const interactionRaycaster = new THREE.Raycaster();
 const interactionDirection = new THREE.Vector3();
@@ -57,7 +57,7 @@ const tryFindOther = (player, origin) => {
         const hits = interactionRaycaster.intersectObjects(meshes, false);
         if (hits.length > 0 && hits[0].distance < nearestDistance) {
             nearestDistance = hits[0].distance;
-            hitItem = hits[0].object;
+            hitItem = hits[0].object.userData;
         }
     }
     if (hitItem)
@@ -72,7 +72,7 @@ const tryFindOther = (player, origin) => {
         for (const mesh of meshes) {
             const box = new THREE.Box3().setFromObject(mesh);
             if (box.intersectsSphere(sphere)) {
-                return mesh
+                return mesh.userData
             }
         }
     }
@@ -88,12 +88,13 @@ export const tryInteract = (player) => {
     const door = tryFindDoor(player, origin)
     if (door) {
         handleUseDoor(door)
-        return
+        return;
     }
 
     const other = tryFindOther(player, origin)
     if (other) {
-        console.log("handle other", other)
+        handleUserOther(other)
+        return;
     }
 
     console.log("no hit")
