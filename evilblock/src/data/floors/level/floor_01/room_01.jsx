@@ -7,7 +7,7 @@ import { handleCreateEnemy } from "../../../creators/handleCreateEnemy";
 import { handleCreateGeometry } from "../../../creators/handleCreateGeometry";
 import { handleCreateItem } from "../../../creators/handleCreateItem";
 import { consumableConstants } from "../../../interact/items/consumable/consumableConstants";
-import { weaponConstants } from "../../../interact/items/weapon/weaponConstants";
+import { ammoConstants, weaponConstants } from "../../../interact/items/weapon/weaponConstants";
 
 export const room_01 = {
     geometry: [
@@ -30,7 +30,8 @@ export const room_01 = {
     ],
     items: [
         handleCreateItem([5, 0.15, 2], consumableConstants.GREENHERB, '01_01_greenherb_01'),
-        handleCreateItem([2, 0.15, 2], weaponConstants.COLT, '01_01_colt_01')
+        handleCreateItem([2, 0.15, 2], weaponConstants.COLT, '01_01_colt_01'),
+        handleCreateItem([2, 0.15, 2], ammoConstants.HANDGUNAMMO, '01_01_handgunAmmo_01')
     ],
     cameras: []
 }

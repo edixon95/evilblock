@@ -7,7 +7,7 @@ import { PlayerMenuMenuOption } from "./playerMenuComponents/PlayerMenuMenuOptio
 export const PlayerMenu = () => {
     const gameState = useGameStore((state) => state.gameState);
 
-    const menuOptions = ["Inventory", "Notes", "Options"];
+    const menuOptions = ["Inventory", "Notes", "Options", "Close"];
 
     const [menuType, setMenuType] = useState({
         menu: menuOptions[0],
@@ -22,6 +22,11 @@ export const PlayerMenu = () => {
     };
 
     const setFocus = (focused) => {
+        if (menuType.menu === "Close") {
+            useGameStore.getState().handleCloseMenu()
+            return
+        }
+
         setMenuType((prev) => ({
             ...prev,
             focused,

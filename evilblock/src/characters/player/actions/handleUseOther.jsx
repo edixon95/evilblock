@@ -1,4 +1,4 @@
-import { CONSUMABLE, WEAPON, NOTE, MAP, KEY, MATERIAL, CURRENCY, OTHER } from "../../../data/interact/interactConstants";
+import { CONSUMABLE, WEAPON, NOTE, MAP, KEY, MATERIAL, CURRENCY, OTHER, AMMO } from "../../../data/interact/interactConstants";
 import { tryPickupItem, tryPickupWepon } from "./subTask/tryPickupItem"
 
 export const handleUserOther = (item) => {
@@ -9,6 +9,10 @@ export const handleUserOther = (item) => {
             break;
 
         case CONSUMABLE:
+            tryPickupItem(item)
+            break;
+
+        case AMMO:
             tryPickupItem(item)
             break;
 
