@@ -24,7 +24,7 @@ export const room_02 = {
         })
     ],
     enemies: [
-        handleCreateEnemy([1, 0, 1], BASIC)
+        handleCreateEnemy([1, 0, 1], BASIC, '01_01_basic_01')
     ],
     items: [],
     cameras: []

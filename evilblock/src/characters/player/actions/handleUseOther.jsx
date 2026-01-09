@@ -1,15 +1,15 @@
 import { CONSUMABLE, WEAPON, NOTE, MAP, KEY, MATERIAL, CURRENCY, OTHER } from "../../../data/interact/interactConstants";
-
+import { tryPickupItem, tryPickupWepon } from "./subTask/tryPickupItem"
 
 export const handleUserOther = (item) => {
     console.log(item)
-    switch (item.subType) {
+    switch (item.userData.subType) {
         case WEAPON:
-            // handle weapon pickup and ammo random
+            tryPickupWepon(item)
             break;
 
         case CONSUMABLE:
-            // Should just be a straight inventory add
+            tryPickupItem(item)
             break;
 
         case NOTE:

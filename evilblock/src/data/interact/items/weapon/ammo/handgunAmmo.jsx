@@ -9,8 +9,8 @@ export const handgunAmmo = {
     subType: AMMO,
     options: interactActionPreset[AMMO],
     data: {
+        minimumAmmo: 1,
         maximumAmmo: 10,
-        currentAmmo: 0,
     },
     examine: "This is a weapon ammo, woof woof.",
     combine: {
