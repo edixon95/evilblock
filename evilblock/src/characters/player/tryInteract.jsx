@@ -57,7 +57,7 @@ const tryFindOther = (player, origin) => {
         const hits = interactionRaycaster.intersectObjects(meshes, false);
         if (hits.length > 0 && hits[0].distance < nearestDistance) {
             nearestDistance = hits[0].distance;
-            hitItem = hits[0].object.userData;
+            hitItem = hits[0].object;
         }
     }
     if (hitItem)
@@ -72,7 +72,7 @@ const tryFindOther = (player, origin) => {
         for (const mesh of meshes) {
             const box = new THREE.Box3().setFromObject(mesh);
             if (box.intersectsSphere(sphere)) {
-                return mesh.userData
+                return mesh
             }
         }
     }

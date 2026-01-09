@@ -26,11 +26,11 @@ export const room_01 = {
         }),
     ],
     enemies: [
-        handleCreateEnemy([1, 0, 1], BASIC)
+        handleCreateEnemy([1, 0, 1], BASIC, '01_01_basic_01')
     ],
     items: [
-        handleCreateItem([5, 0.15, 2], consumableConstants.GREENHERB),
-        handleCreateItem([2, 0.15, 2], weaponConstants.COLT)
+        handleCreateItem([5, 0.15, 2], consumableConstants.GREENHERB, '01_01_greenherb_01'),
+        handleCreateItem([2, 0.15, 2], weaponConstants.COLT, '01_01_colt_01')
     ],
     cameras: []
 }
