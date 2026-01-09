@@ -6,9 +6,9 @@ import { Experience } from './Experience';
 import { useGameStore } from "./stores/useGameStore"
 
 import "./index.css"
-import { extractFromLevelTable, LEVEL_TABLE } from './data/floors/levelTable';
 import { FLOOR_02, ROOM_02 } from './constants/floorConstants';
 import { TransitionManager } from './managers/TransitionManager';
+import { PlayerMenu } from './ui/PlayerMenu';
 function App() {
   const playerRef = useRef()
   const testFunc = () => {
@@ -28,6 +28,7 @@ function App() {
         <Experience playerRef={playerRef} />
       </Canvas>
       <TransitionManager playerRef={playerRef} />
+      <PlayerMenu />
       <button style={{
         position: "absolute",
         top: 25,

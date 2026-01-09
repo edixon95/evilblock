@@ -3,6 +3,7 @@ import { useFrame } from "@react-three/fiber";
 import { useEffect, useRef, useState } from "react";
 import { canMove } from "../../helpers/canMove";
 import { tryInteract } from "./tryInteract";
+import { useGameStore } from "../../stores/useGameStore";
 
 export const Player = ({ playerRef }) => {
   const aimingRef = useRef(false);
@@ -16,6 +17,9 @@ export const Player = ({ playerRef }) => {
   const WALK_SOUND_DELAY = 0.5;
   const WALK_SOUND_LEVEL = 2;
   const RUN_SOUND_LEVEL = 4;
+
+  const isPlayerMenuActive = useGameStore((state) => state.gameState.menu.active)
+
 
 
   const [aiming, setAiming] = useState(false);
@@ -44,7 +48,8 @@ export const Player = ({ playerRef }) => {
     const tabPressed = !!window.keys["KeyE"];
 
     if (tabPressed && !prevTabKeyRef.current) {
-      if (menuOpenRef.current === false) {
+      if (!isPlayerMenuActive) {
+        useGameStore.getState().handleOpenMenu("pause")
         console.log("menu open")
       } else {
         console.log("menu closed")
