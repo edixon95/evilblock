@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
+import { useGameStore } from "../../stores/useGameStore";
 
 export const PlayerMenuMenuOption = ({ menuOptions, moveSelection, setFocus, focused }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
 
     const handleKeyDown = (e) => {
-        if (!focused) return; // only act when menu has focus
+        if (!focused) return;
 
         if (e.key.toLowerCase() === "a") {
             const newIndex = Math.max(currentIndex - 1, 0);
@@ -15,8 +16,9 @@ export const PlayerMenuMenuOption = ({ menuOptions, moveSelection, setFocus, foc
             setCurrentIndex(newIndex);
             moveSelection(menuOptions[newIndex]);
         } else if (e.key === " ") {
-            // Space sets focus to inventory
             setFocus(true);
+        } else if (e.key.toLowerCase() === "f") {
+            useGameStore.getState().handleCloseMenu()
         }
     };
 
