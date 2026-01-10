@@ -1,10 +1,13 @@
 import * as THREE from "three";
 import { createGrid, findPath } from "./pathfinding";
+import { handleCombineFloor } from "./handleCombineFloor";
+import { stingometer } from "../../helpers/stingometer"
 
 export const createNavigation = (floors, blockableMeshes = []) => {
     if (!floors?.length) return { pickRandomPoint: () => new THREE.Vector3(0, 0.5, 0), updateEnemy: () => { } };
 
-    const combinedFloor = floors[0]; // can expand if needed
+    const combinedFloor = handleCombineFloor(floors)
+
     const grid = createGrid(combinedFloor, blockableMeshes, 0.2);
     if (!grid) return { pickRandomPoint: () => new THREE.Vector3(0, 0.5, 0), updateEnemy: () => { } };
 
@@ -20,14 +23,31 @@ export const createNavigation = (floors, blockableMeshes = []) => {
 
     const updateEnemy = (enemy, ref, delta) => {
         if (!ref.current) return;
-        if (!enemy.controller) enemy.controller = { path: null, targetIndex: 0 };
+
+        if (!enemy.controller) enemy.controller = { path: null, targetIndex: 0, idleTimer: 0 };
         const ctrl = enemy.controller;
 
+        // no path, count until can move
         if (!ctrl.path || ctrl.targetIndex >= ctrl.path.length) {
-            const target = pickRandomPoint();
-            ctrl.path = findPath(grid, ref.current.position, target);
-            ctrl.targetIndex = 0;
+            ctrl.idleTimer += delta;
+
+            // Check every 3 seconds
+            if (ctrl.idleTimer >= 3) {
+                ctrl.idleTimer = 0;
+                const roll = stingometer(1, 10);
+                console.log(roll)
+                // Easier difficulty will roll a higher number
+                if (roll <= enemy.moveChance) {
+                    const target = pickRandomPoint();
+                    ctrl.path = findPath(grid, ref.current.position, target);
+                    ctrl.targetIndex = 0;
+                }
+            }
+            return;
         }
+
+        // no timer if moving
+        ctrl.idleTimer = 0;
 
         const path = ctrl.path;
         const idx = ctrl.targetIndex;
@@ -38,16 +58,19 @@ export const createNavigation = (floors, blockableMeshes = []) => {
         const dir = target.clone().sub(ref.current.position);
         const dist = dir.length();
 
-        if (dist < 0.05) ctrl.targetIndex++;
-        else {
-            dir.normalize();
-            ref.current.position.add(dir.multiplyScalar(enemy.speed * delta));
-
-            const targetAngle = Math.atan2(dir.x, dir.z);
-            const deltaY = ((targetAngle - ref.current.rotation.y + Math.PI) % (2 * Math.PI)) - Math.PI;
-            ref.current.rotation.y += deltaY * 0.1;
+        if (dist < 0.05) {
+            ctrl.targetIndex++;
+            return;
         }
+
+        dir.normalize();
+        ref.current.position.add(dir.multiplyScalar(enemy.speed * delta));
+
+        const targetAngle = Math.atan2(dir.x, dir.z);
+        const deltaY = ((targetAngle - ref.current.rotation.y + Math.PI) % (2 * Math.PI)) - Math.PI;
+        ref.current.rotation.y += deltaY * 0.1;
     };
+
 
     return { pickRandomPoint, updateEnemy };
 };
