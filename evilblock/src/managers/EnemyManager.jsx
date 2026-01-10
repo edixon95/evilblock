@@ -1,50 +1,41 @@
-// EnemyManager.jsx
 import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { Enemy } from "../characters/enemy/Enemy";
-import { updateEnemy } from "../characters/enemy/enemyController";
 import { createNavigation } from "../characters/enemy/createNavigation";
 import { wallMeshes } from "./WallManager";
+import { propMeshes } from "./PropManager";
 
 export const liveEnemyRefs = { current: [] };
 
 export const EnemyManager = ({ enemies, floors }) => {
     const enemyRefs = useRef([]);
-    const navigation = useRef(null);
+    const navigationRef = useRef(null);
 
-    // Keep refs in sync with enemies
-    enemyRefs.current = enemies.map(
-        (_, i) => enemyRefs.current[i] ?? { current: null }
-    );
+    // sync refs
+    enemyRefs.current = enemies.map((_, i) => enemyRefs.current[i] ?? { current: null });
     liveEnemyRefs.current = enemyRefs.current;
 
-    // Wait until all walls have valid current refs
-    const getBlockableMeshes = () =>
-        wallMeshes
-            .map((w) => w.current)
-            .filter(Boolean);
+    const getBlockableMeshes = () => [...wallMeshes, ...propMeshes].map(r => r.current).filter(Boolean);
 
     useFrame((_, delta) => {
         const blockableMeshes = getBlockableMeshes();
 
-        if (!navigation.current && blockableMeshes.length > 0) {
-            navigation.current = createNavigation(floors, blockableMeshes);
+        if (!navigationRef.current && blockableMeshes.length) {
+            navigationRef.current = createNavigation(floors, blockableMeshes);
         }
-
-        if (!navigation.current) return;
+        if (!navigationRef.current) return;
 
         enemies.forEach((enemy, i) => {
             const ref = enemyRefs.current[i];
             if (!ref?.current || !enemy.isAlive) return;
 
-            // one-time position initialization
             if (!enemy._initialized) {
                 const [x, y, z] = enemy.position;
                 ref.current.position.set(x, y, z);
                 enemy._initialized = true;
             }
 
-            updateEnemy(enemy, ref, navigation.current, delta);
+            navigationRef.current.updateEnemy(enemy, ref, delta);
         });
     });
 

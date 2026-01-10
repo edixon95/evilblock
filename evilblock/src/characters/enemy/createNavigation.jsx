@@ -1,62 +1,53 @@
 import * as THREE from "three";
+import { createGrid, findPath } from "./pathfinding";
 
-export const createNavigation = (floors = [], blockableMeshes = []) => {
-    const raycaster = new THREE.Raycaster();
+export const createNavigation = (floors, blockableMeshes = []) => {
+    if (!floors?.length) return { pickRandomPoint: () => new THREE.Vector3(0, 0.5, 0), updateEnemy: () => { } };
+
+    const combinedFloor = floors[0]; // can expand if needed
+    const grid = createGrid(combinedFloor, blockableMeshes, 0.2);
+    if (!grid) return { pickRandomPoint: () => new THREE.Vector3(0, 0.5, 0), updateEnemy: () => { } };
 
     const pickRandomPoint = () => {
-        if (!floors?.length === 0 && !blockableMeshes?.length === 0) return new THREE.Vector3(0, 0.5, 0);
-
-
-        let maxAttempts = 20;
-        for (let attempt = 0; attempt < maxAttempts; attempt++) {
-            const floor = floors[Math.floor(Math.random() * floors.length)];
-            const [fx, fy, fz] = floor.position;
-            const [fw, fd] = floor.size;
-
-            const x = fx - fw / 2 + Math.random() * fw;
-            const z = fz - fd / 2 + Math.random() * fd;
-            const yStart = fy + 5;
-
-            const origin = new THREE.Vector3(x, yStart, z);
-            const dir = new THREE.Vector3(0, -1, 0);
-
-            raycaster.set(origin, dir);
-            const hits = raycaster.intersectObjects(blockableMeshes, true);
-
-            // If nothing blocks, use floor height
-            const y = hits.length ? hits[0].point.y + 0.5 : fy + 0.5;
-
-            const position = new THREE.Vector3(x, y, z);
-
-            // buffer
-            const tooClose = blockableMeshes.some(o => {
-                const pos = new THREE.Vector3();
-                o.getWorldPosition(pos);
-                return pos.distanceTo(position) < 0.5;
-            });
-            if (!tooClose) return position;
-        }
-
-        // fallback if nothing valid
-        const [fx, fy, fz] = floors[0].position;
-        return new THREE.Vector3(fx, fy + 0.5, fz);
+        const walkableNodes = [];
+        for (let i = 0; i < grid.cols; i++)
+            for (let j = 0; j < grid.rows; j++)
+                if (grid.grid[i][j].walkable) walkableNodes.push(grid.grid[i][j]);
+        if (!walkableNodes.length) return new THREE.Vector3(0, 0.5, 0);
+        const node = walkableNodes[Math.floor(Math.random() * walkableNodes.length)];
+        return new THREE.Vector3(node.worldX, 0.5, node.worldZ);
     };
 
-    const findPath = (from, to) => {
-        const direction = new THREE.Vector3().subVectors(to, from);
-        const dist = direction.length();
-        direction.normalize();
+    const updateEnemy = (enemy, ref, delta) => {
+        if (!ref.current) return;
+        if (!enemy.controller) enemy.controller = { path: null, targetIndex: 0 };
+        const ctrl = enemy.controller;
 
-        const ray = new THREE.Raycaster(from.clone().add(new THREE.Vector3(0, 0.5, 0)), direction, 0, dist);
-        const hits = ray.intersectObjects(blockableMeshes, true);
-
-        if (hits.length === 0) {
-            return [{ x: to.x, z: to.z }];
+        if (!ctrl.path || ctrl.targetIndex >= ctrl.path.length) {
+            const target = pickRandomPoint();
+            ctrl.path = findPath(grid, ref.current.position, target);
+            ctrl.targetIndex = 0;
         }
 
-        const mid = from.clone().lerp(to, 0.5);
-        return [{ x: mid.x, z: mid.z }, { x: to.x, z: to.z }];
+        const path = ctrl.path;
+        const idx = ctrl.targetIndex;
+        if (!path || idx >= path.length) return;
+
+        const node = path[idx];
+        const target = new THREE.Vector3(node.x, ref.current.position.y, node.z);
+        const dir = target.clone().sub(ref.current.position);
+        const dist = dir.length();
+
+        if (dist < 0.05) ctrl.targetIndex++;
+        else {
+            dir.normalize();
+            ref.current.position.add(dir.multiplyScalar(enemy.speed * delta));
+
+            const targetAngle = Math.atan2(dir.x, dir.z);
+            const deltaY = ((targetAngle - ref.current.rotation.y + Math.PI) % (2 * Math.PI)) - Math.PI;
+            ref.current.rotation.y += deltaY * 0.1;
+        }
     };
 
-    return { pickRandomPoint, findPath };
+    return { pickRandomPoint, updateEnemy };
 };
