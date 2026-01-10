@@ -6,6 +6,7 @@ import { handleCreateDoor } from "../../../creators/handleCreateDoor";
 import { handleCreateEnemy } from "../../../creators/handleCreateEnemy";
 import { handleCreateGeometry } from "../../../creators/handleCreateGeometry";
 import { handleCreateItem } from "../../../creators/handleCreateItem";
+import { handleCreateProp } from "../../../creators/handleCreateProp";
 import { consumableConstants } from "../../../interact/items/consumable/consumableConstants";
 import { ammoConstants, weaponConstants } from "../../../interact/items/weapon/weaponConstants";
 
@@ -15,7 +16,11 @@ export const room_01 = {
         handleCreateGeometry([-3, 0, 2], [6, 4]),
         handleCreateGeometry([6, 0, 8], [4, 8])
     ],
-    props: [],
+    props: [
+        handleCreateProp([4, 0.4, 0], [1.5, 0.8, 1.5]),
+        handleCreateProp([-2, 0.5, 3], [2, 1, 0.5]),
+        handleCreateProp([-1, 0.5, 9], [10, 1, 10])
+    ],
     stations: [],
     doors: [
         handleCreateDoor({
@@ -26,7 +31,7 @@ export const room_01 = {
         }),
     ],
     enemies: [
-        handleCreateEnemy([1, 0, 1], BASIC, '01_01_basic_01')
+        handleCreateEnemy([1, 0.5, 1], BASIC, '01_01_basic_01')
     ],
     items: [
         handleCreateItem([5, 0.15, 2], consumableConstants.REAGENT_G, '01_01_reagentg_01'),

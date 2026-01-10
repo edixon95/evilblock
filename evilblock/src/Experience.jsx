@@ -11,6 +11,8 @@ import { useDoorStore } from "./stores/useDoorStore"
 import { useItemStore } from "./stores/useItemStore"
 import { InteractManager } from "./managers/InteractManager"
 import { EnemyManager } from "./managers/EnemyManager"
+import { usePropStore } from "./stores/usePropStore"
+import { PropManager } from "./managers/PropManager"
 
 export const Experience = ({ playerRef }) => {
     // Can see the updates
@@ -43,13 +45,17 @@ export const Experience = ({ playerRef }) => {
     const allWorlds = useWorldStore((state) => state?.world)
     const allDoors = useDoorStore((state) => state?.doors)
     const allEnemies = useEnemyStore((state) => state?.enemies)
+    const allProps = usePropStore((state) => state?.props)
 
     const allItems = useItemStore((state) => state?.items)
 
     const floors = allWorlds[level][room]
+    const props = allProps[level][room]
     const doors = allDoors[level][room]
-    const items = allItems[level][room]
     const enemies = allEnemies[level][room]
+
+
+    const items = allItems[level][room]
     const interacts = [...items]
 
 
@@ -72,7 +78,11 @@ export const Experience = ({ playerRef }) => {
                 </>
             }
 
-            {shouldRender(enemies) && shouldRender(floors) &&
+            {shouldRender(props) &&
+                <PropManager props={props} />
+            }
+
+            {shouldRender(enemies) && shouldRender(floors) && shouldRender(props) &&
                 <EnemyManager enemies={enemies} floors={floors} />
             }
 

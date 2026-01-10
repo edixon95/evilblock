@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import { wallMeshes } from "../managers/WallManager";
 import { doorMeshes } from "../managers/DoorManager";
+import { propMeshes } from "../managers/PropManager";
 
 
 export const canMove = (playerPos, playerRot, forwardVec, distance = 0.5, buffer = 0.5) => {
@@ -11,6 +12,7 @@ export const canMove = (playerPos, playerRot, forwardVec, distance = 0.5, buffer
     const meshes = [
         ...wallMeshes.map(r => r.current).filter(Boolean),
         ...doorMeshes.map(r => r.current).filter(Boolean),
+        ...propMeshes.map(r => r.current).filter(Boolean)
         // ...propMeshes.map(r => r.current).filter(Boolean),
         // ...otherMeshes.map(r => r.current).filter(Boolean),
         // ...liveEnemyRefs.filter(Boolean),
