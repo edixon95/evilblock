@@ -29,7 +29,7 @@ export const handleUserOther = (item) => {
             break;
 
         case MATERIAL:
-            // Should be straight to inventory
+            tryPickupItem(item)
             break;
 
         case CURRENCY:

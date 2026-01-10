@@ -1,4 +1,5 @@
 import { create } from "zustand"
+import { ITEM_TABLE } from "../data/interact/items/itemTable";
 
 export const useInventoryStore = create((set, get) => ({
     inventory: Array(12).fill(null),
@@ -23,5 +24,13 @@ export const useInventoryStore = create((set, get) => ({
         }
 
         return false;
+    },
+
+    tryCraftByIndex: (itemAIndex, itemBIndex, reward) => {
+        const { inventory } = get()
+        const newInventory = [...inventory];
+        newInventory[itemAIndex] = null;
+        newInventory[itemBIndex] = ITEM_TABLE[reward]
+        set({ inventory: newInventory })
     }
 }))

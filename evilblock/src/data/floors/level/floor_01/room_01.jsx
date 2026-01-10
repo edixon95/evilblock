@@ -29,8 +29,18 @@ export const room_01 = {
         handleCreateEnemy([1, 0, 1], BASIC, '01_01_basic_01')
     ],
     items: [
-        handleCreateItem([5, 0.15, 2], consumableConstants.GREENHERB, '01_01_greenherb_01'),
-        handleCreateItem([2, 0.15, 2], weaponConstants.COLT, '01_01_colt_01'),
+        handleCreateItem([5, 0.15, 2], consumableConstants.REAGENT_G, '01_01_reagentg_01'),
+        handleCreateItem([5, 0.15, 2], consumableConstants.REAGENT_G, '01_01_reagentg_02'),
+        handleCreateItem([5, 0.15, 2], consumableConstants.REAGENT_B, '01_01_reagentb_01'),
+        handleCreateItem([5, 0.15, 2], consumableConstants.REAGENT_R, '01_01_reagentr_01'),
+        handleCreateItem([5, 0.15, 2], consumableConstants.REAGENT_Y, '01_01_reagenty_01'),
+        handleCreateItem([5, 0.15, 2], consumableConstants.REAGENT_B, '01_01_reagentb_02'),
+        handleCreateItem([5, 0.15, 2], consumableConstants.REAGENT_R, '01_01_reagentr_02'),
+        handleCreateItem([5, 0.15, 2], consumableConstants.REAGENT_Y, '01_01_reagenty_02'),
+        handleCreateItem([5, 0.15, 2], consumableConstants.REAGENT_B, '01_01_reagentb_03'),
+        handleCreateItem([5, 0.15, 2], consumableConstants.REAGENT_R, '01_01_reagentr_03'),
+        handleCreateItem([5, 0.15, 2], consumableConstants.REAGENT_Y, '01_01_reagenty_03'),
+        // handleCreateItem([2, 0.15, 2], weaponConstants.COLT, '01_01_colt_01'),
         handleCreateItem([2, 0.15, 2], ammoConstants.HANDGUNAMMO, '01_01_handgunAmmo_01')
     ],
     cameras: []

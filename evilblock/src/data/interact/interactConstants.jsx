@@ -4,6 +4,7 @@ export const ITEM = "ITEM";
 // subTypes
 export const WEAPON = "WEAPON"
 export const CONSUMABLE = "CONSUMABLE"
+export const CONSUMABLELAST = "CONSUMABLELAST"
 export const AMMO = "AMMO"
 export const NOTE = "NOTE"
 export const MAP = "MAP"
