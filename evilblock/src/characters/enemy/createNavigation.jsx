@@ -1,12 +1,10 @@
 import * as THREE from "three";
-import { wallMeshes } from "../../managers/WallManager";
 
-export const createNavigation = (floors) => {
+export const createNavigation = (floors = [], blockableMeshes = []) => {
     const raycaster = new THREE.Raycaster();
-    const blockableMeshes = [...wallMeshes]
 
     const pickRandomPoint = () => {
-        if (!floors.length) return new THREE.Vector3(0, 0.5, 0);
+        if (!floors?.length === 0 && !blockableMeshes?.length === 0) return new THREE.Vector3(0, 0.5, 0);
 
 
         let maxAttempts = 20;
