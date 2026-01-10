@@ -11,6 +11,7 @@ import { useDoorStore } from "./stores/useDoorStore"
 import { useItemStore } from "./stores/useItemStore"
 import { InteractManager } from "./managers/InteractManager"
 import { EnemyManager } from "./managers/EnemyManager"
+import { createNavigation } from "./characters/enemy/createNavigation"
 
 export const Experience = ({ playerRef }) => {
     // Can see the updates
@@ -51,6 +52,11 @@ export const Experience = ({ playerRef }) => {
     const items = allItems[level][room]
     const enemies = allEnemies[level][room]
     const interacts = [...items]
+
+    const navigation = useMemo(
+        () => createNavigation(floors),
+        [floors]
+    );
     console.log(interacts)
 
     const shouldRender = (array) => {
@@ -71,7 +77,7 @@ export const Experience = ({ playerRef }) => {
             }
 
             {shouldRender(enemies) &&
-                <EnemyManager enemies={enemies} />
+                <EnemyManager enemies={enemies} navigation={navigation} />
             }
 
             {shouldRender(doors) &&
