@@ -8,37 +8,22 @@ export const createEnemyControllerState = () => ({
 export const updateEnemy = (enemy, ref, navigation, delta) => {
     if (!ref.current) return;
 
-    // Attach controller lazily
-    if (!enemy.controller) {
-        enemy.controller = createEnemyControllerState();
-    }
-
+    if (!enemy.controller) enemy.controller = createEnemyControllerState();
     const controller = enemy.controller;
 
-    // No path? Get one
-    if (!controller.path) {
+    // Pick new target if no path
+    if (!controller.path || controller.targetIndex >= controller.path.length) {
         const target = navigation.pickRandomPoint();
-        controller.path = navigation.findPath(
-            ref.current.position,
-            target
-        );
+        controller.path = navigation.findPath(ref.current.position, target);
         controller.targetIndex = 0;
     }
 
     const path = controller.path;
     const idx = controller.targetIndex;
-
-    if (!path || idx >= path.length) {
-        controller.path = null;
-        return;
-    }
+    if (!path || idx >= path.length) return;
 
     const node = path[idx];
-    const target = new THREE.Vector3(
-        node.x,
-        ref.current.position.y,
-        node.z
-    );
+    const target = new THREE.Vector3(node.x, ref.current.position.y, node.z);
 
     const dir = target.clone().sub(ref.current.position);
     const dist = dir.length();
@@ -47,8 +32,11 @@ export const updateEnemy = (enemy, ref, navigation, delta) => {
         controller.targetIndex++;
         return;
     }
+
     dir.normalize();
-    ref.current.position.add(
-        dir.multiplyScalar(enemy.speed * delta)
-    );
+    ref.current.position.add(dir.multiplyScalar(enemy.speed * delta));
+
+    const targetAngle = Math.atan2(dir.x, dir.z);
+    let deltaY = ((targetAngle - ref.current.rotation.y + Math.PI) % (2 * Math.PI)) - Math.PI;
+    ref.current.rotation.y += deltaY * 0.1;
 };

@@ -1,26 +1,64 @@
 import * as THREE from "three";
+import { wallMeshes } from "../../managers/WallManager";
 
 export const createNavigation = (floors) => {
-    return {
-        pickRandomPoint() {
-            if (!floors.length) {
-                return new THREE.Vector3(0, 0.5, 0);
-            }
+    const raycaster = new THREE.Raycaster();
+    const blockableMeshes = [...wallMeshes]
 
+    const pickRandomPoint = () => {
+        if (!floors.length) return new THREE.Vector3(0, 0.5, 0);
+
+
+        let maxAttempts = 20;
+        for (let attempt = 0; attempt < maxAttempts; attempt++) {
             const floor = floors[Math.floor(Math.random() * floors.length)];
-            const [x, y, z] = floor.position;
-            const [w, d] = floor.size;
+            const [fx, fy, fz] = floor.position;
+            const [fw, fd] = floor.size;
 
-            return new THREE.Vector3(
-                x - w / 2 + Math.random() * w,
-                y + 0.5,
-                z - d / 2 + Math.random() * d
-            );
-        },
+            const x = fx - fw / 2 + Math.random() * fw;
+            const z = fz - fd / 2 + Math.random() * fd;
+            const yStart = fy + 5;
 
-        findPath(from, to) {
-            // TEMP: straight line
-            return [{ x: to.x, z: to.z }];
-        },
+            const origin = new THREE.Vector3(x, yStart, z);
+            const dir = new THREE.Vector3(0, -1, 0);
+
+            raycaster.set(origin, dir);
+            const hits = raycaster.intersectObjects(blockableMeshes, true);
+
+            // If nothing blocks, use floor height
+            const y = hits.length ? hits[0].point.y + 0.5 : fy + 0.5;
+
+            const position = new THREE.Vector3(x, y, z);
+
+            // buffer
+            const tooClose = blockableMeshes.some(o => {
+                const pos = new THREE.Vector3();
+                o.getWorldPosition(pos);
+                return pos.distanceTo(position) < 0.5;
+            });
+            if (!tooClose) return position;
+        }
+
+        // fallback if nothing valid
+        const [fx, fy, fz] = floors[0].position;
+        return new THREE.Vector3(fx, fy + 0.5, fz);
     };
+
+    const findPath = (from, to) => {
+        const direction = new THREE.Vector3().subVectors(to, from);
+        const dist = direction.length();
+        direction.normalize();
+
+        const ray = new THREE.Raycaster(from.clone().add(new THREE.Vector3(0, 0.5, 0)), direction, 0, dist);
+        const hits = ray.intersectObjects(blockableMeshes, true);
+
+        if (hits.length === 0) {
+            return [{ x: to.x, z: to.z }];
+        }
+
+        const mid = from.clone().lerp(to, 0.5);
+        return [{ x: mid.x, z: mid.z }, { x: to.x, z: to.z }];
+    };
+
+    return { pickRandomPoint, findPath };
 };

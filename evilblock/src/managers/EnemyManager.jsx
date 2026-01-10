@@ -1,15 +1,15 @@
+// EnemyManager.jsx
 import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { Enemy } from "../characters/enemy/Enemy";
 import { updateEnemy } from "../characters/enemy/enemyController";
 
-// Exported refs for external use
 export const liveEnemyRefs = { current: [] };
 
 export const EnemyManager = ({ enemies, navigation }) => {
     const enemyRefs = useRef([]);
 
-    // Sync local refs → exported refs, ensure length matches enemies
+    // Keep refs in sync
     enemyRefs.current = enemies.map(
         (_, i) => enemyRefs.current[i] ?? { current: null }
     );
@@ -20,14 +20,12 @@ export const EnemyManager = ({ enemies, navigation }) => {
             const ref = enemyRefs.current[i];
             if (!ref?.current || !enemy.isAlive) return;
 
-            // One-time initialization of position
             if (!enemy._initialized) {
                 const [x, y, z] = enemy.position;
                 ref.current.position.set(x, y, z);
                 enemy._initialized = true;
             }
 
-            // Update enemy movement
             updateEnemy(enemy, ref, navigation, delta);
         });
     });
@@ -35,11 +33,7 @@ export const EnemyManager = ({ enemies, navigation }) => {
     return (
         <>
             {enemies.map((enemy, i) => (
-                <Enemy
-                    key={enemy.id}
-                    enemy={enemy}
-                    ref={enemyRefs.current[i]}
-                />
+                <Enemy key={enemy.id} enemy={enemy} ref={enemyRefs.current[i]} />
             ))}
         </>
     );
