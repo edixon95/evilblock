@@ -1,6 +1,9 @@
 import { useEffect, useState, useRef } from "react";
 import { useInventoryStore } from "../../stores/useInventoryStore";
 import { PlayerMenuInventoryPrompt } from "./PlayerMenuInventoryPrompt";
+import { shouldFade } from "../uiHelper/shouldFade";
+import { canCombineItem } from "../uiHelper/canCombineItem";
+import { handleCombineItems } from "../actions/handleCombineItems";
 
 export const PlayerMenuInventory = ({ focused, setFocus }) => {
     const inventory = useInventoryStore((state) => state.inventory);
@@ -33,19 +36,12 @@ export const PlayerMenuInventory = ({ focused, setFocus }) => {
                     setSelection((prev) => ({ ...prev, col: (prev.col + 1) % cols }));
                     break;
                 case " ":
-                    if (
-                        currentItem &&
-                        Object.keys(inventory[combineTarget].combine || {}).some((key) =>
-                            currentItem.id.toLowerCase().includes(key.toLowerCase())
-                        )
-                    ) {
-                        console.log(
-                            "Combining",
-                            `${inventory[combineTarget].name}, which is at idx ${combineTarget}`,
-                            "with",
-                            `${currentItem.name} which is at idx ${index}`
-                        );
+                    const canCombine = canCombineItem(currentItem, combineTarget, inventory, index)
+                    if (canCombine.canCombine) {
+                        handleCombineItems(combineTarget, index, inventory[combineTarget].combine[currentItem.combineId])
                         setCombineTarget(null);
+                    } else {
+                        console.log(`Can't combine because ${canCombine.reason}`)
                     }
                     break;
                 case "f":
@@ -103,13 +99,6 @@ export const PlayerMenuInventory = ({ focused, setFocus }) => {
                     const col = index % 4;
                     const isSelected = focused && selection.row === row && selection.col === col;
 
-                    const faded =
-                        combineTarget !== null &&
-                        index !== combineTarget && // item A never fades
-                        (!item || !Object.keys(inventory[combineTarget].combine || {}).some((key) =>
-                            item.id.toLowerCase().includes(key.toLowerCase())
-                        ));
-
                     return (
                         <div
                             key={index}
@@ -122,7 +111,7 @@ export const PlayerMenuInventory = ({ focused, setFocus }) => {
                                 backgroundColor: isSelected ? "#ff0" : "#f9f9f9",
                                 fontWeight: "bold",
                                 position: "relative",
-                                opacity: !isSelected && faded ? 0.1 : 1,
+                                opacity: !isSelected && shouldFade(combineTarget, index, item, inventory) ? 0.1 : 1,
                                 transition: "opacity 0.3s ease"
                             }}
                         >

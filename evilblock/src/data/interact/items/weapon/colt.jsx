@@ -4,6 +4,7 @@ import { ammoConstants, weaponConstants } from "./weaponConstants";
 
 export const colt = {
     id: weaponConstants.COLT,
+    combineId: weaponConstants.COLT,
     name: "Colt",
     type: ITEM,
     subType: WEAPON,

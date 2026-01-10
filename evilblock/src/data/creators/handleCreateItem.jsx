@@ -5,7 +5,7 @@ export const handleCreateItem = (position = [4, 0, 0], item, id) => {
         position,
         data: {
             ...ITEM_TABLE[item],
-            id
+            id,
         }
     };
 };

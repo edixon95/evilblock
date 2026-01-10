@@ -31,12 +31,20 @@ export const interactActionPreset = {
         COMBINE,
         EXAMINE
     ],
+    CONSUMABLELAST: [
+        USE,
+        EXAMINE
+    ],
     WEAPON: [
         EQUIP,
         COMBINE,
         EXAMINE
     ],
     AMMO: [
+        COMBINE,
+        EXAMINE
+    ],
+    MATERIAL: [
         COMBINE,
         EXAMINE
     ]

@@ -4,6 +4,7 @@ import { ammoConstants, weaponConstants } from "../weaponConstants";
 
 export const handgunAmmo = {
     id: ammoConstants.HANDGUNAMMO,
+    combineId: ammoConstants.HANDGUNAMMO,
     name: "Handgun Ammo",
     type: ITEM,
     subType: AMMO,

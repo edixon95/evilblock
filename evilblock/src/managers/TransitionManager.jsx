@@ -18,7 +18,6 @@ export const TransitionManager = ({ playerRef }) => {
 
         // Check if the new data is a door event
         if (data.type === "DOOR" || data.type === "STAIR") {
-            console.log(data.type)
             const { level, room, door } = data.extra.to
             const destinationFromStore = useDoorStore.getState().handleGetDoorData(level, room, door)
             // // TOOD: Hide
