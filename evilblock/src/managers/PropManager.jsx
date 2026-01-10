@@ -7,6 +7,7 @@ export const propMeshes = [];
 export const PropManager = ({ props }) => {
     if (!props || props.length == 0) return;
 
+    propMeshes.length = 0;
     return (
         <>
             {props.map((prop) => {
