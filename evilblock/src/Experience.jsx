@@ -4,12 +4,13 @@ import { FloorManager } from "./managers/FloorManager"
 import { WallManager } from "./managers/WallManager"
 import { useGameStore } from "./stores/useGameStore"
 import { useWorldStore } from "./stores/useWorldStore"
+import { useEnemyStore } from "./stores/useEnemyStore"
 import { DevCam } from "./tool/DevCam"
-import { countWallSegments } from "./helpers/countWallSegments"
 import { DoorManager } from "./managers/DoorManager"
 import { useDoorStore } from "./stores/useDoorStore"
 import { useItemStore } from "./stores/useItemStore"
 import { InteractManager } from "./managers/InteractManager"
+import { EnemyManager } from "./managers/EnemyManager"
 
 export const Experience = ({ playerRef }) => {
     // Can see the updates
@@ -41,10 +42,14 @@ export const Experience = ({ playerRef }) => {
     const { level, room } = useGameStore((state) => state.gameState.game)
     const allWorlds = useWorldStore((state) => state?.world)
     const allDoors = useDoorStore((state) => state?.doors)
+    const allEnemies = useEnemyStore((state) => state?.enemies)
+
     const allItems = useItemStore((state) => state?.items)
+
     const floors = allWorlds[level][room]
     const doors = allDoors[level][room]
     const items = allItems[level][room]
+    const enemies = allEnemies[level][room]
     const interacts = [...items]
     console.log(interacts)
 
@@ -63,6 +68,10 @@ export const Experience = ({ playerRef }) => {
                     <FloorManager floors={floors} />
                     <WallManager floors={floors} />
                 </>
+            }
+
+            {shouldRender(enemies) &&
+                <EnemyManager enemies={enemies} />
             }
 
             {shouldRender(doors) &&
