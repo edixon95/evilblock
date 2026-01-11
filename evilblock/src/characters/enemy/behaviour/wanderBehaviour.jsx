@@ -18,7 +18,7 @@ export const wanderBehaviour = (ctx) => {
 
     ctrl.idleTimer = 0;
 
-    if (stingometer(1, 10) <= 10) {
+    if (stingometer(1, 10) <= enemy.moveChance) {
         const target = pickRandomPoint();
         ctrl.path = findPath(grid, ref.current.position, target);
         ctrl.targetIndex = 0;

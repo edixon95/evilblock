@@ -16,7 +16,7 @@ export const findSoundTarget = (enemy, ref, getSoundEvents, grid) => {
             const offset = new THREE.Vector3(
                 (Math.random() - 0.5) * 0.5 * 2,
                 0,
-                (Math.random() - 0.5) * 0.5 ?? 0 * 2
+                (Math.random() - 0.5) * 0.5 * 2
             );
 
             const targetPos = sound.position.clone().add(offset);

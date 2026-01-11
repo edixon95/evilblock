@@ -17,7 +17,7 @@ export const room_01 = {
         handleCreateGeometry([6, 0, 8], [4, 8])
     ],
     props: [
-        handleCreateProp([4, 0.4, 0], [1.5, 0.8, 1.5]),
+        handleCreateProp([4, 0.4, 0], [1.5, 2, 1.5]),
         handleCreateProp([-2, 0.5, 3], [2, 1, 0.5]),
         handleCreateProp([-1, 0.5, 9], [10, 1, 10])
     ],

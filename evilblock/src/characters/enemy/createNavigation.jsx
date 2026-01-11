@@ -1,21 +1,23 @@
 import * as THREE from "three";
-import { createGrid, findPath } from "./pathfinding";
+import { createGrid } from "./pathfinding";
 import { handleCombineFloor } from "./handleCombineFloor";
-import { stingometer } from "../../helpers/stingometer"
-import { findSoundTarget } from "./actions/findSoundTarget";
 import { soundBehaviour } from "./behaviour/soundBehaviour";
 import { wanderBehaviour } from "./behaviour/wanderBehaviour";
 import { moveBehaviour } from "./behaviour/moveBehaviour";
+import { playerVisionBehaviour } from "./behaviour/playerVisionBehaviour";
+import { playerChaseBehaviour } from "./behaviour/playerChaseBehaviour";
 
 const initController = {
     path: null,
     targetIndex: 0,
     idleTimer: 0,
+    lostPlayerTimer: 0,
+    chaseTimer: 0,
     intent: "idle",
     soundTargetId: null
 }
 
-export const createNavigation = (floors, blockableMeshes = [], getSoundEvents) => {
+export const createNavigation = (floors, blockableMeshes = [], getSoundEvents, playerRef) => {
     if (!floors?.length) return { pickRandomPoint: () => new THREE.Vector3(0, 0.5, 0), updateEnemy: () => { } };
 
     const combinedFloor = handleCombineFloor(floors)
@@ -47,11 +49,14 @@ export const createNavigation = (floors, blockableMeshes = [], getSoundEvents) =
             grid,
             delta,
             getSoundEvents,
-            pickRandomPoint
+            pickRandomPoint,
+            playerRef,
+            blockableMeshes
         };
 
 
-        // spotPayerBehaviour
+        playerVisionBehaviour(ctx)
+        playerChaseBehaviour(ctx)
         soundBehaviour(ctx);
         wanderBehaviour(ctx);
         moveBehaviour(ctx);
