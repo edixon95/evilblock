@@ -4,6 +4,7 @@ import { Enemy } from "../characters/enemy/Enemy";
 import { createNavigation } from "../characters/enemy/createNavigation";
 import { wallMeshes } from "./WallManager";
 import { propMeshes } from "./PropManager";
+import { soundEvents } from "../sound/SoundSystem";
 
 export const liveEnemyRefs = { current: [] };
 
@@ -21,7 +22,7 @@ export const EnemyManager = ({ enemies, floors }) => {
         const blockableMeshes = getBlockableMeshes();
 
         if (!navigationRef.current && blockableMeshes.length) {
-            navigationRef.current = createNavigation(floors, blockableMeshes);
+            navigationRef.current = createNavigation(floors, blockableMeshes, () => soundEvents);
         }
         if (!navigationRef.current) return;
 

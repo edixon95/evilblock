@@ -2,8 +2,17 @@ import * as THREE from "three";
 import { createGrid, findPath } from "./pathfinding";
 import { handleCombineFloor } from "./handleCombineFloor";
 import { stingometer } from "../../helpers/stingometer"
+import { findSoundTarget } from "./behaviour/findSoundTarget";
 
-export const createNavigation = (floors, blockableMeshes = []) => {
+const initController = {
+    path: null,
+    targetIndex: 0,
+    idleTimer: 0,
+    intent: "idle",
+    soundTargetId: null
+}
+
+export const createNavigation = (floors, blockableMeshes = [], getSoundEvents) => {
     if (!floors?.length) return { pickRandomPoint: () => new THREE.Vector3(0, 0.5, 0), updateEnemy: () => { } };
 
     const combinedFloor = handleCombineFloor(floors)
@@ -24,27 +33,41 @@ export const createNavigation = (floors, blockableMeshes = []) => {
     const updateEnemy = (enemy, ref, delta) => {
         if (!ref.current) return;
 
-        if (!enemy.controller) enemy.controller = { path: null, targetIndex: 0, idleTimer: 0 };
+        if (!enemy.controller) enemy.controller = { ...initController };
         const ctrl = enemy.controller;
 
-        // no path, count until can move
+
+        // Try to acquire sound target first
+        if (ctrl.intent !== "player") {
+            const soundResult = findSoundTarget(enemy, ref, getSoundEvents, grid);
+            if (soundResult) {
+                ctrl.path = soundResult.path;
+                ctrl.targetIndex = 0;
+                ctrl.intent = "sound";
+                ctrl.soundTargetId = soundResult.soundId;
+                ctrl.idleTimer = 0;
+            }
+        }
+
+        // no path or finished path
         if (!ctrl.path || ctrl.targetIndex >= ctrl.path.length) {
             ctrl.idleTimer += delta;
 
-            // Check every 3 seconds
+            // Otherwise, wander check every 3s
             if (ctrl.idleTimer >= 3) {
                 ctrl.idleTimer = 0;
                 const roll = stingometer(1, 10);
-                console.log(roll)
-                // Easier difficulty will roll a higher number
+
                 if (roll <= enemy.moveChance) {
                     const target = pickRandomPoint();
                     ctrl.path = findPath(grid, ref.current.position, target);
                     ctrl.targetIndex = 0;
+                    ctrl.intent = "wander";
                 }
             }
             return;
         }
+
 
         // no timer if moving
         ctrl.idleTimer = 0;
