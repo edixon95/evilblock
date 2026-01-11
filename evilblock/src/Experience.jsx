@@ -13,6 +13,7 @@ import { InteractManager } from "./managers/InteractManager"
 import { EnemyManager } from "./managers/EnemyManager"
 import { usePropStore } from "./stores/usePropStore"
 import { PropManager } from "./managers/PropManager"
+import { SoundSpheres } from "./sound/SoundSphere"
 
 export const Experience = ({ playerRef }) => {
     // Can see the updates
@@ -70,6 +71,7 @@ export const Experience = ({ playerRef }) => {
             <DevCam />
             <ambientLight intensity={1.2} />
             <Player playerRef={playerRef} />
+            <SoundSpheres />
 
             {shouldRender(floors) &&
                 <>
