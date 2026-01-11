@@ -2,7 +2,10 @@ import * as THREE from "three";
 import { createGrid, findPath } from "./pathfinding";
 import { handleCombineFloor } from "./handleCombineFloor";
 import { stingometer } from "../../helpers/stingometer"
-import { findSoundTarget } from "./behaviour/findSoundTarget";
+import { findSoundTarget } from "./actions/findSoundTarget";
+import { soundBehaviour } from "./behaviour/soundBehaviour";
+import { wanderBehaviour } from "./behaviour/wanderBehaviour";
+import { moveBehaviour } from "./behaviour/moveBehaviour";
 
 const initController = {
     path: null,
@@ -33,66 +36,27 @@ export const createNavigation = (floors, blockableMeshes = [], getSoundEvents) =
     const updateEnemy = (enemy, ref, delta) => {
         if (!ref.current) return;
 
-        if (!enemy.controller) enemy.controller = { ...initController };
+        if (!enemy.controller) enemy.controller = { ...initController }
+
         const ctrl = enemy.controller;
 
-
-        // Try to acquire sound target first
-        if (ctrl.intent !== "player") {
-            const soundResult = findSoundTarget(enemy, ref, getSoundEvents, grid);
-            if (soundResult) {
-                ctrl.path = soundResult.path;
-                ctrl.targetIndex = 0;
-                ctrl.intent = "sound";
-                ctrl.soundTargetId = soundResult.soundId;
-                ctrl.idleTimer = 0;
-            }
-        }
-
-        // no path or finished path
-        if (!ctrl.path || ctrl.targetIndex >= ctrl.path.length) {
-            ctrl.idleTimer += delta;
-
-            // Otherwise, wander check every 3s
-            if (ctrl.idleTimer >= 3) {
-                ctrl.idleTimer = 0;
-                const roll = stingometer(1, 10);
-
-                if (roll <= enemy.moveChance) {
-                    const target = pickRandomPoint();
-                    ctrl.path = findPath(grid, ref.current.position, target);
-                    ctrl.targetIndex = 0;
-                    ctrl.intent = "wander";
-                }
-            }
-            return;
-        }
+        const ctx = {
+            enemy,
+            ref,
+            ctrl,
+            grid,
+            delta,
+            getSoundEvents,
+            pickRandomPoint
+        };
 
 
-        // no timer if moving
-        ctrl.idleTimer = 0;
-
-        const path = ctrl.path;
-        const idx = ctrl.targetIndex;
-        if (!path || idx >= path.length) return;
-
-        const node = path[idx];
-        const target = new THREE.Vector3(node.x, ref.current.position.y, node.z);
-        const dir = target.clone().sub(ref.current.position);
-        const dist = dir.length();
-
-        if (dist < 0.05) {
-            ctrl.targetIndex++;
-            return;
-        }
-
-        dir.normalize();
-        ref.current.position.add(dir.multiplyScalar(enemy.speed * delta));
-
-        const targetAngle = Math.atan2(dir.x, dir.z);
-        const deltaY = ((targetAngle - ref.current.rotation.y + Math.PI) % (2 * Math.PI)) - Math.PI;
-        ref.current.rotation.y += deltaY * 0.1;
+        // spotPayerBehaviour
+        soundBehaviour(ctx);
+        wanderBehaviour(ctx);
+        moveBehaviour(ctx);
     };
+
 
 
     return { pickRandomPoint, updateEnemy };

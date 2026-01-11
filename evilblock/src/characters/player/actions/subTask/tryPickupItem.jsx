@@ -17,7 +17,7 @@ export const tryPickupItem = (item) => {
 
 export const tryPickupWepon = (item) => {
     if (useInventoryStore.getState().hasInventorySpace()) {
-        // Generate bullet count
+        // TODO: Generate bullet count
         const randomAmmoCount = 5
         // Update currentAmmo
         item.userData.data.currentAmmo = randomAmmoCount
@@ -25,6 +25,4 @@ export const tryPickupWepon = (item) => {
 
         markCollected(item);
     }
-
-    console.log(useInventoryStore.getState().inventory)
 }

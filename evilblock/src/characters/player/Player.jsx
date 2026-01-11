@@ -51,7 +51,6 @@ export const Player = ({ playerRef }) => {
     if (tabPressed && !prevTabKeyRef.current) {
       if (!isPlayerMenuActive) {
         useGameStore.getState().handleOpenMenu("pause")
-        console.log("menu open")
       }
 
       menuOpenRef.current = !menuOpenRef.current
@@ -148,7 +147,6 @@ export const Player = ({ playerRef }) => {
     if (!aimingRef.current) {
       direction.current.set(0, 0, -1);
       if (window.keys["KeyW"]) {
-        console.log("p w")
         if (
           canMove(
             playerRef.current.position,
