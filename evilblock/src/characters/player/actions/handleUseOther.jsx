@@ -2,7 +2,6 @@ import { CONSUMABLE, WEAPON, NOTE, MAP, KEY, MATERIAL, CURRENCY, OTHER, AMMO } f
 import { tryPickupItem, tryPickupWepon } from "./subTask/tryPickupItem"
 
 export const handleUserOther = (item) => {
-    console.log(item)
     switch (item.userData.subType) {
         case WEAPON:
             tryPickupWepon(item)

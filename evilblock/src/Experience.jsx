@@ -59,9 +59,6 @@ export const Experience = ({ playerRef }) => {
     const items = allItems[level][room]
     const interacts = [...items]
 
-
-    console.log(interacts)
-
     const shouldRender = (array) => {
         return array && array.length > 0
     }

@@ -17,7 +17,6 @@ export const handleUseDoor = (door) => {
     }
 
     if (lock.isLocked) {
-        console.log("Door Locked")
         return
     }
 
