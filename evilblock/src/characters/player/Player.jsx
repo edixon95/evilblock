@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { canMove } from "../../helpers/canMove";
 import { tryInteract } from "./tryInteract";
 import { useGameStore } from "../../stores/useGameStore";
+import { emitSound, updateSounds } from "../../sound/SoundSystem";
 
 export const Player = ({ playerRef }) => {
   const aimingRef = useRef(false);
@@ -51,14 +52,18 @@ export const Player = ({ playerRef }) => {
       if (!isPlayerMenuActive) {
         useGameStore.getState().handleOpenMenu("pause")
         console.log("menu open")
-      } else {
-        console.log("menu closed")
       }
 
       menuOpenRef.current = !menuOpenRef.current
     }
 
     prevTabKeyRef.current = tabPressed;
+
+    /* Menu only activates from here, can't turn it off. 
+      Handle the key press first so there's no overlap.
+      Update sounds so that they're dealt with after unpausing. */
+    if (isPlayerMenuActive) return;
+    updateSounds(delta)
 
     // SPACE ACTION
     const spacePressed = !!window.keys["Space"];
@@ -125,9 +130,12 @@ export const Player = ({ playerRef }) => {
       moveSoundTimerRef.current += delta;
 
       if (moveSoundTimerRef.current >= WALK_SOUND_DELAY) {
-        // play sound
         const isRunning = window.keys["ShiftLeft"];
-
+        emitSound(
+          playerRef.current.position,
+          isRunning ? RUN_SOUND_LEVEL : WALK_SOUND_LEVEL,
+          0.15
+        );
         moveSoundTimerRef.current = 0;
       }
     } else {
