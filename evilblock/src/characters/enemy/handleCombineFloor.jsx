@@ -5,7 +5,7 @@ export const handleCombineFloor = (floors) => {
     floors.forEach(f => {
         const [fx, fy, fz] = f.position;
         const [fw, fd] = f.size;
-        y = fy; // pick the height of first floor (assume all floors are at same Y)
+        y = fy;
         minX = Math.min(minX, fx - fw / 2);
         maxX = Math.max(maxX, fx + fw / 2);
         minZ = Math.min(minZ, fz - fd / 2);

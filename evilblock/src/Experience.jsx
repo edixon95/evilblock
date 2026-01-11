@@ -82,7 +82,7 @@ export const Experience = ({ playerRef }) => {
             }
 
             {shouldRender(enemies) && shouldRender(floors) && shouldRender(props) &&
-                <EnemyManager enemies={enemies} floors={floors} />
+                <EnemyManager enemies={enemies} floors={floors} playerRef={playerRef} />
             }
 
             {shouldRender(doors) &&

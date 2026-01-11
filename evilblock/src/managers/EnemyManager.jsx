@@ -6,11 +6,17 @@ import { wallMeshes } from "./WallManager";
 import { propMeshes } from "./PropManager";
 import { soundEvents } from "../sound/SoundSystem";
 
+import { useThree } from "@react-three/fiber";
+import { drawVisionConeDebug } from "../tool/drawVisionCone";
+
+
+
 export const liveEnemyRefs = { current: [] };
 
-export const EnemyManager = ({ enemies, floors }) => {
+export const EnemyManager = ({ enemies, floors, playerRef }) => {
     const enemyRefs = useRef([]);
     const navigationRef = useRef(null);
+    const { scene } = useThree();
 
     // sync refs
     enemyRefs.current = enemies.map((_, i) => enemyRefs.current[i] ?? { current: null });
@@ -22,7 +28,7 @@ export const EnemyManager = ({ enemies, floors }) => {
         const blockableMeshes = getBlockableMeshes();
 
         if (!navigationRef.current && blockableMeshes.length) {
-            navigationRef.current = createNavigation(floors, blockableMeshes, () => soundEvents);
+            navigationRef.current = createNavigation(floors, blockableMeshes, () => soundEvents, playerRef);
         }
         if (!navigationRef.current) return;
 
@@ -35,6 +41,7 @@ export const EnemyManager = ({ enemies, floors }) => {
                 ref.current.position.set(x, y, z);
                 enemy._initialized = true;
             }
+            drawVisionConeDebug(enemy, ref, scene);
 
             navigationRef.current.updateEnemy(enemy, ref, delta);
         });

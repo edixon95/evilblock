@@ -1,37 +1,36 @@
 import * as THREE from "three";
 
 export const moveBehaviour = (ctx) => {
-    const { enemy, ref, ctrl, delta } = ctx;
+    const { ref, ctrl, enemy, delta } = ctx;
+    if (!ref.current || !ctrl.path || ctrl.targetIndex >= ctrl.path.length) return;
 
-    if (!ctrl.path || ctrl.targetIndex >= ctrl.path.length) return false;
+    const enemyPos = ref.current.position;
 
     const node = ctrl.path[ctrl.targetIndex];
-    const target = new THREE.Vector3(
-        node.x,
-        ref.current.position.y,
-        node.z
-    );
+    const nodePos = new THREE.Vector3(node.x, enemyPos.y, node.z);
 
-    const dir = target.clone().sub(ref.current.position);
-    const dist = dir.length();
+    const dir = nodePos.clone().sub(enemyPos);
+    const distance = dir.length();
 
-    if (dist < 0.05) {
+    const reachThreshold = 0.15;
+    if (distance < reachThreshold) {
         ctrl.targetIndex++;
-        return true;
+        return;
     }
 
-    dir.normalize();
-    ref.current.position.add(
-        dir.multiplyScalar(enemy.speed * delta)
-    );
+    const moveDir = dir.clone().normalize();
+    const speed = enemy.moveSpeed || 1;
+    enemyPos.add(moveDir.multiplyScalar(speed * delta));
 
-    const targetAngle = Math.atan2(dir.x, dir.z);
-    const deltaY =
-        ((targetAngle - ref.current.rotation.y + Math.PI) %
-            (2 * Math.PI)) -
-        Math.PI;
+    const targetDir = moveDir.clone();
 
-    ref.current.rotation.y += deltaY * 0.1;
-
-    return true;
+    targetDir.y = 0;
+    if (targetDir.lengthSq() > 0) {
+        targetDir.normalize();
+        const targetQuaternion = new THREE.Quaternion().setFromUnitVectors(
+            new THREE.Vector3(0, 0, 1),
+            targetDir
+        );
+        ref.current.quaternion.slerp(targetQuaternion, 0.1);
+    }
 };
