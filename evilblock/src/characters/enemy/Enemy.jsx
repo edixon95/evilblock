@@ -7,7 +7,7 @@ export const Enemy = forwardRef(({ enemy }, ref) => {
     return (
         <mesh
             ref={ref}
-            userData={{ enemyId: enemy.id }}
+            userData={enemy}
             castShadow
         >
             {/* COLLISION ONLY */}

@@ -1,0 +1,29 @@
+import { aimBehaviour } from "./behaviour/aimBehaviour";
+import { interactionBehaviour } from "./behaviour/interactionBehaviour";
+import { soundBehaviour } from "./behaviour/soundBehaviour";
+import { shootingBehaviour } from "./behaviour/shootingBehaviour";
+import { movementBehaviour } from "./behaviour/movementBehaviour";
+import { useGameStore } from "../../stores/useGameStore";
+
+let prevMenuPressed = false;
+
+export const updatePlayer = (ctx) => {
+    const { input, menuActive } = ctx;
+
+    if (input.menu && !prevMenuPressed) {
+        const state = useGameStore.getState();
+        if (!state.gameState.menu.active) {
+            state.handleOpenMenu("pause");
+        }
+    }
+    prevMenuPressed = input.menu;
+
+    // Stop gameplay while menu is active
+    if (menuActive) return;
+
+    aimBehaviour(ctx);
+    shootingBehaviour(ctx);
+    interactionBehaviour(ctx);
+    movementBehaviour(ctx);
+    soundBehaviour(ctx);
+};

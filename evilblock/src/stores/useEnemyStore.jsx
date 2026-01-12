@@ -5,7 +5,6 @@ export const useEnemyStore = create((set, get) => ({
     enemies: extractFromLevelTable("enemies"),
 
     resetEnemies: (level, room) => {
-        console.log(level, room)
         set((state) => {
             const floor = state.enemies[level];
             if (!floor) return {};
@@ -38,6 +37,47 @@ export const useEnemyStore = create((set, get) => ({
                     }
                 }
             };
+        });
+    },
+
+    damageEnemy: (target, damage, level, room) => {
+        if (!target || !target.userData?.id) return;
+        set((state) => {
+            const id = target.userData.id;
+            let updatedEnemies = { ...state.enemies };
+
+            const levelsToCheck = level ? [level] : Object.keys(state.enemies);
+
+            levelsToCheck.forEach(lvl => {
+                const floor = state.enemies[lvl];
+                if (!floor) return;
+
+                const roomsToCheck = room ? [room] : Object.keys(floor);
+
+                roomsToCheck.forEach(rm => {
+                    const roomEnemies = floor[rm];
+                    if (!roomEnemies) return;
+
+                    roomEnemies.forEach(enemy => {
+                        if (enemy.id === id) {
+                            if (enemy.health === undefined) enemy.health = enemy.maxHealth || 100;
+
+                            enemy.health -= damage;
+
+                            if (enemy.health <= 0) {
+                                enemy.isAlive = false;
+                            }
+                        }
+                    });
+
+                    updatedEnemies[lvl] = {
+                        ...floor,
+                        [rm]: roomEnemies
+                    };
+                });
+            });
+
+            return { enemies: updatedEnemies };
         });
     }
 }));
