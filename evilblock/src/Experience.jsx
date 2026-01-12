@@ -47,6 +47,8 @@ export const Experience = ({ playerRef }) => {
     const allDoors = useDoorStore((state) => state?.doors)
     const allEnemies = useEnemyStore((state) => state?.enemies)
     const allProps = usePropStore((state) => state?.props)
+    const fade = useGameStore((state) => state.gameState.fade)
+    console.log(fade)
 
     const allItems = useItemStore((state) => state?.items)
 
@@ -54,6 +56,7 @@ export const Experience = ({ playerRef }) => {
     const props = allProps[level][room]
     const doors = allDoors[level][room]
     const enemies = allEnemies[level][room]
+    console.log(enemies)
 
 
     const items = allItems[level][room]
@@ -70,28 +73,35 @@ export const Experience = ({ playerRef }) => {
             <Player playerRef={playerRef} />
             <SoundSpheres />
 
-            {shouldRender(floors) &&
+            {!fade &&
                 <>
-                    <FloorManager floors={floors} />
-                    <WallManager floors={floors} />
+                    {shouldRender(floors) &&
+                        <>
+                            <FloorManager floors={floors} />
+                            <WallManager floors={floors} />
+                        </>
+                    }
+
+
+                    {shouldRender(props) &&
+                        <PropManager props={props} />
+                    }
+
+                    {shouldRender(enemies) && shouldRender(floors) &&
+                        <EnemyManager key={`${level}-${room}`} enemies={enemies} floors={floors} playerRef={playerRef} />
+                    }
+
+                    {shouldRender(doors) &&
+                        <DoorManager doors={doors} />
+                    }
+
+                    {shouldRender(interacts) &&
+                        <InteractManager items={interacts} />
+                    }
                 </>
             }
 
-            {shouldRender(props) &&
-                <PropManager props={props} />
-            }
 
-            {shouldRender(enemies) && shouldRender(floors) && shouldRender(props) &&
-                <EnemyManager enemies={enemies} floors={floors} playerRef={playerRef} />
-            }
-
-            {shouldRender(doors) &&
-                <DoorManager doors={doors} />
-            }
-
-            {shouldRender(interacts) &&
-                <InteractManager items={interacts} />
-            }
         </>
     )
 }
