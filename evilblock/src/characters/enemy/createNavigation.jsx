@@ -6,6 +6,7 @@ import { wanderBehaviour } from "./behaviour/wanderBehaviour";
 import { moveBehaviour } from "./behaviour/moveBehaviour";
 import { playerVisionBehaviour } from "./behaviour/playerVisionBehaviour";
 import { playerChaseBehaviour } from "./behaviour/playerChaseBehaviour";
+import { attackBehaviour } from "./behaviour/attackBehaviour";
 
 const initController = {
     path: null,
@@ -55,8 +56,9 @@ export const createNavigation = (floors, blockableMeshes = [], getSoundEvents, p
         };
 
 
-        playerVisionBehaviour(ctx)
-        playerChaseBehaviour(ctx)
+        playerVisionBehaviour(ctx);
+        playerChaseBehaviour(ctx);
+        attackBehaviour(ctx);
         soundBehaviour(ctx);
         wanderBehaviour(ctx);
         moveBehaviour(ctx);

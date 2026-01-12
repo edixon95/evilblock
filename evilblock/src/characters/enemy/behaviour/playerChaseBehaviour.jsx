@@ -16,6 +16,13 @@ export const playerChaseBehaviour = (ctx) => {
     const distance = enemyPos.distanceTo(playerPos);
     const stopDistance = 0.6;
 
+    if (distance <= stopDistance + 0.5) {
+        ctrl.intent = "attacking";
+        ctrl.path = null;
+        ctrl.targetIndex = 0;
+        return;
+    }
+
     if (!enemy.seesPlayer) {
         ctrl.lostPlayerTimer += delta;
         const lostTime = 7;
@@ -30,11 +37,6 @@ export const playerChaseBehaviour = (ctx) => {
         ctrl.lostPlayerTimer = 0;
     }
 
-    if (distance <= stopDistance) {
-        ctrl.path = null;
-        ctrl.targetIndex = 0;
-        return;
-    }
 
     ctrl.chaseTimer += delta;
 
