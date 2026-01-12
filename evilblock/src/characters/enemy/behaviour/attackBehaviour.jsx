@@ -4,7 +4,7 @@ export const attackBehaviour = (ctx) => {
     const { enemy, ctrl, playerRef, ref, delta } = ctx;
 
     const upper = enemy._upperRef;
-    if (!playerRef?.current || !upper) return;
+    if (!playerRef?.current || !upper || (ctrl.intent !== "attacking" && ctrl.intent !== "player")) return
 
     const defaultForwardRot = Math.PI / 4;
     const defaultForwardZ = 0.2;
