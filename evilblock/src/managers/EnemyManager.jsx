@@ -41,9 +41,15 @@ export const EnemyManager = ({ enemies, floors, playerRef }) => {
                     ref.current.rotation.copy(enemy.rotation);
                 }
 
+                const visualGroup = ref.current.children[0];
+                enemy._upperRef = visualGroup.children[1];
+                enemy._lowerRef = visualGroup.children[0];
                 enemy._initialized = true;
             }
-            drawVisionConeDebug(enemy, ref, scene);
+            const debug = false;
+            if (debug) {
+                drawVisionConeDebug(enemy, ref, scene);
+            }
 
             enemy._despawnPos = ref.current.position;
             enemy._despawnRotation = ref.current.rotation;
