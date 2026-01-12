@@ -60,7 +60,7 @@ export const EnemyManager = ({ enemies, floors, playerRef }) => {
 
     return (
         <>
-            {enemies.map((enemy, i) => (
+            {enemies.filter((enemy) => enemy.isAlive).map((enemy, i) => (
                 <Enemy key={enemy.id} enemy={enemy} ref={enemyRefs.current[i]} />
             ))}
         </>

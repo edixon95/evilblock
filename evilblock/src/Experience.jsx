@@ -48,7 +48,6 @@ export const Experience = ({ playerRef }) => {
     const allEnemies = useEnemyStore((state) => state?.enemies)
     const allProps = usePropStore((state) => state?.props)
     const fade = useGameStore((state) => state.gameState.fade)
-    console.log(fade)
 
     const allItems = useItemStore((state) => state?.items)
 
@@ -56,7 +55,6 @@ export const Experience = ({ playerRef }) => {
     const props = allProps[level][room]
     const doors = allDoors[level][room]
     const enemies = allEnemies[level][room]
-    console.log(enemies)
 
 
     const items = allItems[level][room]

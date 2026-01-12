@@ -3,7 +3,6 @@ import { useGameStore } from "../../../stores/useGameStore";
 
 export const handleUseDoor = (door) => {
     // Handle other things here
-    console.log("Before", door)
     const doorInformation = door.extra;
     const { cutscene, lock } = doorInformation;
 
