@@ -24,8 +24,7 @@ const drawLine = (() => {
 
 
 export const drawVisionConeDebug = (enemy, ref, scene) => {
-    const debug = true;
-    if (!debug || !ref.current) return;
+    if (!ref.current) return;
 
     const origin = ref.current.position;
     const distance = enemy.visionDistance;

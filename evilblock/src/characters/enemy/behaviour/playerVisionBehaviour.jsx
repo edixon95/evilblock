@@ -29,13 +29,11 @@ export const playerVisionBehaviour = (ctx) => {
         return;
     }
 
-    // line of sight test
     if (!hasLineOfSight(enemyPos, playerPos, blockableMeshes)) {
         enemy.seesPlayer = false;
         return;
     }
 
-    // SUCCESS: enemy sees player
     ctrl.intent = "player";
-    enemy.seesPlayer = true; // <--- this is the key line
+    enemy.seesPlayer = true;
 };

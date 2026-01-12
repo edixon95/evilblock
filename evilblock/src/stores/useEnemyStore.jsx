@@ -14,6 +14,9 @@ export const useEnemyStore = create((set, get) => ({
             if (!roomEnemies) return {};
             roomEnemies.forEach(enemy => {
                 delete enemy.controller;
+                delete enemy._upperRef;
+                delete enemy._lowerRef;
+                delete enemy.seesPlayer;
                 delete enemy._initialized;
 
                 if (enemy._despawnPos) {
