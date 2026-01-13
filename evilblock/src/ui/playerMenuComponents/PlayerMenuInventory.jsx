@@ -4,6 +4,7 @@ import { PlayerMenuInventoryPrompt } from "./PlayerMenuInventoryPrompt";
 import { shouldFade } from "../uiHelper/shouldFade";
 import { canCombineItem } from "../uiHelper/canCombineItem";
 import { handleCombineItems } from "../actions/handleCombineItems";
+import { shouldDisplayEquip } from "../actions/handleEquipWeapon";
 
 export const PlayerMenuInventory = ({ focused, setFocus }) => {
     const inventory = useInventoryStore((state) => state.inventory);
@@ -98,7 +99,7 @@ export const PlayerMenuInventory = ({ focused, setFocus }) => {
                     const row = Math.floor(index / 4);
                     const col = index % 4;
                     const isSelected = focused && selection.row === row && selection.col === col;
-
+                    const isEquipped = shouldDisplayEquip(index)
                     return (
                         <div
                             key={index}
@@ -116,6 +117,22 @@ export const PlayerMenuInventory = ({ focused, setFocus }) => {
                             }}
                         >
                             {item ? item.name : "-"}
+                            {item && item?.data?.currentAmmo >= 0 &&
+                                <div style={{
+                                    position: "absolute",
+                                    bottom: 10,
+                                    width: "100%",
+                                    fontSize: 22,
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                }}>
+
+                                    <div style={{ paddingLeft: 20 }}>
+                                        {isEquipped && "Equipped"}
+                                    </div>
+                                    <div style={{ paddingRight: 20 }}>{item.data.currentAmmo} / {item.data.maximumAmmo}</div>
+                                </div>
+                            }
                         </div>
                     );
                 })}
@@ -124,6 +141,7 @@ export const PlayerMenuInventory = ({ focused, setFocus }) => {
             {promptOpen && selectedItem && (
                 <PlayerMenuInventoryPrompt
                     item={selectedItem}
+                    itemIndex={selection.row * cols + selection.col}
                     closePrompt={() => setPromptOpen(false)}
                     anchorRef={slotRefs.current[selection.row * cols + selection.col]}
                     onSelectCombine={() => {

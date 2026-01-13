@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import { liveEnemyRefs } from "../../../managers/EnemyManager";
 import { useEnemyStore } from "../../../stores/useEnemyStore";
+import { useInventoryStore } from "../../../stores/useInventoryStore";
 
 const raycaster = new THREE.Raycaster();
 const directionVector = new THREE.Vector3();
@@ -19,6 +20,12 @@ export const shootingBehaviour = ({ ctrl, input, ref, weaponInfo, delta, locatio
     if (weaponInfo.fireCooldown < 0) weaponInfo.fireCooldown = 0;
 
     if (!input.interact || weaponInfo.fireCooldown > 0) return;
+
+    if (useInventoryStore.getState().getEquippedInformation()?.data?.currentAmmo === 0) {
+        console.log("no ammo")
+        return
+    }
+    useInventoryStore.getState().tryShootWeapon()
 
     const target = getTargetEnemy(ref.current, weaponInfo);
     if (target) {

@@ -45,7 +45,7 @@ export const room_01 = {
         handleCreateItem([5, 0.15, 2], consumableConstants.REAGENT_B, '01_01_reagentb_03'),
         handleCreateItem([5, 0.15, 2], consumableConstants.REAGENT_R, '01_01_reagentr_03'),
         handleCreateItem([5, 0.15, 2], consumableConstants.REAGENT_Y, '01_01_reagenty_03'),
-        // handleCreateItem([2, 0.15, 2], weaponConstants.COLT, '01_01_colt_01'),
+        handleCreateItem([2, 0.15, 2], weaponConstants.COLT, '01_01_colt_01'),
         handleCreateItem([2, 0.15, 2], ammoConstants.HANDGUNAMMO, '01_01_handgunAmmo_01')
     ],
     cameras: []

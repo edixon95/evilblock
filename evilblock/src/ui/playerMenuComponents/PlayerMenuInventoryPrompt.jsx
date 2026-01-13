@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
+import { handleEquipWeapon, shouldDisplayEquip } from "../actions/handleEquipWeapon";
+import { useInventoryStore } from "../../stores/useInventoryStore";
 
-export const PlayerMenuInventoryPrompt = ({ item, closePrompt, anchorRef, onSelectCombine }) => {
+export const PlayerMenuInventoryPrompt = ({ item, itemIndex, closePrompt, anchorRef, onSelectCombine }) => {
     const [selectedOption, setSelectedOption] = useState(0);
     const [position, setPosition] = useState({ top: 0, left: 0 });
 
@@ -28,6 +30,11 @@ export const PlayerMenuInventoryPrompt = ({ item, closePrompt, anchorRef, onSele
             case " ":
                 const option = item.options[selectedOption];
                 switch (option.label) {
+                    case "Equip":
+                        console.log("Equip", item.name);
+                        handleEquipWeapon(itemIndex)
+                        closePrompt();
+                        break;
                     case "Use":
                         console.log("Using", item.name);
                         closePrompt();
@@ -51,6 +58,14 @@ export const PlayerMenuInventoryPrompt = ({ item, closePrompt, anchorRef, onSele
         window.addEventListener("keydown", handleKeyDown);
         return () => window.removeEventListener("keydown", handleKeyDown);
     });
+
+    const getPromptText = (label) => {
+        const isEquipped = useInventoryStore.getState().isWeaponEquipped(itemIndex)
+        if (isEquipped && label === "Equip")
+            return "Unequip"
+
+        return label
+    }
 
     return (
         <div
@@ -77,7 +92,7 @@ export const PlayerMenuInventoryPrompt = ({ item, closePrompt, anchorRef, onSele
                         textDecoration: selectedOption === i ? "underline" : "none",
                     }}
                 >
-                    {opt.label}
+                    {getPromptText(opt.label)}
                 </div>
             ))}
         </div>
