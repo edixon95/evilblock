@@ -14,6 +14,7 @@ import { EnemyManager } from "./managers/EnemyManager"
 import { usePropStore } from "./stores/usePropStore"
 import { PropManager } from "./managers/PropManager"
 import { SoundSpheres } from "./sound/SoundSphere"
+import { EnemyTarget } from "./ui/ui3d/EnemyTarget"
 
 export const Experience = ({ playerRef }) => {
     // Can see the updates
@@ -69,6 +70,7 @@ export const Experience = ({ playerRef }) => {
             <DevCam />
             <ambientLight intensity={1.2} />
             <Player playerRef={playerRef} />
+            <EnemyTarget playerRef={playerRef} />
             <SoundSpheres />
 
             {!fade &&
