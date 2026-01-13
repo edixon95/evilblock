@@ -31,7 +31,6 @@ export const PlayerMenuInventoryPrompt = ({ item, itemIndex, closePrompt, anchor
                 const option = item.options[selectedOption];
                 switch (option.label) {
                     case "Equip":
-                        console.log("Equip", item.name);
                         handleEquipWeapon(itemIndex)
                         closePrompt();
                         break;

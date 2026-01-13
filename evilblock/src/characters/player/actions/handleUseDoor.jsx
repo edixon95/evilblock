@@ -4,7 +4,7 @@ import { useGameStore } from "../../../stores/useGameStore";
 export const handleUseDoor = (door) => {
     // Handle other things here
     const doorInformation = door.extra;
-    const { cutscene, lock } = doorInformation;
+    const { cutscene, lock, prompt } = doorInformation;
 
     if (cutscene) {
         if (useCutsceneStore.getState().shouldCutscenePlay(cutscene)) {
@@ -15,9 +15,20 @@ export const handleUseDoor = (door) => {
         }
     }
 
-    if (lock.isLocked) {
+    if (lock.isLocked || prompt) {
+        handleInteractionPrompt(door, prompt)
         return
     }
 
     useGameStore.getState().handleAddData(door)
+}
+
+export const handleInteractionPrompt = (door, prompt) => {
+    const tempPrompt = {
+        door,
+        prompt,
+        type: "PROMPT"
+    }
+
+    useGameStore.getState().handleAddData(tempPrompt)
 }
