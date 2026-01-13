@@ -4,12 +4,13 @@ import { soundBehaviour } from "./behaviour/soundBehaviour";
 import { shootingBehaviour } from "./behaviour/shootingBehaviour";
 import { movementBehaviour } from "./behaviour/movementBehaviour";
 import { useGameStore } from "../../stores/useGameStore";
+import { stabilityBehaviour } from "./behaviour/stabilityBehaviour";
+import { aimTargetBehaviour } from "./behaviour/aimTargetBehaviour";
 
 let prevMenuPressed = false;
 
 export const updatePlayer = (ctx) => {
     const { input, menuActive } = ctx;
-
     if (input.menu && !prevMenuPressed) {
         const state = useGameStore.getState();
         if (!state.gameState.menu.active) {
@@ -22,6 +23,8 @@ export const updatePlayer = (ctx) => {
     if (menuActive) return;
 
     aimBehaviour(ctx);
+    stabilityBehaviour(ctx);
+    aimTargetBehaviour(ctx)
     shootingBehaviour(ctx);
     interactionBehaviour(ctx);
     movementBehaviour(ctx);

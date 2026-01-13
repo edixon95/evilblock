@@ -9,6 +9,7 @@ import { useGameStore } from "../../stores/useGameStore";
 import { initPlayerController } from "./controller";
 import { getPlayerInput } from "./input";
 import { updatePlayer } from "./updatePlayer";
+import { useInventoryStore } from "../../stores/useInventoryStore";
 
 export const Player = ({ playerRef }) => {
   const [, forceRender] = useState(false);
@@ -36,10 +37,6 @@ export const Player = ({ playerRef }) => {
       playerRef.current.controller = { ...initPlayerController };
     }
 
-    // TODO READ FROM STORE
-    if (!playerRef.current.weapon) {
-      playerRef.current.weapon = { range: 3, damage: 10, fireDelay: 0.3 };
-    }
 
     updateSounds(delta);
 
@@ -51,11 +48,18 @@ export const Player = ({ playerRef }) => {
       canMove,
       tryInteract,
       menuActive: useGameStore.getState().gameState.menu.active,
-      weaponInfo: playerRef.current.weapon,
+      weaponInfo: useInventoryStore.getState().getEquippedInformation()?.data,
       location: { level: game.level, room: game.room }
     };
 
     updatePlayer(ctx);
+
+    playerRef.current.focusedEnemy =
+      playerRef.current.controller?.focusedEnemy || null;
+
+    playerRef.current.aimStability =
+      playerRef.current.controller?.aimStability || 0;
+
 
     forceRender(v => !v);
   });

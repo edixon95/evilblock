@@ -13,7 +13,9 @@ export const colt = {
         damage: 10,
         maximumAmmo: 10,
         currentAmmo: 0,
-        delay: 3
+        fireDelay: 3,
+        stabilityTime: 5,
+        range: 10
     },
     examine: "This is a weapon, meow.",
     combine: {
