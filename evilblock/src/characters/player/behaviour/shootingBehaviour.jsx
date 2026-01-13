@@ -32,10 +32,10 @@ export const shootingBehaviour = ({ ctrl, input, ref, weaponInfo, delta, locatio
     const stability = ctrl.aimStability ?? 0;
     if (Math.random() > stability) {
         console.log("missed");
-        // todo add recoil stat on weapons
-        ctrl.aimStability *= 0.4;
+        ctrl.aimStability = Math.max(stability - weaponInfo.stabilityTime, stability * 0.5);
         return;
     }
+    ctrl.aimStability = Math.max(stability - weaponInfo.stabilityTime, stability * 0.5);
 
     const target = getTargetEnemy(ref.current, weaponInfo);
     if (target) {
