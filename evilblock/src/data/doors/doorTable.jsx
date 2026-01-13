@@ -8,6 +8,7 @@ import {
     DOOR_01,
     DOOR_02,
 } from "../../constants/floorConstants";
+import { handleCreatePrompt } from "../../tool/handleCreatePrompt";
 
 // TODO: Seperate into floors like the levels
 export const DOOR_TABLE = {
@@ -21,7 +22,8 @@ export const DOOR_TABLE = {
             type: 0,
             isLocked: false
         },
-        cutscene: "cutscene_01"
+        cutscene: "cutscene_01",
+        prompt: handleCreatePrompt("The door is open, enter?")
     },
     [DOOR_02]: {
         to: {

@@ -6,6 +6,7 @@ import { Experience } from './Experience';
 import "./index.css"
 import { TransitionManager } from './managers/TransitionManager';
 import { PlayerMenu } from './ui/PlayerMenu';
+import { IngamePromptMenu } from './ui/promptWindow/IngamePromptMenu';
 function App() {
   const playerRef = useRef()
 
@@ -19,6 +20,7 @@ function App() {
         <Experience playerRef={playerRef} />
       </Canvas>
       <TransitionManager playerRef={playerRef} />
+      <IngamePromptMenu />
       <PlayerMenu />
     </div>
   )
