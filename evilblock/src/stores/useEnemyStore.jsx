@@ -11,6 +11,7 @@ export const useEnemyStore = create((set, get) => ({
 
             const roomEnemies = floor[room];
             if (!roomEnemies) return {};
+            console.log("saving", roomEnemies)
             roomEnemies.forEach(enemy => {
                 delete enemy.controller;
                 delete enemy._upperRef;

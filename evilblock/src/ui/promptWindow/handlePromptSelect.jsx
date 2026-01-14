@@ -2,7 +2,6 @@ import { USE } from "../../data/interact/interactConstants";
 import { useGameStore } from "../../stores/useGameStore";
 
 const handleDoor = (door) => {
-    console.log(door)
     if (door.extra.lock.isLocked) {
         const data = {
             target: door,

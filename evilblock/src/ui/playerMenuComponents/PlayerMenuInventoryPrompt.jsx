@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { handleEquipWeapon, shouldDisplayEquip } from "../actions/handleEquipWeapon";
 import { useInventoryStore } from "../../stores/useInventoryStore";
 import { useGameStore } from "../../stores/useGameStore";
+import { handleUseItemOnTarget } from "../actions/handleUseItemOnTarget";
 
 export const PlayerMenuInventoryPrompt = ({ item, itemIndex, closePrompt, anchorRef, onSelectCombine }) => {
     const [selectedOption, setSelectedOption] = useState(0);
@@ -43,7 +44,8 @@ export const PlayerMenuInventoryPrompt = ({ item, itemIndex, closePrompt, anchor
                         break;
                     case "Use":
                         if (gameState.menu.menuType === "pause:inventory") {
-                            console.log("Use item on target", item)
+                            handleUseItemOnTarget(item, itemIndex)
+                            closePrompt();
                         } else {
                             console.log("Using", item.name);
                             closePrompt();
