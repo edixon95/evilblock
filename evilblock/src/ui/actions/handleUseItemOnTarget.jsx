@@ -19,9 +19,17 @@ export const handleUseItemOnTarget = (item, inventoryIdx) => {
 
             // Get most up to date room since we just changed it and it has to run through the prompt window again
             const door = useDoorStore.getState().handleGetDoorData(level, room, data.target.id)
+
+            // Override the text just this once
+            const editedText = `You used the ${item.name} on the door.`
+            const copyPrompt = {
+                ...door.extra.success,
+                text: `${editedText} ${door.extra.success.text}`,
+            }
+
             const tempPrompt = {
                 door: door,
-                prompt: door.extra.success,
+                prompt: copyPrompt,
                 type: "PROMPT"
             }
 

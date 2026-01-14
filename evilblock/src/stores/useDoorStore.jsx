@@ -37,6 +37,32 @@ export const useDoorStore = create((set, get) => ({
                 },
             }
         })
+    },
+
+    handeDoorSeen: (level, room, id) => {
+        set((state) => {
+            const updatedRoomDoors = state.doors[level][room].map((door) =>
+                door.id === id
+                    ? {
+                        ...door,
+                        extra: {
+                            ...door.extra,
+                            isSeen: true,
+                        },
+                    }
+                    : door
+            )
+
+            return {
+                doors: {
+                    ...state.doors,
+                    [level]: {
+                        ...state.doors[level],
+                        [room]: updatedRoomDoors,
+                    },
+                },
+            }
+        })
     }
 
 

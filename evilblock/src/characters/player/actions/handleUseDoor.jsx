@@ -1,4 +1,5 @@
 import { useCutsceneStore } from "../../../stores/useCutsceneStore";
+import { useDoorStore } from "../../../stores/useDoorStore";
 import { useGameStore } from "../../../stores/useGameStore";
 
 export const handleUseDoor = (door) => {
@@ -26,7 +27,7 @@ export const handleUseDoor = (door) => {
 export const handleInteractionPrompt = (door) => {
     // If the text always show or hasn't been seen
     // Notes on how this works in doorsTable.jsx
-    if (door.extra.alwaysShow || !door.extra.isSeen) {
+    if (door.extra.alwaysShow || !door.extra.isSeen || door.extra.lock.isLocked) {
         // Use the correct prompt
         const promptToShow = door.extra.lock.isLocked ? door.extra.prompt : door.extra.success
         const tempPrompt = {
@@ -35,7 +36,9 @@ export const handleInteractionPrompt = (door) => {
             type: "PROMPT"
         }
 
-        useGameStore.getState().handleAddData(tempPrompt)
+        const { level, room } = useGameStore.getState().gameState.game
+        useDoorStore.getState().handeDoorSeen(level, room, door.id);
+        useGameStore.getState().handleAddData(tempPrompt);
         return
     }
     // If the door isn't locked, has a prompt, but the prompt has been seen, just use the door normally
