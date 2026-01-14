@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useGameStore } from "../stores/useGameStore";
 import { INVENTORY } from "./menuConstants";
 import { PlayerMenuInventory } from "./playerMenuComponents/PlayerMenuInventory";
@@ -32,6 +32,26 @@ export const PlayerMenu = () => {
             focused,
         }));
     };
+
+    useEffect(() => {
+        if (gameState.menu.active && gameState.menu.menuType === "pause:inventory") {
+            setMenuType((prev) => ({
+                ...prev,
+                menu: INVENTORY,
+                focused: true
+            }));
+        }
+    }, [gameState.menu.menuType])
+
+    useEffect(() => {
+        if (!gameState.menu.active) {
+            setMenuType((prev) => ({
+                ...prev,
+                menu: menuOptions[0], // Maybe this one gets removed?
+                focused: false
+            }));
+        }
+    }, [gameState.menu.menuType])
 
     if (!gameState.menu.active) return null;
     return (

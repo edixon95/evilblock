@@ -1,4 +1,5 @@
 import { useGameStore } from "../../stores/useGameStore";
+import { handlePromptSelect } from "./handlePromptSelect";
 
 /*
 TODO: Hookup keyboard controls
@@ -14,11 +15,11 @@ export const IngamePromptMenu = () => {
     const data = useGameStore((state) => state.gameState?.data);
 
     if (!data || data?.type !== "PROMPT") return;
-    const { options, text, type } = data.prompt
+    const { options, text } = data.prompt
 
     const handlePrompt = (fn) => {
         if (fn === "confirm") {
-            useGameStore.getState().handleAddData(data.door)
+            handlePromptSelect(data)
         } else {
             useGameStore.getState().handleClearData()
         }
