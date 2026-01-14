@@ -33,7 +33,7 @@ export const EnemyManager = ({ enemies, floors, playerRef }) => {
         enemies.forEach((enemy, i) => {
             const ref = enemyRefs.current[i];
             if (!ref?.current || !enemy.isAlive) return;
-            if (!enemy._initialized) {
+            if (!ref.current._initialized) {
                 const [x, y, z] = enemy.position;
                 ref.current.position.set(x, y, z);
 
@@ -44,7 +44,7 @@ export const EnemyManager = ({ enemies, floors, playerRef }) => {
                 const visualGroup = ref.current.children[0];
                 enemy._upperRef = visualGroup.children[1];
                 enemy._lowerRef = visualGroup.children[0];
-                enemy._initialized = true;
+                ref.current._initialized = true; // Keep this off the actual enemy
             }
             const debug = false;
             if (debug) {
@@ -53,7 +53,6 @@ export const EnemyManager = ({ enemies, floors, playerRef }) => {
 
             enemy._despawnPos = ref.current.position;
             enemy._despawnRotation = ref.current.rotation;
-
             navigationRef.current.updateEnemy(enemy, ref, delta);
         });
     });

@@ -47,7 +47,7 @@ export const Player = ({ playerRef }) => {
       input: getPlayerInput(),
       canMove,
       tryInteract,
-      menuActive: useGameStore.getState().gameState.menu.active,
+      menuActive: useGameStore.getState().gameState.menu.active || useGameStore.getState().gameState.data !== null,
       weaponInfo: useInventoryStore.getState().getEquippedInformation()?.data,
       location: { level: game.level, room: game.room }
     };

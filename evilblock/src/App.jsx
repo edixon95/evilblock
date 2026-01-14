@@ -9,7 +9,6 @@ import { PlayerMenu } from './ui/PlayerMenu';
 import { IngamePromptMenu } from './ui/promptWindow/IngamePromptMenu';
 function App() {
   const playerRef = useRef()
-
   return (
     <div className="fullscreen-canvas">
       <Canvas

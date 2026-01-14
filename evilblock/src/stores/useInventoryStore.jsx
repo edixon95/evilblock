@@ -28,6 +28,14 @@ export const useInventoryStore = create((set, get) => ({
         return false;
     },
 
+    tryRemoveInventory: (index) => {
+        const { inventory } = get();
+
+        const newInventory = [...inventory]
+        newInventory[index] = null;
+        set({ inventory: newInventory })
+    },
+
     tryCraftByIndex: (itemAIndex, itemBIndex, reward) => {
         const { inventory } = get()
         const newInventory = [...inventory];
