@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { useGameStore } from "../../stores/useGameStore";
 import { handlePromptSelect } from "./handlePromptSelect";
 
@@ -13,18 +14,52 @@ Types:
 
 export const IngamePromptMenu = () => {
     const data = useGameStore((state) => state.gameState?.data);
+    const [index, setIndex] = useState(0)
 
-    if (!data || data?.type !== "PROMPT") return;
-    const { options, text } = data.prompt
+    const { options = [], text = "" } = data?.prompt ?? {};
+    const optionCount = options.length;
+
 
     const handlePrompt = (fn) => {
         if (fn === "confirm") {
             handlePromptSelect(data)
         } else {
-            useGameStore.getState().handleClearData()
+            useGameStore.getState().handleClearData();
         }
 
     }
+
+    const handleKeyDown = (e) => {
+        if (data?.type !== "PROMPT") return;
+
+        switch (e.key.toLowerCase()) {
+            case "w":
+                setIndex((prev) => (prev - 1 + optionCount) % optionCount);
+                break;
+
+            case "s":
+                setIndex((prev) => (prev + 1) % optionCount);
+                break;
+
+            case "f":
+                useGameStore.getState().handleClearData();
+                break;
+
+            case " ":
+                handlePrompt(options[index].function);
+                break;
+
+            default:
+                break;
+        }
+    };
+
+    useEffect(() => {
+        window.addEventListener("keydown", handleKeyDown);
+        return () => window.removeEventListener("keydown", handleKeyDown);
+    });
+
+    if (!data || data?.type !== "PROMPT") return;
 
     return (
         <div
@@ -80,8 +115,12 @@ export const IngamePromptMenu = () => {
                     {options && options.length > 0 &&
                         options.map((op, i) => {
                             return (
-                                <div key={`option-${i}`}
-                                    onClick={() => handlePrompt(op.function)}
+                                <div
+                                    key={`option-${i}`}
+                                    style={{
+                                        opacity: i === index ? 1 : 0.5,
+                                        fontWeight: i === index ? "bold" : "normal",
+                                    }}
                                 >{op.optionText}</div>
                             )
                         })

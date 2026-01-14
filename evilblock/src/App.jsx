@@ -7,14 +7,19 @@ import "./index.css"
 import { TransitionManager } from './managers/TransitionManager';
 import { PlayerMenu } from './ui/PlayerMenu';
 import { IngamePromptMenu } from './ui/promptWindow/IngamePromptMenu';
+import { useGameStore } from './stores/useGameStore';
 function App() {
   const playerRef = useRef()
+
+  const gameState = useGameStore((state) => state.gameState)
+  const shouldPause = gameState.data !== null || gameState.fade || gameState.menu.active
+
   return (
     <div className="fullscreen-canvas">
       <Canvas
         camera={{ fov: 75 }}
         shadows
-      // frameloop={isDevCam ? "always" : pauseGame ? "demand" : "always"}
+        frameloop={shouldPause ? "demand" : "always"}
       >
         <Experience playerRef={playerRef} />
       </Canvas>
