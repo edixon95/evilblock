@@ -1,10 +1,16 @@
 import { useEffect, useState } from "react";
 import { handleEquipWeapon, shouldDisplayEquip } from "../actions/handleEquipWeapon";
 import { useInventoryStore } from "../../stores/useInventoryStore";
+import { useGameStore } from "../../stores/useGameStore";
 
 export const PlayerMenuInventoryPrompt = ({ item, itemIndex, closePrompt, anchorRef, onSelectCombine }) => {
     const [selectedOption, setSelectedOption] = useState(0);
     const [position, setPosition] = useState({ top: 0, left: 0 });
+    const gameState = useGameStore((state) => state.gameState);
+    const inventoryInteractOptions = [
+        { label: "Use" },
+        { label: "Examine" }
+    ]
 
     useEffect(() => {
         if (anchorRef) {
@@ -28,15 +34,20 @@ export const PlayerMenuInventoryPrompt = ({ item, itemIndex, closePrompt, anchor
                 setSelectedOption((prev) => (prev + 1) % item.options.length);
                 break;
             case " ":
-                const option = item.options[selectedOption];
+                const useOption = gameState.menu.menuType === "pause:inventory" ? inventoryInteractOptions : item.options
+                const option = useOption[selectedOption];
                 switch (option.label) {
                     case "Equip":
                         handleEquipWeapon(itemIndex)
                         closePrompt();
                         break;
                     case "Use":
-                        console.log("Using", item.name);
-                        closePrompt();
+                        if (gameState.menu.menuType === "pause:inventory") {
+                            console.log("Use item on target", item)
+                        } else {
+                            console.log("Using", item.name);
+                            closePrompt();
+                        }
                         break;
                     case "Combine":
                         onSelectCombine();
@@ -83,17 +94,32 @@ export const PlayerMenuInventoryPrompt = ({ item, itemIndex, closePrompt, anchor
                 minWidth: "120px",
             }}
         >
-            {item.options.map((opt, i) => (
-                <div
-                    key={i}
-                    style={{
-                        fontWeight: selectedOption === i ? "bold" : "normal",
-                        textDecoration: selectedOption === i ? "underline" : "none",
-                    }}
-                >
-                    {getPromptText(opt.label)}
-                </div>
-            ))}
+            {gameState.menu.menuType !== "pause:inventory" ?
+                item.options.map((opt, i) => (
+                    <div
+                        key={i}
+                        style={{
+                            fontWeight: selectedOption === i ? "bold" : "normal",
+                            textDecoration: selectedOption === i ? "underline" : "none",
+                        }}
+                    >
+                        {getPromptText(opt.label)}
+                    </div>
+                ))
+                :
+                inventoryInteractOptions.map((opt, i) => (
+                    <div
+                        key={i}
+                        style={{
+                            fontWeight: selectedOption === i ? "bold" : "normal",
+                            textDecoration: selectedOption === i ? "underline" : "none",
+                        }}
+                    >
+                        {opt.label}
+                    </div>
+                ))
+            }
+
         </div>
     );
 };

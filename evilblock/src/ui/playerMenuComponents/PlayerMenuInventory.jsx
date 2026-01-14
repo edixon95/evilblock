@@ -5,9 +5,12 @@ import { shouldFade } from "../uiHelper/shouldFade";
 import { canCombineItem } from "../uiHelper/canCombineItem";
 import { handleCombineItems } from "../actions/handleCombineItems";
 import { shouldDisplayEquip } from "../actions/handleEquipWeapon";
+import { useGameStore } from "../../stores/useGameStore";
 
 export const PlayerMenuInventory = ({ focused, setFocus }) => {
     const inventory = useInventoryStore((state) => state.inventory);
+    const gameState = useGameStore((state) => state.gameState);
+
     const [selection, setSelection] = useState({ row: 0, col: 0 });
     const [promptOpen, setPromptOpen] = useState(false);
     const [combineTarget, setCombineTarget] = useState(null);
@@ -70,7 +73,12 @@ export const PlayerMenuInventory = ({ focused, setFocus }) => {
                     if (currentItem) setPromptOpen(true);
                     break;
                 case "f":
-                    setFocus(false);
+                    if (gameState.menu.menuType === "pause:inventory") {
+                        console.log("Should close from Inventory")
+                        useGameStore.getState().handleCloseMenu();
+                    } else {
+                        setFocus(false);
+                    }
                     break;
             }
         }

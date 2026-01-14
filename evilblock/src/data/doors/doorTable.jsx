@@ -20,7 +20,7 @@ export const DOOR_TABLE = {
         },
         lock: {
             type: 0,
-            isLocked: false
+            isLocked: true
         },
         cutscene: "cutscene_01",
         prompt: handleCreatePrompt("The door is open, enter?")
