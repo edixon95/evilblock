@@ -41,7 +41,7 @@ export const DOOR_TABLE = {
         cutscene: "cutscene_01",
         prompt: handleCreatePrompt("The door is locked, use an item?"),
         success: handleCreatePrompt("The door is unlocked, it doesn't feel right in there", "CONFIRMATION", "Enter", "Back"),
-        alwaysShow: false,
+        alwaysShow: true,
         isSeen: false
     },
     [DOOR_02]: {

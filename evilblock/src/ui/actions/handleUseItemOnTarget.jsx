@@ -28,9 +28,10 @@ export const handleUseItemOnTarget = (item, inventoryIdx) => {
             }
 
             const tempPrompt = {
-                door: door,
+                item: door,
                 prompt: copyPrompt,
-                type: "PROMPT"
+                type: "PROMPT",
+                itemType: DOOR
             }
 
             useGameStore.getState().handleAddData(tempPrompt)

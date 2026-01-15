@@ -1,3 +1,4 @@
+import { DOOR } from "../../../constants/doorConstants";
 import { useCutsceneStore } from "../../../stores/useCutsceneStore";
 import { useDoorStore } from "../../../stores/useDoorStore";
 import { useGameStore } from "../../../stores/useGameStore";
@@ -31,9 +32,10 @@ export const handleInteractionPrompt = (door) => {
         // Use the correct prompt
         const promptToShow = door.extra.lock.isLocked ? door.extra.prompt : door.extra.success
         const tempPrompt = {
-            door,
+            item: door,
             prompt: promptToShow,
-            type: "PROMPT"
+            type: "PROMPT",
+            itemType: DOOR
         }
 
         const { level, room } = useGameStore.getState().gameState.game
