@@ -12,6 +12,7 @@ export const KEY = "KEY"
 export const MATERIAL = "MATERIAL"
 export const CURRENCY = "CURRENCY"
 export const OTHER = "OTHER"
+export const PROP = "PROP"
 
 // internal actions
 export const HEAL = "HEAL"

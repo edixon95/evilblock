@@ -1,4 +1,5 @@
-import { CONSUMABLE, WEAPON, NOTE, MAP, KEY, MATERIAL, CURRENCY, OTHER, AMMO } from "../../../data/interact/interactConstants";
+import { CONSUMABLE, WEAPON, NOTE, MAP, KEY, MATERIAL, CURRENCY, OTHER, AMMO, PROP } from "../../../data/interact/interactConstants";
+import { handlePropInteract } from "./subTask/handlePropInteract";
 import { tryPickupItem, tryPickupWeapon } from "./subTask/tryPickupItem"
 
 // TODO: add middle screen for newly picked up items
@@ -35,6 +36,10 @@ export const handleUserOther = (item) => {
 
         case CURRENCY:
             // Should be straight to inventory, does not require space
+            break;
+
+        case PROP:
+            handlePropInteract(item)
             break;
 
         case OTHER:
