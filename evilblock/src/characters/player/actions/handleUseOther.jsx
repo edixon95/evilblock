@@ -1,10 +1,12 @@
 import { CONSUMABLE, WEAPON, NOTE, MAP, KEY, MATERIAL, CURRENCY, OTHER, AMMO } from "../../../data/interact/interactConstants";
-import { tryPickupItem, tryPickupWepon } from "./subTask/tryPickupItem"
+import { tryPickupItem, tryPickupWeapon } from "./subTask/tryPickupItem"
 
+// TODO: add middle screen for newly picked up items
+// TODO: add props with descriptions, perhaps that's the "other"?
 export const handleUserOther = (item) => {
     switch (item.userData.subType) {
         case WEAPON:
-            tryPickupWepon(item)
+            tryPickupWeapon(item)
             break;
 
         case CONSUMABLE:

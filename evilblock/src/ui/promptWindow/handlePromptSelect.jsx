@@ -1,3 +1,4 @@
+import { DOOR } from "../../constants/doorConstants";
 import { USE } from "../../data/interact/interactConstants";
 import { useGameStore } from "../../stores/useGameStore";
 
@@ -16,7 +17,7 @@ const handleDoor = (door) => {
 }
 
 export const handlePromptSelect = (data) => {
-    if (data?.door) {
-        handleDoor(data.door)
+    if (data?.itemType === DOOR) {
+        handleDoor(data.item)
     }
 }
