@@ -3,6 +3,7 @@ import { DOOR } from "../../constants/doorConstants";
 import { handleUseDoor } from "./actions/handleUseDoor";
 import { interactMeshes } from "../../managers/InteractManager";
 import { handleUserOther } from "./actions/handleUseOther";
+import { propMeshes } from "../../managers/PropManager";
 
 const interactionRaycaster = new THREE.Raycaster();
 const interactionDirection = new THREE.Vector3();
@@ -35,7 +36,7 @@ const tryFindDoor = (player, origin) => {
 }
 
 const tryFindOther = (player, origin) => {
-    const meshes = [...interactMeshes]
+    const meshes = [...interactMeshes, ...propMeshes]
         .map(ref => ref.current)
         .filter(Boolean);
     let hitItem = null;

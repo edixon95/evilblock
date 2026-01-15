@@ -76,3 +76,7 @@ export const ITEM_TABLE = {
     // Ammo
     handgunAmmo
 };
+
+export const getItem = (item) => {
+    return ITEM_TABLE[item]
+}

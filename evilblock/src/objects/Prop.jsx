@@ -5,6 +5,7 @@ export const Prop = ({ prop, ref }) => {
             position={prop.position}
             castShadow
             receiveShadow
+            userData={prop.extra}
         >
             <boxGeometry args={prop.size} />
             <meshStandardMaterial color="green" />
