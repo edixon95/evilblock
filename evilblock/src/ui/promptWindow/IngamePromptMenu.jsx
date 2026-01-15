@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useGameStore } from "../../stores/useGameStore";
 import { handlePromptSelect } from "./handlePromptSelect";
+import "../css/ingamePromptMenu.css"
 
 /*
 TODO: Hookup keyboard controls
@@ -62,56 +63,13 @@ export const IngamePromptMenu = () => {
     if (!data || data?.type !== "PROMPT") return;
 
     return (
-        <div
-            style={{
-                position: "absolute",
-                width: "100%",
-                bottom: 0,
-                left: 0,
-                backgroundColor: "red",
-                height: "30%",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center"
-            }}
-        >
-            <div
-                style={{
-                    height: "80%",
-                    width: "50%",
-                    backgroundColor: "green",
-                    display: "flex",
-                    justifyContent: "space-between",
-                    boxSizing: "border-box"
-                }}
-            >
-                <div
-                    style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "stretch",
-                        flexDirection: "column",
-                        fontSize: 33,
-                        backgroundColor: "orange",
-                        width: "80%",
-                        padding: 25,
-                        boxSizing: "border-box"
-                    }}
-                >
+        <div id="ingame-prompt-menu-main">
+            <div>
+                <div id="ingame-prompt-text">
                     {text}
                 </div>
 
-                <div
-                    style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "stretch",
-                        backgroundColor: "yellow",
-                        flexDirection: "column",
-                        gap: "25%",
-                        fontSize: 33
-                    }}
-                >
+                <div id="ingame-prompt-options">
                     {options && options.length > 0 &&
                         options.map((op, i) => {
                             return (

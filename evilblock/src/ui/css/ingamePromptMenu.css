@@ -1,0 +1,42 @@
+#ingame-prompt-menu-main{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: red;
+}
+
+#ingame-prompt-menu-main > div{
+    height: 80%;
+    width: 50%;
+    background-color: green;
+    display: flex;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+
+#ingame-prompt-text {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    flex-direction: column;
+    font-size: 33px;
+    background-color: orange;
+    width: 80%;
+    padding: 25px;
+    box-sizing: border-box;
+}
+
+#ingame-prompt-options{
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    background-color: yellow;
+    flex-direction: column;
+    gap: 25%;
+    font-size: 33px;
+}

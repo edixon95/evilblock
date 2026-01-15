@@ -7,6 +7,8 @@ import { handleCombineItems } from "../actions/handleCombineItems";
 import { shouldDisplayEquip } from "../actions/handleEquipWeapon";
 import { useGameStore } from "../../stores/useGameStore";
 
+import "../css/playerMenuInventory.css"
+
 export const PlayerMenuInventory = ({ focused, setFocus }) => {
     const inventory = useInventoryStore((state) => state.inventory);
     const gameState = useGameStore((state) => state.gameState);
@@ -92,17 +94,8 @@ export const PlayerMenuInventory = ({ focused, setFocus }) => {
     const selectedItem = inventory[selection.row * cols + selection.col] || null;
 
     return (
-        <div style={{ position: "relative", width: "100%", height: "100%" }}>
-            <div
-                style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(4, 1fr)",
-                    gridTemplateRows: "repeat(3, 1fr)",
-                    gap: "8px",
-                    width: "100%",
-                    height: "100%",
-                }}
-            >
+        <div id="playermenu-inventory-main">
+            <div id="playermenu-inventory-grid">
                 {inventory.map((item, index) => {
                     const row = Math.floor(index / 4);
                     const col = index % 4;
@@ -113,27 +106,14 @@ export const PlayerMenuInventory = ({ focused, setFocus }) => {
                             key={index}
                             ref={(el) => (slotRefs.current[index] = el)}
                             style={{
-                                border: "1px solid #ccc",
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
                                 backgroundColor: isSelected ? "#ff0" : "#f9f9f9",
-                                fontWeight: "bold",
-                                position: "relative",
                                 opacity: !isSelected && shouldFade(combineTarget, index, item, inventory) ? 0.1 : 1,
-                                transition: "opacity 0.3s ease"
                             }}
+                            className="playermenu-inventory-item"
                         >
                             {item ? item.name : "-"}
                             {item && item?.data?.currentAmmo >= 0 &&
-                                <div style={{
-                                    position: "absolute",
-                                    bottom: 10,
-                                    width: "100%",
-                                    fontSize: 22,
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                }}>
+                                <div className="playermenu-inventory-information">
 
                                     <div style={{ paddingLeft: 20 }}>
                                         {isEquipped && "Equipped"}
