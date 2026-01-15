@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useGameStore } from "../../stores/useGameStore";
 
+import "../css/playerMenuMenuOption.css"
+
 export const PlayerMenuMenuOption = ({ menuOptions, moveSelection, setFocus, focused }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -28,14 +30,7 @@ export const PlayerMenuMenuOption = ({ menuOptions, moveSelection, setFocus, foc
     });
 
     return (
-        <div
-            style={{
-                display: "flex",
-                justifyContent: "space-around",
-                height: "100%",
-                alignItems: "center",
-            }}
-        >
+        <div id="playermenu-menuoption-main">
             {menuOptions.map((op, i) => (
                 <div
                     key={op}

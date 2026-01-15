@@ -1,0 +1,6 @@
+#playermenu-menuoption-main{
+    display: flex;
+    justify-content: space-around;
+    height: 100%;
+    align-items: center;
+}

@@ -4,6 +4,8 @@ import { INVENTORY } from "./menuConstants";
 import { PlayerMenuInventory } from "./playerMenuComponents/PlayerMenuInventory";
 import { PlayerMenuMenuOption } from "./playerMenuComponents/PlayerMenuMenuOption";
 
+import "./css/playerMenu.css"
+
 export const PlayerMenu = () => {
     const gameState = useGameStore((state) => state.gameState);
 
@@ -55,33 +57,11 @@ export const PlayerMenu = () => {
 
     if (!gameState.menu.active) return null;
     return (
-        <div
-            style={{
-                backgroundColor: "red",
-                position: "absolute",
-                width: "100%",
-                height: "100%",
-                top: 0,
-                left: 0,
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                padding: 10,
-                gap: "1%",
-                boxSizing: "border-box",
-            }}
+        <div id="playermenu-main"
         >
-            <div
-                style={{
-                    backgroundColor: "orange",
-                    width: "100%",
-                    height: "18%",
-                    display: "flex",
-                    gap: "1%",
-                }}
-            >
-                <div style={{ flex: 1, backgroundColor: "yellow" }}>Player information</div>
-                <div style={{ flex: 1, backgroundColor: "green" }}>
+            <div>
+                <div id="information-box">Player information</div>
+                <div id="options-box">
                     <PlayerMenuMenuOption
                         menuOptions={menuOptions}
                         moveSelection={moveSelection}
@@ -91,7 +71,7 @@ export const PlayerMenu = () => {
                 </div>
             </div>
 
-            <div style={{ backgroundColor: "green", flex: 1 }}>
+            <div id="menu-viewsection">
                 {menuType.menu === INVENTORY && (
                     <PlayerMenuInventory
                         focused={menuType.focused}

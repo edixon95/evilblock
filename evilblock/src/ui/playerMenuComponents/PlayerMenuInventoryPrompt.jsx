@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
-import { handleEquipWeapon, shouldDisplayEquip } from "../actions/handleEquipWeapon";
+import { handleEquipWeapon } from "../actions/handleEquipWeapon";
 import { useInventoryStore } from "../../stores/useInventoryStore";
 import { useGameStore } from "../../stores/useGameStore";
 import { handleUseItemOnTarget } from "../actions/handleUseItemOnTarget";
+
+import "../css/playerMenuInventoryPrompt.css"
 
 export const PlayerMenuInventoryPrompt = ({ item, itemIndex, closePrompt, anchorRef, onSelectCombine }) => {
     const [selectedOption, setSelectedOption] = useState(0);
@@ -82,19 +84,10 @@ export const PlayerMenuInventoryPrompt = ({ item, itemIndex, closePrompt, anchor
     return (
         <div
             style={{
-                position: "absolute",
                 top: position.top,
                 left: position.left,
-                backgroundColor: "#222",
-                color: "#fff",
-                border: "2px solid #fff",
-                padding: "8px",
-                display: "flex",
-                flexDirection: "column",
-                gap: "4px",
-                zIndex: 10,
-                minWidth: "120px",
             }}
+            id="playermenu-inventory-prompt-main"
         >
             {gameState.menu.menuType !== "pause:inventory" ?
                 item.options.map((opt, i) => (
