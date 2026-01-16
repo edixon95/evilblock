@@ -15,6 +15,8 @@ import { usePropStore } from "./stores/usePropStore"
 import { PropManager } from "./managers/PropManager"
 import { SoundSpheres } from "./sound/SoundSphere"
 import { EnemyTarget } from "./ui/ui3d/EnemyTarget"
+import { useCameraStore } from "./stores/useCameraStore"
+import { CameraManager } from "./managers/CameraManager"
 
 export const Experience = ({ playerRef }) => {
     // Can see the updates
@@ -43,11 +45,12 @@ export const Experience = ({ playerRef }) => {
     //     items: [],
     //     cameras: []
 
-    const { level, room } = useGameStore((state) => state.gameState.game)
+    const { level, room, region } = useGameStore((state) => state.gameState.game)
     const allWorlds = useWorldStore((state) => state?.world)
     const allDoors = useDoorStore((state) => state?.doors)
     const allEnemies = useEnemyStore((state) => state?.enemies)
     const allProps = usePropStore((state) => state?.props)
+    const allCameras = useCameraStore((state) => state?.cameras)
     const fade = useGameStore((state) => state.gameState.fade)
 
     const allItems = useItemStore((state) => state?.items)
@@ -56,6 +59,7 @@ export const Experience = ({ playerRef }) => {
     const props = allProps[level][room]
     const doors = allDoors[level][room]
     const enemies = allEnemies[level][room]
+    const cameras = allCameras[level][room]
 
 
     const items = allItems[level][room]
@@ -65,13 +69,19 @@ export const Experience = ({ playerRef }) => {
         return array && array.length > 0
     }
 
+    const isDev = false
+
     return (
         <>
-            <DevCam />
+            {isDev && <DevCam />}
             <ambientLight intensity={1.2} />
             <Player playerRef={playerRef} />
             <EnemyTarget playerRef={playerRef} />
             <SoundSpheres />
+
+            {shouldRender(cameras) &&
+                <CameraManager playerRef={playerRef} cameras={cameras} region={region} isDev={isDev} />
+            }
 
             {!fade &&
                 <>

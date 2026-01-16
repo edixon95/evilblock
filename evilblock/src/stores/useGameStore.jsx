@@ -9,7 +9,8 @@ export const useGameStore = create((set, get) => ({
             character: "Ben Lock",
             difficulty: 1,
             level: FLOOR_00,
-            room: ROOM_00
+            room: ROOM_00,
+            region: ""
         },
         cutscene: null,
         menu: {
@@ -81,6 +82,17 @@ export const useGameStore = create((set, get) => ({
                 game: {
                     ...state.gameState.game,
                     room
+                }
+            }
+        }))
+    },
+    handleChangeRegion: (region) => {
+        set((state) => ({
+            gameState: {
+                ...state.gameState,
+                game: {
+                    ...state.gameState.game,
+                    region
                 }
             }
         }))

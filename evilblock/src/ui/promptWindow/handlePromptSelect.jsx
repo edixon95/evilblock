@@ -28,7 +28,7 @@ const handleProp = (prop) => {
             prop,
             prompt: {
                 ...prop.success,
-                text: `You take the ${item.name}`,
+                text: prop?.customText ?? `You take the ${item.name}`,
             },
             type: "PROMPT",
             itemType: PROP,
