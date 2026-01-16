@@ -7,6 +7,9 @@ import {
 
     DOOR_01,
     DOOR_02,
+    DOOR_00,
+    FLOOR_00,
+    ROOM_00,
 } from "../../constants/floorConstants";
 import { handleCreatePrompt } from "../../tool/handleCreatePrompt";
 
@@ -27,6 +30,18 @@ import { handleCreatePrompt } from "../../tool/handleCreatePrompt";
         
 */
 export const DOOR_TABLE = {
+    [DOOR_00]: {
+        to: {
+            level: FLOOR_02,
+            room: ROOM_02,
+            door: DOOR_02,
+        },
+        lock: {
+            type: 0,
+            isLocked: false
+        },
+        cutscene: null
+    },
     [DOOR_01]: {
         to: {
             level: FLOOR_02,
@@ -46,9 +61,9 @@ export const DOOR_TABLE = {
     },
     [DOOR_02]: {
         to: {
-            level: FLOOR_01,
-            room: ROOM_01,
-            door: DOOR_01,
+            level: FLOOR_00,
+            room: ROOM_00,
+            door: DOOR_00,
         },
         lock: {
             type: 0,
