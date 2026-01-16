@@ -5,6 +5,7 @@ import { handleCreatePrompt } from "../../../../tool/handleCreatePrompt";
 import { handleCreateDoor } from "../../../creators/handleCreateDoor";
 import { handleCreateGeometry } from "../../../creators/handleCreateGeometry";
 import { handleCreateProp } from "../../../creators/handleCreateProp";
+import { consumableConstants } from "../../../interact/items/consumable/consumableConstants";
 
 export const room_000 = {
     geometry: [
@@ -25,6 +26,13 @@ export const room_000 = {
         handleCreateProp([-5, -2, -4], [3.5, 5, 1], { // Inner wall prop
             canExamine: false
         }),
+        handleCreateProp([-7.5, 0.5, -6.3], [2, 1, 5], { // Garbage pile
+            id: "pile_1",
+            item: consumableConstants.REAGENT_GBY,
+            prompt: handleCreatePrompt("A heap of broken, abandoned things. Several lifetimes of discarded belongings, there is probably something useful within.", "CONFIRMATION", "Look", "Back"),
+            success: handleCreatePrompt("The pile of discarded belongings has given all it will", "CONFIRMATION", false, "Back"),
+            customText: "The pile puts up more of a fight than first thought... You manage to pry some wood free and hold onto it."
+        }),
         handleCreateProp([-2, 0.25, -1.25], [3, 0.5, 0.5], { // Short edge outer
             success: handleCreatePrompt("From a height, the piled up garbage looks like a small kingdom", "CONFIRMATION", false, "Back")
         }),
@@ -44,11 +52,19 @@ export const room_000 = {
         handleCreateDoor({
             id: DOOR_002,
             type: DOOR,
-            position: [-0.6, -7.25],
-            direction: 2,
+            position: [-1.5, -8.25],
+            direction: 3,
         }),
     ],
     enemies: [],
     items: [],
-    cameras: []
+    cameras: [
+        { // Alley 1
+            id: "c_alley_up_1",
+            position: [-1.872, 1.827, 0.142],
+            lookAt: [-1.745, 1.705, -0.843],
+            boundingBox: [-4.5, 0.5, -5],
+            size: [9, 1, 8]
+        },
+    ]
 }
