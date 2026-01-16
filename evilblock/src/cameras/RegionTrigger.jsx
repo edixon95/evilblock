@@ -8,8 +8,8 @@ export const RegionTrigger = ({
     id,
     position,
     size,
+    visible
 }) => {
-    const isVisible = true;
     const boxRef = useRef();
     const box = useMemo(() => new Box3(), []);
 
@@ -24,9 +24,9 @@ export const RegionTrigger = ({
     });
 
     return (
-        <mesh ref={boxRef} position={position} visible={true}>
+        <mesh ref={boxRef} position={position} visible={visible}>
             <boxGeometry args={size} />
-            <meshBasicMaterial wireframe visible={isVisible} />
+            <meshBasicMaterial wireframe visible={visible} />
         </mesh>
     );
 }

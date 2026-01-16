@@ -19,6 +19,7 @@ export const CameraManager = ({ playerRef, cameras, region, isDev }) => {
                     id={cam.id}
                     position={cam.boundingBox}
                     size={cam.size}
+                    visible={isDev}
                 />
             ))}
 

@@ -70,7 +70,7 @@ export const Experience = ({ playerRef }) => {
         return array && array.length > 0
     }
 
-    const isDev = true
+    const isDev = false
 
     return (
         <>
