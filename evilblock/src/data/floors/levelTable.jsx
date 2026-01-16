@@ -1,8 +1,10 @@
 import { getDoorInfo } from "../doors/doorTable";
+import { floor_00 } from "./level/floor_00";
 import { floor_01 } from "./level/floor_01";
 import { floor_02 } from "./level/floor_02";
 
 export const LEVEL_TABLE = {
+    floor_00,
     floor_01,
     floor_02
 }

@@ -6,6 +6,8 @@ export const backupPrompt = handleCreatePrompt("There's nothing here worth looki
 
 export const handlePropInteract = (item) => {
     let prompt;
+    if (!item?.userData?.canExamine)
+        return
 
     if (item.userData.success) {
         if (item.userData.item) {
