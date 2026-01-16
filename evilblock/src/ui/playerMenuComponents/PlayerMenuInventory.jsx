@@ -76,7 +76,6 @@ export const PlayerMenuInventory = ({ focused, setFocus }) => {
                     break;
                 case "f":
                     if (gameState.menu.menuType === "pause:inventory") {
-                        console.log("Should close from Inventory")
                         useGameStore.getState().handleCloseMenu();
                     } else {
                         setFocus(false);

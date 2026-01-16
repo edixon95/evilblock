@@ -66,8 +66,13 @@ export const DOOR_TABLE = {
         },
         lock: {
             type: 0,
-            isLocked: false
+            isLocked: true,
+            required: "Plank of Wood"
         },
+        prompt: handleCreatePrompt("You could probably get in through here. Try to break the window?",),
+        success: handleCreatePrompt("The glass shatters into the room, sharp edges around all the edges", "CONFIRMATION", "Enter", "Back"),
+        alwaysShow: false,
+        isSeen: false,
         cutscene: null
     },
     [DOOR_01]: {

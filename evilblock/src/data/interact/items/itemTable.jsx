@@ -36,6 +36,7 @@ import { colt } from "./weapon/colt";
 
 // Ammo
 import { handgunAmmo } from "./weapon/ammo/handgunAmmo";
+import { plankOfWood } from "./key/plankofWood";
 
 export const ITEM_TABLE = {
     // Consumables
@@ -74,7 +75,10 @@ export const ITEM_TABLE = {
     colt,
 
     // Ammo
-    handgunAmmo
+    handgunAmmo,
+
+    // Key
+    plankOfWood
 };
 
 export const getItem = (item) => {

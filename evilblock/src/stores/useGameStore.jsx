@@ -13,6 +13,7 @@ export const useGameStore = create((set, get) => ({
             region: ""
         },
         cutscene: null,
+        action: null,
         menu: {
             active: false,
             menuType: null,
@@ -35,6 +36,22 @@ export const useGameStore = create((set, get) => ({
             gameState: {
                 ...state.gameState,
                 fade
+            }
+        }))
+    },
+    handleSetAction: (action) => {
+        set((state) => ({
+            gameState: {
+                ...state.gameState,
+                action
+            }
+        }))
+    },
+    handlClearAction: () => {
+        set((state) => ({
+            gameState: {
+                ...state.gameState,
+                action: null
             }
         }))
     },
