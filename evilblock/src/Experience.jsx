@@ -17,6 +17,7 @@ import { SoundSpheres } from "./sound/SoundSphere"
 import { EnemyTarget } from "./ui/ui3d/EnemyTarget"
 import { useCameraStore } from "./stores/useCameraStore"
 import { CameraManager } from "./managers/CameraManager"
+import { ActionManager } from "./managers/ActionManager"
 
 export const Experience = ({ playerRef }) => {
     // Can see the updates
@@ -69,7 +70,7 @@ export const Experience = ({ playerRef }) => {
         return array && array.length > 0
     }
 
-    const isDev = false
+    const isDev = true
 
     return (
         <>
@@ -78,6 +79,7 @@ export const Experience = ({ playerRef }) => {
             <Player playerRef={playerRef} />
             <EnemyTarget playerRef={playerRef} />
             <SoundSpheres />
+            <ActionManager playerRef={playerRef} />
 
             {shouldRender(cameras) &&
                 <CameraManager playerRef={playerRef} cameras={cameras} region={region} isDev={isDev} />

@@ -21,7 +21,7 @@ export const handleUseItemOnTarget = (item, inventoryIdx) => {
             const door = useDoorStore.getState().handleGetDoorData(level, room, data.target.id)
 
             // Override the text just this once
-            const editedText = `You used the ${item.name} on the door.`
+            const editedText = `You used the ${item.name}.`
             const copyPrompt = {
                 ...door.extra.success,
                 text: `${editedText} ${door.extra.success.text}`,

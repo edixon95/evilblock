@@ -5,7 +5,7 @@ import { handleCreatePrompt } from "../../../../tool/handleCreatePrompt";
 import { handleCreateDoor } from "../../../creators/handleCreateDoor";
 import { handleCreateGeometry } from "../../../creators/handleCreateGeometry";
 import { handleCreateProp } from "../../../creators/handleCreateProp";
-import { consumableConstants } from "../../../interact/items/consumable/consumableConstants";
+import { keyConstants } from "../../../interact/items/key/keyConstants";
 
 export const room_000 = {
     geometry: [
@@ -28,7 +28,7 @@ export const room_000 = {
         }),
         handleCreateProp([-7.5, 0.5, -6.3], [2, 1, 5], { // Garbage pile
             id: "pile_1",
-            item: consumableConstants.REAGENT_GBY,
+            item: keyConstants.PLANKOFWOOD,
             prompt: handleCreatePrompt("A heap of broken, abandoned things. Several lifetimes of discarded belongings, there is probably something useful within.", "CONFIRMATION", "Look", "Back"),
             success: handleCreatePrompt("The pile of discarded belongings has given all it will", "CONFIRMATION", false, "Back"),
             customText: "The pile puts up more of a fight than first thought... You manage to pry some wood free and hold onto it."

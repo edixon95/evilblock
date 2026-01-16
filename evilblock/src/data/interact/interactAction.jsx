@@ -47,5 +47,8 @@ export const interactActionPreset = {
     MATERIAL: [
         COMBINE,
         EXAMINE
+    ],
+    KEY: [
+        EXAMINE
     ]
 }

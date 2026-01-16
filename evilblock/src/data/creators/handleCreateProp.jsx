@@ -1,15 +1,17 @@
 export const handleCreateProp = (position, size, extra) => {
-    console.log("d", extra)
+    const extendedAction = !extra?.action ? false : {
+        ...extra.action,
+        isComplete: false
+    }
 
     const extendExtra = {
         ...extra,
         type: "PROP",
         subType: "PROP",
         isCollected: extra?.item ? false : true,
-        canExamine: extra?.canExamine ?? true
+        canExamine: extra?.canExamine ?? true,
+        action: extendedAction
     }
-
-    console.log(extendExtra)
 
     return ({
         position,

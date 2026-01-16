@@ -26,6 +26,18 @@ export const room_00 = {
         handleCreateProp([-7, 1, -1.7], [7, 3, 1.5], {
             canExamine: false
         }),
+        handleCreateProp([-11, 0.5, -0.25], [4, 0.75, 1.5], {
+            id: "prop_test_2",
+            prompt: handleCreatePrompt("A large box on wheels, it could probably be moved.", "CONFIRMATION", "Move", "Back"),
+            success: handleCreatePrompt("A large box on wheels.", "CONFIRMATION", false, "Back"),
+            action: {
+                target: ["prop_test_2", "PLAYER"],
+                type: "MOVE",
+                speed: 1,
+                position: [-11, 0.5, 1.5],
+                onComplete: null
+            }
+        }),
     ],
     stations: [],
     doors: [
