@@ -3,14 +3,6 @@ import { useGameStore } from "../../stores/useGameStore";
 import { handlePromptSelect } from "./handlePromptSelect";
 import "../css/ingamePromptMenu.css";
 
-/*
-Typing Features:
-- Typewriter effect for prompt text
-- Skip typing with F or Space
-- Options appear only after typing completes
-- Input lock for a short delay after typing finishes
-*/
-
 export const IngamePromptMenu = () => {
     const data = useGameStore((state) => state.gameState?.data);
     const { options = [], text = "" } = data?.prompt ?? {};
@@ -21,23 +13,23 @@ export const IngamePromptMenu = () => {
     const [canAcceptInput, setCanAcceptInput] = useState(false);
 
     const optionCount = options.length;
-
-    /* ======================
-        CONFIGURATION
-    ====================== */
-    const TYPING_SPEED = 60;        // ms per character
-    const POST_TYPE_DELAY = 500;    // ms before inputs are allowed
+    const TYPING_SPEED = 60;
+    const POST_TYPE_DELAY = 500;
 
     const typingIntervalRef = useRef(null);
     const typingIndexRef = useRef(0);
 
-    /* ======================
-        TYPEWRITER EFFECT
-    ====================== */
+    //tickytacky
     useEffect(() => {
-        if (!text || data?.type !== "PROMPT") return;
+        if (!text || data?.type !== "PROMPT") {
+            setDisplayedText("");
+            setIsTyping(true);
+            setIndex(0);
+            typingIndexRef.current = 0;
 
-        // Reset state
+            return;
+        }
+
         setDisplayedText("");
         setIsTyping(true);
         setCanAcceptInput(false);
@@ -67,10 +59,6 @@ export const IngamePromptMenu = () => {
             setCanAcceptInput(true);
         }, POST_TYPE_DELAY);
     };
-
-    /* ======================
-        PROMPT HANDLING
-    ====================== */
     const handlePrompt = (fn) => {
         if (fn === "confirm") {
             handlePromptSelect(data);
@@ -79,9 +67,6 @@ export const IngamePromptMenu = () => {
         }
     };
 
-    /* ======================
-        KEYBOARD INPUT
-    ====================== */
     const handleKeyDown = (e) => {
         if (data?.type !== "PROMPT") return;
 
@@ -125,9 +110,6 @@ export const IngamePromptMenu = () => {
 
     if (!data || data?.type !== "PROMPT") return null;
 
-    /* ======================
-        RENDER
-    ====================== */
     return (
         <div id="ingame-prompt-menu-main">
             <div>
