@@ -131,8 +131,9 @@ export const IngamePromptMenu = () => {
     return (
         <div id="ingame-prompt-menu-main">
             <div>
-                <div id="ingame-prompt-text">
-                    {displayedText}
+                <div id="ingame-prompt-text" className="menu-text">
+                    <span className="ghost-text">{text}</span>
+                    <span className="typed-text">{displayedText}</span>
                 </div>
 
                 {!isTyping && (
@@ -144,6 +145,7 @@ export const IngamePromptMenu = () => {
                                     opacity: i === index ? 1 : 0.5,
                                     fontWeight: i === index ? "bold" : "normal",
                                 }}
+                                className="menu-text"
                             >
                                 {op.optionText}
                             </div>
