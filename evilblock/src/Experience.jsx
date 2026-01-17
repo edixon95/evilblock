@@ -1,4 +1,3 @@
-import { useMemo, useRef } from "react"
 import { Player } from "./characters/player/Player"
 import { FloorManager } from "./managers/FloorManager"
 import { WallManager } from "./managers/WallManager"
@@ -18,34 +17,9 @@ import { EnemyTarget } from "./ui/ui3d/EnemyTarget"
 import { useCameraStore } from "./stores/useCameraStore"
 import { CameraManager } from "./managers/CameraManager"
 import { ActionManager } from "./managers/ActionManager"
+import { useFrame, useThree } from "@react-three/fiber"
 
-export const Experience = ({ playerRef }) => {
-    // Can see the updates
-    // const gameState = useGameStore((state) => state.gameState)
-    // This probably safer
-    // const mode = useGameStore((state) => state.gameState.mode)
-
-    // geometry: [
-    //         handleCreateGeometry([4, 0, 0], [10, 4]),
-    //         handleCreateGeometry([-3, 0, 3], [4, 10])
-    //     ],
-    //     props: [],
-    //     stations: [],
-    //     doors: [
-    //         handleCreateDoor({
-    //             id: DOOR_02,
-    //             type: STAIR,
-    //             position: [-2, 5],
-    //             direction: 3,
-    //             stairDirection: UP
-    //         })
-    //     ],
-    //     enemies: [
-    //         handleCreateEnemy([1, 0, 1], BASIC)
-    //     ],
-    //     items: [],
-    //     cameras: []
-
+export const Experience = ({ playerRef, ppEffects }) => {
     const { level, room, region } = useGameStore((state) => state.gameState.game)
     const allWorlds = useWorldStore((state) => state?.world)
     const allDoors = useDoorStore((state) => state?.doors)
@@ -72,20 +46,43 @@ export const Experience = ({ playerRef }) => {
 
     const isDev = false
 
+    const { camera } = useThree();
+    useFrame(() => {
+        if (ppEffects.shake) {
+            // subtle PSX-style camera jitter
+            camera.position.x += (Math.random() - 0.5) * 0.0025;
+            camera.position.y += (Math.random() - 0.5) * 0.0025;
+        }
+    });
+
     return (
         <>
             {isDev && <DevCam />}
-            <ambientLight intensity={0.3} color={"#4056b8"} />
-            <directionalLight
-                color={"#13709b"}
-                intensity={0.6}
-                position={[5.25, 2, 10]}
+            <ambientLight intensity={isDev ? 1.2 : 0.3} color={isDev ? "#ffffff" : ppEffects.moody ? "#4056b8" : "#ffffff"} />
+            <spotLight
+                color={"#ffffff"}
+                intensity={5}
+                position={[5, 2, 10]}
+                angle={4.5}
+                penumbra={0.2}
             />
 
-            <fog attach="fog" args={["#086357", -5, 15]} />
+            <spotLight
+                color={"#ffffff"}
+                intensity={8}
+                position={[-12, 4.5, -2.5]}
+                angle={3}
+                penumbra={0.2}
+            />
+
+            {ppEffects.fog &&
+                <fog attach="fog" args={["#086357", -5, 20]} />
+            }
             <Player playerRef={playerRef} />
             <EnemyTarget playerRef={playerRef} />
-            <SoundSpheres />
+            {isDev &&
+                <SoundSpheres />
+            }
             <ActionManager playerRef={playerRef} />
 
             {shouldRender(cameras) &&
