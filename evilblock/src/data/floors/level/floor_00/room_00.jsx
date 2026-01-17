@@ -8,11 +8,11 @@ import { handleCreateProp } from "../../../creators/handleCreateProp";
 
 export const room_00 = {
     geometry: [
-        handleCreateGeometry([-2.5, 0, 1.5], [20, 5]),
-        handleCreateGeometry([-8, 0, -2.5], [9, 3]),
-        handleCreateGeometry([3.5, 0, -3.5], [8, 5]),
+        handleCreateGeometry([-2.5, 0, 1.5], [20, 5], false, 1, "concrete_1"),
+        handleCreateGeometry([-8, 0, -2.5], [9, 3], false, 1, "concrete_1"),
+        handleCreateGeometry([3.5, 0, -3.5], [8, 5], false, 1, "concrete_1"),
         // handleCreateGeometry([-10, 0, 2], [10, 4]),
-        handleCreateGeometry([5, 0, 8], [5, 8])
+        handleCreateGeometry([5, 0, 8], [5, 8], false, 1, "concrete_1")
     ],
     props: [
         handleCreateProp(

@@ -8,6 +8,7 @@ import { TransitionManager } from './managers/TransitionManager';
 import { PlayerMenu } from './ui/PlayerMenu';
 import { IngamePromptMenu } from './ui/promptWindow/IngamePromptMenu';
 import { useGameStore } from './stores/useGameStore';
+import { MaterialProvider } from './data/materials/MaterialProvider';
 function App() {
   const playerRef = useRef()
 
@@ -21,6 +22,7 @@ function App() {
         shadows
         frameloop={shouldPause ? "demand" : "always"}
       >
+        <MaterialProvider />
         <Experience playerRef={playerRef} />
       </Canvas>
       <TransitionManager playerRef={playerRef} />

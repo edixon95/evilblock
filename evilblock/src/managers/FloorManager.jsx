@@ -1,23 +1,31 @@
 import * as THREE from "three";
+import { useMaterialStore } from "../stores/useMaterialStore";
+
 
 export const FloorManager = ({ floors, floorRefs }) => {
+    const materials = useMaterialStore((state) => state.materials)
     return (
         <>
             {/* Normal floors */}
             {floors
                 .filter(floor => !floor?.skip)
-                .map((floor, i) => (
-                    <mesh
-                        key={`floor-${i}`}
-                        ref={floorRefs?.[i]}
-                        position={floor.position}
-                        rotation={[-Math.PI / 2, 0, 0]}
-                        receiveShadow
-                    >
-                        <planeGeometry args={floor.size} />
-                        <meshStandardMaterial color={floor.color} side={THREE.DoubleSide} />
-                    </mesh>
-                ))}
+                .map((floor, i) => {
+                    const material = materials[floor.texture] ?? null
+
+                    return (
+                        <mesh
+                            key={`floor-${i}`}
+                            ref={floorRefs?.[i]}
+                            position={floor.position}
+                            rotation={[-Math.PI / 2, 0, 0]}
+                            receiveShadow
+                        >
+                            <planeGeometry args={floor.size} />
+                            {material && <primitive object={material} attach="material" />}
+                            <meshStandardMaterial color={floor.color} side={THREE.DoubleSide} />
+                        </mesh>
+                    )
+                })}
 
             {/* Floors with skip flag: render walls instead */}
             {floors
