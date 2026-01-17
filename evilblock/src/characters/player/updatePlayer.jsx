@@ -12,9 +12,8 @@ let prevMenuPressed = false;
 export const updatePlayer = (ctx) => {
     const { input, menuActive } = ctx;
     if (input.menu && !prevMenuPressed) {
-        const state = useGameStore.getState();
-        if (!state.gameState.menu.active) {
-            state.handleOpenMenu("pause");
+        if (!menuActive) {
+            useGameStore.getState().handleOpenMenu("pause");
         }
     }
     prevMenuPressed = input.menu;
