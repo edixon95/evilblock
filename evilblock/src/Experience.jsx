@@ -75,7 +75,14 @@ export const Experience = ({ playerRef }) => {
     return (
         <>
             {isDev && <DevCam />}
-            <ambientLight intensity={1.2} />
+            <ambientLight intensity={0.3} color={"#4056b8"} />
+            <directionalLight
+                color={"#13709b"}
+                intensity={0.6}
+                position={[5.25, 2, 10]}
+            />
+
+            <fog attach="fog" args={["#086357", -5, 15]} />
             <Player playerRef={playerRef} />
             <EnemyTarget playerRef={playerRef} />
             <SoundSpheres />
