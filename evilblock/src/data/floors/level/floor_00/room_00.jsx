@@ -4,7 +4,9 @@ import { handleCreatePrompt } from "../../../../tool/handleCreatePrompt";
 
 import { handleCreateDoor } from "../../../creators/handleCreateDoor";
 import { handleCreateGeometry } from "../../../creators/handleCreateGeometry";
+import { handleCreateLight } from "../../../creators/handleCreateLight";
 import { handleCreateProp } from "../../../creators/handleCreateProp";
+import { handleCreateWeather } from "../../../creators/handleCreateWeather";
 
 export const room_00 = {
     geometry: [
@@ -87,5 +89,13 @@ export const room_00 = {
             boundingBox: [-8.3, 0.5, -3.5],
             size: [9, 1, 4.5]
         }
+    ],
+    lights: [
+        handleCreateLight("#ffffff", 5, [5, 10], 2, 4.5, 0.2),
+        handleCreateLight("#ffffff", 8, [-12, -25], null, 3, 0.2)
+    ],
+    weather: [
+        handleCreateWeather("ambient", { intensity: 0.3, color: "#4056b8" }),
+        handleCreateWeather("fog", { color: "#086357", near: -5, far: 20 })
     ]
 }

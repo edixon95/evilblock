@@ -19,6 +19,10 @@ import { CameraManager } from "./managers/CameraManager"
 import { ActionManager } from "./managers/ActionManager"
 import { useFrame, useThree } from "@react-three/fiber"
 import { useAdminStore } from "./stores/useAdminStore"
+import { useLightStore } from "./stores/useLightStore"
+import { LightManager } from "./managers/LightManager"
+import { useWeatherStore } from "./stores/useWeatherStore"
+import { WeatherManager } from "./managers/WeatherManager"
 
 export const Experience = ({ playerRef }) => {
     const { level, room, region } = useGameStore((state) => state.gameState.game)
@@ -27,6 +31,8 @@ export const Experience = ({ playerRef }) => {
     const allEnemies = useEnemyStore((state) => state?.enemies)
     const allProps = usePropStore((state) => state?.props)
     const allCameras = useCameraStore((state) => state?.cameras)
+    const allLights = useLightStore((state) => state?.lights)
+    const allWeather = useWeatherStore((state) => state?.weather)
     const fade = useGameStore((state) => state.gameState.fade)
 
     const allItems = useItemStore((state) => state?.items)
@@ -36,8 +42,9 @@ export const Experience = ({ playerRef }) => {
     const doors = allDoors[level][room]
     const enemies = allEnemies[level][room]
     const cameras = allCameras[level][room]
-
-
+    const lights = allLights[level][room]
+    const weather = allWeather[level][room]
+    console.log(weather)
     const items = allItems[level][room]
     const interacts = [...items]
 
@@ -59,32 +66,25 @@ export const Experience = ({ playerRef }) => {
     return (
         <>
             {isDev && <DevCam />}
-            <ambientLight intensity={isDev ? 1.2 : 0.3} color={isDev ? "#ffffff" : moody ? "#4056b8" : "#ffffff"} />
-            <spotLight
-                color={"#ffffff"}
-                intensity={5}
-                position={[5, 2, 10]}
-                angle={4.5}
-                penumbra={0.2}
-            />
+            {/* <ambientLight intensity={isDev ? 1.2 : 0.3} color={isDev ? "#ffffff" : moody ? "#4056b8" : "#ffffff"} /> */}
 
-            <spotLight
-                color={"#ffffff"}
-                intensity={8}
-                position={[-12, 4.5, -2.5]}
-                angle={3}
-                penumbra={0.2}
-            />
-
-            {fog &&
+            {/* {fog &&
                 <fog attach="fog" args={["#086357", -5, 20]} />
-            }
+            } */}
             <Player playerRef={playerRef} />
             <EnemyTarget playerRef={playerRef} />
             {isDev &&
                 <SoundSpheres />
             }
             <ActionManager playerRef={playerRef} />
+
+            {shouldRender(weather) &&
+                <WeatherManager weather={weather} settings={{ isDev, fog, moody }} />
+            }
+
+            {shouldRender(lights) &&
+                <LightManager lights={lights} />
+            }
 
             {shouldRender(cameras) &&
                 <CameraManager playerRef={playerRef} cameras={cameras} region={region} isDev={isDev} />
