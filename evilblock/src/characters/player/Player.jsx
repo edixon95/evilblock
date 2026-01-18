@@ -67,7 +67,7 @@ export const Player = ({ playerRef }) => {
   return (
     <mesh
       ref={playerRef}
-      position={[5.25, 0.5, 10]}
+      position={[-10, 0.5, 15]}
       rotation={[0, 0, 0]}
       castShadow
     >

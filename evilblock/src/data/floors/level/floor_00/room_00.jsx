@@ -12,6 +12,7 @@ import { handleCreateWeather } from "../../../creators/handleCreateWeather";
 
 export const room_00 = {
     geometry: [
+        handleCreateGeometry([-5, 0, 13], [15, 10], false, 1, "concrete_1"),
         handleCreateGeometry([-2.5, 0, 1.5], [20, 5], false, 1, "concrete_1"),
         handleCreateGeometry([-8, 0, -2.5], [9, 3], false, 1, "concrete_1"),
         handleCreateGeometry([3.5, 0, -3.5], [8, 5], false, 1, "concrete_1"),
@@ -19,6 +20,10 @@ export const room_00 = {
         handleCreateGeometry([5, 0, 8], [5, 8], false, 1, "concrete_1")
     ],
     props: [
+        handleCreateProp([-7, 1, -1.7], [7, 3, 1.5], {
+            canExamine: false
+        }),
+
         handleCreateProp(
             [7, 0.25, 10],
             [1.5, 0.5, 5],
@@ -27,28 +32,6 @@ export const room_00 = {
                 success: handleCreatePrompt("The trash has been piling up for a while.", "CONFIRMATION", false, "Back")
             }
         ),
-        handleCreatePrefab(
-            [3.6, 7.2],
-            1,
-            propConstants.CHAIR1,
-            {
-                id: "prop_test_2",
-                success: handleCreatePrompt("Chair.", "CONFIRMATION", false, "Back")
-            },
-        ),
-
-        handleCreatePrefab(
-            [3.5, 9],
-            1,
-            propConstants.TENT1,
-            {
-                id: "prop_test_3",
-                success: handleCreatePrompt("Tent.", "CONFIRMATION", false, "Back")
-            },
-        ),
-        handleCreateProp([-7, 1, -1.7], [7, 3, 1.5], {
-            canExamine: false
-        }),
         handleCreateProp([-11, 0.5, -0.25], [4, 0.75, 1.5], {
             id: "prop_test_2",
             prompt: handleCreatePrompt("A large box on wheels, it could probably be moved.", "CONFIRMATION", "Move", "Back"),
@@ -61,6 +44,26 @@ export const room_00 = {
                 onComplete: null
             }
         }),
+
+        // Prefabs
+        handleCreatePrefab(
+            [3.5, 9],
+            1,
+            propConstants.TENT1,
+            {
+                id: "prop_test_3",
+                success: handleCreatePrompt("Tent.", "CONFIRMATION", false, "Back")
+            },
+        ),
+        handleCreatePrefab(
+            [3.6, 7.2],
+            1,
+            propConstants.CHAIR1,
+            {
+                id: "prop_test_4",
+                success: handleCreatePrompt("Chair.", "CONFIRMATION", false, "Back")
+            },
+        ),
     ],
     stations: [],
     doors: [
@@ -75,6 +78,20 @@ export const room_00 = {
     enemies: [],
     items: [],
     cameras: [
+        { // Start room 1
+            id: "c_home_1",
+            position: [-2.33, 0.347, 12.031],
+            lookAt: [-3.264, -0.008, 12.072],
+            boundingBox: [-8.5, 0.5, 15],
+            size: [9, 1, 15]
+        },
+        { // Start room 2
+            id: "c_home_2",
+            position: [-7.36, 0.428, 8.31],
+            lookAt: [-6.662, 0.272, 9.009],
+            boundingBox: [-0.7, 0.5, 15],
+            size: [5.5, 1, 15]
+        },
         { // Alley 1
             id: "c_alley_1",
             position: [5.287, 3.44, 11.76],
@@ -115,11 +132,20 @@ export const room_00 = {
         handleCreateLight("spotlight", { color: "#ffffff", intensity: 8, position: [-12, -2.5], height: null, angle: 3, penumbra: 0.2 }),
         handleCreateLight("rect", {
             color: "#ffffff",
-            intensity: 10,
-            position: [5, 11],
+            intensity: 3,
+            position: [5, 12],
             height: 2,
             width: 3,
-            rectHeight: 0.2,
+            rectHeight: 0.8,
+            rotation: [0, 0, 0],
+        }),
+        handleCreateLight("rect", {
+            color: "#ffffff",
+            intensity: 12,
+            position: [-13, 19],
+            height: 2,
+            width: 3,
+            rectHeight: 0.8,
             rotation: [0, 0, 0],
         })
     ],
