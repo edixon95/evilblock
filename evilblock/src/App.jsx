@@ -12,6 +12,7 @@ import { MaterialProvider } from './data/materials/MaterialProvider';
 
 import { EffectComposer, Pixelation, Noise, ChromaticAberration } from '@react-three/postprocessing'
 import { Vector2 } from 'three';
+import { AdminPanel } from './tool/AdminPanel';
 function App() {
   const playerRef = useRef()
 
@@ -48,6 +49,7 @@ function App() {
       <TransitionManager playerRef={playerRef} />
       <IngamePromptMenu />
       <PlayerMenu />
+      <AdminPanel />
     </div>
   )
 }

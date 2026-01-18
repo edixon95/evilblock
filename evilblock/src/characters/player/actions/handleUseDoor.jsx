@@ -3,7 +3,13 @@ import { useCutsceneStore } from "../../../stores/useCutsceneStore";
 import { useDoorStore } from "../../../stores/useDoorStore";
 import { useGameStore } from "../../../stores/useGameStore";
 
-export const handleUseDoor = (door) => {
+export const handleUseDoor = (door, override = false) => {
+    console.log(door)
+    if (override) {
+        useGameStore.getState().handleAddData(door)
+        return
+    }
+
     // Handle other things here
     const doorInformation = door.extra;
     const { cutscene, lock } = doorInformation;

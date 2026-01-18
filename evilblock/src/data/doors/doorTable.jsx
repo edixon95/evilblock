@@ -35,6 +35,7 @@ import { handleCreatePrompt } from "../../tool/handleCreatePrompt";
 export const DOOR_TABLE = {
     // Intro scene
     [DOOR_00]: {
+        group: "Epilogue",
         to: {
             level: FLOOR_00,
             room: ROOM_000,
@@ -47,6 +48,7 @@ export const DOOR_TABLE = {
         cutscene: null
     },
     [DOOR_001]: {
+        group: "Epilogue",
         to: {
             level: FLOOR_00,
             room: ROOM_00,
@@ -76,6 +78,7 @@ export const DOOR_TABLE = {
         cutscene: null
     },
     [DOOR_01]: {
+        group: "Unused",
         to: {
             level: FLOOR_02,
             room: ROOM_02,
@@ -93,6 +96,7 @@ export const DOOR_TABLE = {
         isSeen: false
     },
     [DOOR_02]: {
+        group: "Epilogue",
         to: {
             level: FLOOR_00,
             room: ROOM_000,

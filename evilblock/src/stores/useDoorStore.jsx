@@ -9,6 +9,29 @@ export const useDoorStore = create((set, get) => ({
         return doors[level][room].find((x) => x.id === id)
     },
 
+    handleFindDoorById: (id) => {
+        const { doors } = get();
+
+        for (const levelKey of Object.keys(doors)) {
+            const level = doors[levelKey];
+
+            for (const roomKey of Object.keys(level)) {
+                const roomDoors = level[roomKey];
+
+                const door = roomDoors.find((d) => d.id === id);
+                if (door) {
+                    return {
+                        door,
+                        level: levelKey,
+                        room: roomKey,
+                    };
+                }
+            }
+        }
+
+        return null; // not found
+    },
+
     handleUnlockDoor: (level, room, id) => {
         set((state) => {
             const updatedRoomDoors = state.doors[level][room].map((door) =>
