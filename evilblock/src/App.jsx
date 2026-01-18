@@ -12,19 +12,15 @@ import { MaterialProvider } from './data/materials/MaterialProvider';
 
 import { EffectComposer, Pixelation, Noise, ChromaticAberration } from '@react-three/postprocessing'
 import { Vector2 } from 'three';
+import { AdminPanel } from './tool/AdminPanel';
+import { useAdminStore } from './stores/useAdminStore';
 function App() {
   const playerRef = useRef()
 
   const gameState = useGameStore((state) => state.gameState)
   const shouldPause = gameState.data !== null || gameState.fade || gameState.menu.active
 
-  const ppEffects = {
-    shake: false,
-    pixel: true,
-    chromatic: true,
-    fog: true,
-    moody: true
-  }
+  const { pixel, chromatic } = useAdminStore((state) => state?.adminState)
 
   return (
     <div className="fullscreen-canvas">
@@ -34,12 +30,12 @@ function App() {
         frameloop={shouldPause ? "demand" : "always"}
       >
         <MaterialProvider />
-        <Experience playerRef={playerRef} ppEffects={ppEffects} />
+        <Experience playerRef={playerRef} />
         <EffectComposer>
-          {ppEffects.pixel &&
+          {pixel &&
             <Pixelation granularity={6} />
           }
-          {ppEffects.chromatic &&
+          {chromatic &&
             <ChromaticAberration offset={new Vector2(0.0025, 0.0025)} />
           }
         </EffectComposer>
@@ -48,6 +44,7 @@ function App() {
       <TransitionManager playerRef={playerRef} />
       <IngamePromptMenu />
       <PlayerMenu />
+      <AdminPanel />
     </div>
   )
 }
