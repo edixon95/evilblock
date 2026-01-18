@@ -18,8 +18,9 @@ import { useCameraStore } from "./stores/useCameraStore"
 import { CameraManager } from "./managers/CameraManager"
 import { ActionManager } from "./managers/ActionManager"
 import { useFrame, useThree } from "@react-three/fiber"
+import { useAdminStore } from "./stores/useAdminStore"
 
-export const Experience = ({ playerRef, ppEffects }) => {
+export const Experience = ({ playerRef }) => {
     const { level, room, region } = useGameStore((state) => state.gameState.game)
     const allWorlds = useWorldStore((state) => state?.world)
     const allDoors = useDoorStore((state) => state?.doors)
@@ -44,11 +45,11 @@ export const Experience = ({ playerRef, ppEffects }) => {
         return array && array.length > 0
     }
 
-    const isDev = false
+    const { shake, fog, moody, isDev } = useAdminStore((state) => state?.adminState)
 
     const { camera } = useThree();
     useFrame(() => {
-        if (ppEffects.shake) {
+        if (shake) {
             // subtle PSX-style camera jitter
             camera.position.x += (Math.random() - 0.5) * 0.0025;
             camera.position.y += (Math.random() - 0.5) * 0.0025;
@@ -58,7 +59,7 @@ export const Experience = ({ playerRef, ppEffects }) => {
     return (
         <>
             {isDev && <DevCam />}
-            <ambientLight intensity={isDev ? 1.2 : 0.3} color={isDev ? "#ffffff" : ppEffects.moody ? "#4056b8" : "#ffffff"} />
+            <ambientLight intensity={isDev ? 1.2 : 0.3} color={isDev ? "#ffffff" : moody ? "#4056b8" : "#ffffff"} />
             <spotLight
                 color={"#ffffff"}
                 intensity={5}
@@ -75,7 +76,7 @@ export const Experience = ({ playerRef, ppEffects }) => {
                 penumbra={0.2}
             />
 
-            {ppEffects.fog &&
+            {fog &&
                 <fog attach="fog" args={["#086357", -5, 20]} />
             }
             <Player playerRef={playerRef} />
