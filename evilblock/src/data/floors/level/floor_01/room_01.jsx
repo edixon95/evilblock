@@ -62,8 +62,8 @@ export const room_01 = {
     ],
     cameras: [],
     lights: [
-        handleCreateLight("#ffffff", 5, [5, 10], 2, 4.5, 0.2),
-        handleCreateLight("#ffffff", 8, [-12, -25], null, 3, 0.2)
+        handleCreateLight("spotlight", "#ffffff", 5, [5, 10], 2, 4.5, 0.2),
+        handleCreateLight("spotlight", "#ffffff", 8, [-12, -25], null, 3, 0.2)
     ],
     weather: [
         handleCreateWeather("ambient", { intensity: 0.3, color: "#4056b8" }),
