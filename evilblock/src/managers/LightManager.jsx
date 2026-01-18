@@ -1,4 +1,4 @@
-import { WorldSpotlight } from "../objects/WorldSpotlight"
+import { WorldSpotlight } from "../objects//lights/WorldSpotlight"
 
 export const LightManager = ({ lights }) => {
     return (
