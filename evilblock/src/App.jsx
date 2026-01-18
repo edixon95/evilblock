@@ -14,7 +14,10 @@ import { EffectComposer, Pixelation, Noise, ChromaticAberration } from '@react-t
 import { Vector2 } from 'three';
 import { AdminPanel } from './tool/AdminPanel';
 import { useAdminStore } from './stores/useAdminStore';
+import { RectAreaLightUniformsLib } from 'three/examples/jsm/lights/RectAreaLightUniformsLib'
+
 function App() {
+  RectAreaLightUniformsLib.init()
   const playerRef = useRef()
 
   const gameState = useGameStore((state) => state.gameState)
