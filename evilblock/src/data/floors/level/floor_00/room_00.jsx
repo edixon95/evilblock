@@ -1,10 +1,12 @@
 import { DOOR, STAIR, UP } from "../../../../constants/doorConstants";
 import { DOOR_00 } from "../../../../constants/floorConstants";
+import { propConstants } from "../../../../objects/props/propConstants";
 import { handleCreatePrompt } from "../../../../tool/handleCreatePrompt";
 
 import { handleCreateDoor } from "../../../creators/handleCreateDoor";
 import { handleCreateGeometry } from "../../../creators/handleCreateGeometry";
 import { handleCreateLight } from "../../../creators/handleCreateLight";
+import { handleCreatePrefab } from "../../../creators/handleCreatePrefab";
 import { handleCreateProp } from "../../../creators/handleCreateProp";
 import { handleCreateWeather } from "../../../creators/handleCreateWeather";
 
@@ -24,6 +26,25 @@ export const room_00 = {
                 id: "prop_test_1",
                 success: handleCreatePrompt("The trash has been piling up for a while.", "CONFIRMATION", false, "Back")
             }
+        ),
+        handleCreatePrefab(
+            [3.6, 7.2],
+            1,
+            propConstants.CHAIR1,
+            {
+                id: "prop_test_2",
+                success: handleCreatePrompt("Chair.", "CONFIRMATION", false, "Back")
+            },
+        ),
+
+        handleCreatePrefab(
+            [3.5, 9],
+            1,
+            propConstants.TENT1,
+            {
+                id: "prop_test_3",
+                success: handleCreatePrompt("Tent.", "CONFIRMATION", false, "Back")
+            },
         ),
         handleCreateProp([-7, 1, -1.7], [7, 3, 1.5], {
             canExamine: false
