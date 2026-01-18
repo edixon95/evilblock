@@ -4,7 +4,6 @@ import { useDoorStore } from "../../../stores/useDoorStore";
 import { useGameStore } from "../../../stores/useGameStore";
 
 export const handleUseDoor = (door, override = false) => {
-    console.log(door)
     if (override) {
         useGameStore.getState().handleAddData(door)
         return

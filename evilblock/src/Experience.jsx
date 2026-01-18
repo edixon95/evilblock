@@ -44,7 +44,6 @@ export const Experience = ({ playerRef }) => {
     const cameras = allCameras[level][room]
     const lights = allLights[level][room]
     const weather = allWeather[level][room]
-    console.log(weather)
     const items = allItems[level][room]
     const interacts = [...items]
 

@@ -1,4 +1,4 @@
-export const handleCreateProp = (position, size, extra) => {
+export const handleCreatePrefab = (position, rotation = 1, prefab, extra) => {
     const extendedAction = !extra?.action ? false : {
         ...extra.action,
         isComplete: false
@@ -15,7 +15,8 @@ export const handleCreateProp = (position, size, extra) => {
 
     return ({
         position,
-        size,
+        rotation,
+        prefab,
         extra: extendExtra,
     })
 }
