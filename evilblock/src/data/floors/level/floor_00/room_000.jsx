@@ -70,8 +70,8 @@ export const room_000 = {
         },
     ],
     lights: [
-        handleCreateLight("spotlight", "#ffffff", 5, [5, 10], 2, 4.5, 0.2),
-        handleCreateLight("spotlight", "#ffffff", 8, [-12, -25], null, 3, 0.2)
+        handleCreateLight("spotlight", { color: "#ffffff", intensity: 5, position: [5, 10], height: 2, angle: 4.5, penumbra: 0.2 }),
+        handleCreateLight("spotlight", { color: "#ffffff", intensity: 8, position: [-12, -25], height: null, angle: 3, penumbra: 0.2 }),
     ],
     weather: [
         handleCreateWeather("ambient", { intensity: 0.3, color: "#4056b8" }),
