@@ -47,6 +47,22 @@ export const room_00 = {
 
         // Prefabs
         handleCreatePrefab(
+            [-11.5, 17.1],
+            1,
+            propConstants.ROADSUPPORT,
+            {
+                success: handleCreatePrompt("Road Support.", "CONFIRMATION", false, "Back")
+            },
+        ),
+        handleCreatePrefab(
+            [-11.5, 9],
+            1,
+            propConstants.ROADSUPPORT,
+            {
+                success: handleCreatePrompt("Road Support.", "CONFIRMATION", false, "Back")
+            },
+        ),
+        handleCreatePrefab(
             [3.5, 9],
             1,
             propConstants.TENT1,
