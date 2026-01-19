@@ -15,6 +15,7 @@ import { Vector2 } from 'three';
 import { AdminPanel } from './tool/AdminPanel';
 import { useAdminStore } from './stores/useAdminStore';
 import { RectAreaLightUniformsLib } from 'three/examples/jsm/lights/RectAreaLightUniformsLib'
+import * as THREE from "three";
 
 function App() {
   RectAreaLightUniformsLib.init()
@@ -31,6 +32,9 @@ function App() {
         camera={{ fov: 75 }}
         shadows
         frameloop={shouldPause ? "demand" : "always"}
+        onCreated={({ scene }) => {
+          scene.background = new THREE.Color('#151c2c')
+        }}
       >
         <MaterialProvider />
         <Experience playerRef={playerRef} />
