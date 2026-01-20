@@ -1,5 +1,6 @@
 import { DOOR, STAIR, UP } from "../../../../constants/doorConstants";
 import { DOOR_00 } from "../../../../constants/floorConstants";
+import { propCatalogue } from "../../../../objects/props/propCatalogue";
 import { propConstants } from "../../../../objects/props/propConstants";
 import { handleCreatePrompt } from "../../../../tool/handleCreatePrompt";
 
@@ -145,25 +146,30 @@ export const room_00 = {
         }
     ],
     lights: [
-        handleCreateLight("spotlight", { color: "#ffffff", intensity: 8, position: [-12, -2.5], height: null, angle: 3, penumbra: 0.2 }),
-        handleCreateLight("rect", {
-            color: "#ffffff",
-            intensity: 3,
-            position: [5, 12],
-            height: 2,
-            width: 3,
-            rectHeight: 0.8,
-            rotation: [0, 0, 0],
-        }),
-        handleCreateLight("rect", {
-            color: "#ffffff",
-            intensity: 12,
-            position: [-13, 19],
-            height: 2,
-            width: 3,
-            rectHeight: 0.8,
-            rotation: [0, 0, 0],
-        })
+        handleCreateLight(propConstants.STREETLIGHT, 5, 5, [-9, 0, 16.5], 5, 2),
+
+        handleCreateLight(propConstants.STREETLIGHT, 5, 5, [-5, 0, 9], 5, 4),
+        handleCreateLight(propConstants.STREETLIGHT, 5, 5, [1.5, 0, 12.5], 5, 2),
+        handleCreateLight(propConstants.STREETLIGHT, 5, 5, [7, 0, 10], 5, 3),
+        // handleCreateLight("spotlight", { color: "#ffffff", intensity: 8, position: [-12, -2.5], height: null, angle: 3, penumbra: 0.2 }),
+        // handleCreateLight("rect", {
+        //     color: "#ffffff",
+        //     intensity: 3,
+        //     position: [5, 12],
+        //     height: 2,
+        //     width: 3,
+        //     rectHeight: 0.8,
+        //     rotation: [0, 0, 0],
+        // }),
+        // handleCreateLight("rect", {
+        //     color: "#ffffff",
+        //     intensity: 12,
+        //     position: [-13, 19],
+        //     height: 2,
+        //     width: 3,
+        //     rectHeight: 0.8,
+        //     rotation: [0, 0, 0],
+        // })
     ],
     weather: [
         handleCreateWeather("ambient", { intensity: 0.3, color: "#4056b8" }),

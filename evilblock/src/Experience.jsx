@@ -47,6 +47,8 @@ export const Experience = ({ playerRef }) => {
     const items = allItems[level][room]
     const interacts = [...items]
 
+    const propsToRender = [...props, ...lights]
+
     const shouldRender = (array) => {
         return array && array.length > 0
     }
@@ -76,9 +78,9 @@ export const Experience = ({ playerRef }) => {
                 <WeatherManager weather={weather} settings={{ isDev, fog, moody }} />
             }
 
-            {shouldRender(lights) &&
+            {/* {shouldRender(lights) &&
                 <LightManager lights={lights} />
-            }
+            } */}
 
             {shouldRender(cameras) &&
                 <CameraManager playerRef={playerRef} cameras={cameras} region={region} isDev={isDev} />
@@ -94,8 +96,8 @@ export const Experience = ({ playerRef }) => {
                     }
 
 
-                    {shouldRender(props) &&
-                        <PropManager props={props} />
+                    {shouldRender(propsToRender) &&
+                        <PropManager props={propsToRender} />
                     }
 
                     {shouldRender(enemies) && shouldRender(floors) &&
