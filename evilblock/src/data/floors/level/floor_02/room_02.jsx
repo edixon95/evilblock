@@ -1,4 +1,4 @@
-import { DOWN, STAIR, UP } from "../../../../constants/doorConstants";
+import { DOOR, DOWN, STAIR, UP } from "../../../../constants/doorConstants";
 import { BASIC } from "../../../../constants/enemyConstants";
 import { DOOR_02 } from "../../../../constants/floorConstants";
 
@@ -10,33 +10,61 @@ import { handleCreateWeather } from "../../../creators/handleCreateWeather";
 
 export const room_02 = {
     geometry: [
-        handleCreateGeometry([4, 0, 0], [10, 4]),
-        handleCreateGeometry([2, 0, 4], [4, 10]),
-        handleCreateGeometry([-1.5, 0, 7.8], [3, 2], true)
+        handleCreateGeometry([-2, 0, 0], [4, 2]),
+        handleCreateGeometry([-3, 0, 3], [2, 4]),
+        // handleCreateGeometry([-2, 0, 0], [4, 2]),
+        handleCreateGeometry([1.5, 0, 4], [3, 10]),
+        handleCreateGeometry([4, 0, 4], [4, 2]),
+        handleCreateGeometry([6, 0, 4], [4, 6]),
     ],
     props: [],
     stations: [],
     doors: [
         handleCreateDoor({
             id: DOOR_02,
-            type: STAIR,
-            position: [-3, 6.7],
-            direction: 1,
-            stairDirection: DOWN
+            type: DOOR,
+            position: [0.1, 7.5],
+            direction: 4,
         })
     ],
     enemies: [
-        handleCreateEnemy([1, 0.5, 1], BASIC, '02_02_basic_01'),
-        handleCreateEnemy([3, 0.5, 1], BASIC, '02_02_basic_02'),
     ],
     items: [],
-    cameras: [],
+    cameras: [
+        { // Start room 1
+            id: "c_entry_r02_01",
+            position: [0.522, 3.35, 8.584],
+            lookAt: [0.722, 2.548, 8.021],
+            boundingBox: [1.7, 0.5, 7.5],
+            size: [4, 1, 5]
+        },
+        { // Start room 1
+            id: "c_entry_r02_02",
+            position: [7.145, 4.203, 3.429],
+            lookAt: [6.761, 3.284, 3.513],
+            boundingBox: [2.2, 0.5, 4],
+            size: [5, 1, 2]
+        },
+        { // Start room 1
+            id: "c_entry_r02_03",
+            position: [2.54, 3.329, -0.304],
+            lookAt: [2.203, 2.491, 0.126],
+            boundingBox: [1, 0.5, 0.45],
+            size: [4, 1, 5]
+        },
+        { // Start room 1
+            id: "c_entry_r02_04",
+            position: [-3.768, 0.488, 4.72],
+            lookAt: [-3.184, 0.232, 3.949],
+            boundingBox: [-3.25, 0.5, 2],
+            size: [4, 1, 6]
+        },
+    ],
     lights: [
-        handleCreateLight("spotlight", { color: "#ffffff", intensity: 5, position: [5, 10], height: 2, angle: 4.5, penumbra: 0.2 }),
-        handleCreateLight("spotlight", { color: "#ffffff", intensity: 8, position: [-12, -25], height: null, angle: 3, penumbra: 0.2 })
+
     ],
     weather: [
-        handleCreateWeather("ambient", { intensity: 0.3, color: "#4056b8" }),
-        handleCreateWeather("fog", { color: "#086357", near: -5, far: 20 })
+        handleCreateWeather("ambient", { intensity: 0.3, color: "#a1a7c2" }),
+        handleCreateWeather("fog", { color: "#436e69", near: 0, far: 25 })
     ]
 }
