@@ -25,6 +25,19 @@ export const room_000 = {
         //         success: handleCreatePrompt("The trash has been piling up for a while.", "CONFIRMATION", false, "Back")
         //     }
         // ),
+
+        handleCreateProp([-11, 0.5, -0.25], [4, 0.75, 1.5], {
+            id: "prop_test_2",
+            prompt: handleCreatePrompt("A large box on wheels, it could probably be moved.", "CONFIRMATION", "Move", "Back"),
+            success: handleCreatePrompt("A large box on wheels.", "CONFIRMATION", false, "Back"),
+            action: {
+                target: ["prop_test_2", "PLAYER"],
+                type: "MOVE",
+                speed: 1,
+                position: [-11, 0.5, 1.5],
+                onComplete: null
+            }
+        }),
         handleCreateProp([-5, -2, -4], [3.5, 5, 1], { // Inner wall prop
             canExamine: false
         }),
@@ -70,8 +83,7 @@ export const room_000 = {
         },
     ],
     lights: [
-        handleCreateLight("spotlight", { color: "#ffffff", intensity: 5, position: [5, 10], height: 2, angle: 4.5, penumbra: 0.2 }),
-        handleCreateLight("spotlight", { color: "#ffffff", intensity: 8, position: [-12, -25], height: null, angle: 3, penumbra: 0.2 }),
+
     ],
     weather: [
         handleCreateWeather("ambient", { intensity: 0.3, color: "#4056b8" }),

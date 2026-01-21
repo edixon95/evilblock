@@ -61,6 +61,7 @@ export const DOOR_TABLE = {
         cutscene: null
     },
     [DOOR_002]: {
+        group: "Floor 2",
         to: {
             level: FLOOR_02,
             room: ROOM_02,
