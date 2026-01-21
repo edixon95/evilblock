@@ -1,6 +1,6 @@
 import { DOOR, DOWN, STAIR, UP } from "../../../../constants/doorConstants";
 import { BASIC } from "../../../../constants/enemyConstants";
-import { DOOR_02, DOOR_04, DOOR_05 } from "../../../../constants/floorConstants";
+import { DOOR_02, DOOR_04, DOOR_06 } from "../../../../constants/floorConstants";
 
 import { handleCreateDoor } from "../../../creators/handleCreateDoor";
 import { handleCreateEnemy } from "../../../creators/handleCreateEnemy";
@@ -8,26 +8,23 @@ import { handleCreateGeometry } from "../../../creators/handleCreateGeometry";
 import { handleCreateLight } from "../../../creators/handleCreateLight";
 import { handleCreateWeather } from "../../../creators/handleCreateWeather";
 
-export const room_03 = {
+export const room_04 = {
     geometry: [
-        // handleCreateGeometry([-2, 0, 0], [4, 2]),
-        handleCreateGeometry([1.5, 0, 4], [3, 15]),
-        handleCreateGeometry([1.5, 0, 13.5], [5, 4]),
+        handleCreateGeometry([5, 0, 0], [4, 2]),
+        handleCreateGeometry([5, 0, 1], [2, 1]),
+        handleCreateGeometry([5, 0, -1], [2, 1]),
+        handleCreateGeometry([6, 0, 3.5], [4, 4]),
+        handleCreateGeometry([7, 0, -3.5], [6, 4]),
+        handleCreateGeometry([1.5, 0, 4], [3, 10]),
     ],
     props: [],
     stations: [],
     doors: [
         handleCreateDoor({
-            id: DOOR_04,
+            id: DOOR_06,
             type: DOOR,
-            position: [3.9, 13.5],
-            direction: 2,
-        }),
-        handleCreateDoor({
-            id: DOOR_05,
-            type: DOOR,
-            position: [2.9, 7.5],
-            direction: 2,
+            position: [0.1, 7.5],
+            direction: 4,
         })
     ],
     enemies: [
@@ -35,18 +32,26 @@ export const room_03 = {
     items: [],
     cameras: [
         { // Start room 1
-            id: "c_entry_r03_01",
-            position: [0.567, 2.714, 11.023],
-            lookAt: [0.775, 2.105, 10.258],
+            id: "c_entry_r04_01",
+            position: [0.715, 1.372, -0.549],
+            lookAt: [1.246, 0.859, 0.125],
             boundingBox: [1.7, 0.5, 3],
             size: [4, 1, 14]
         },
         { // Start room 1
-            id: "c_entry_r03_02",
-            position: [1.615, 2.537, 9.023],
-            lookAt: [1.612, 1.96, 9.84],
-            boundingBox: [1.7, 0.5, 12.1],
-            size: [5, 1, 4]
+            id: "c_entry_r04_02",
+            position: [6.749, 4.121, -3.35],
+            lookAt: [6.749, 3.121, -3.35],
+
+            boundingBox: [7, 0.5, -4],
+            size: [6, 1, 5]
+        },
+        { // Start room 1
+            id: "c_entry_r04_03",
+            position: [4.41, 2.536, 4.64],
+            lookAt: [4.994, 1.772, 4.365],
+            boundingBox: [6, 0.5, 1.2],
+            size: [4, 1, 5]
         },
     ],
     lights: [
