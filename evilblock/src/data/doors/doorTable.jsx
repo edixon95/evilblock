@@ -13,6 +13,9 @@ import {
     DOOR_001,
     ROOM_000,
     DOOR_002,
+    DOOR_03,
+    DOOR_04,
+    ROOM_03,
 } from "../../constants/floorConstants";
 import { handleCreatePrompt } from "../../tool/handleCreatePrompt";
 
@@ -60,6 +63,19 @@ export const DOOR_TABLE = {
         },
         cutscene: null
     },
+    [DOOR_02]: {
+        group: "Epilogue",
+        to: {
+            level: FLOOR_00,
+            room: ROOM_000,
+            door: DOOR_002,
+        },
+        lock: {
+            type: 0,
+            isLocked: false
+        },
+        cutscene: null
+    },
     [DOOR_002]: {
         group: "Floor 2",
         to: {
@@ -77,6 +93,30 @@ export const DOOR_TABLE = {
         alwaysShow: false,
         isSeen: false,
         cutscene: null
+    },
+    [DOOR_03]: {
+        group: "Floor 2",
+        to: {
+            level: FLOOR_02,
+            room: ROOM_03,
+            door: DOOR_04,
+        },
+        lock: {
+            type: 0,
+            isLocked: false,
+        },
+    },
+    [DOOR_04]: {
+        group: "Floor 2",
+        to: {
+            level: FLOOR_02,
+            room: ROOM_02,
+            door: DOOR_03,
+        },
+        lock: {
+            type: 0,
+            isLocked: false,
+        },
     },
     [DOOR_01]: {
         group: "Unused",
@@ -96,19 +136,6 @@ export const DOOR_TABLE = {
         alwaysShow: true,
         isSeen: false
     },
-    [DOOR_02]: {
-        group: "Epilogue",
-        to: {
-            level: FLOOR_00,
-            room: ROOM_000,
-            door: DOOR_002,
-        },
-        lock: {
-            type: 0,
-            isLocked: false
-        },
-        cutscene: null
-    }
 }
 
 export const getDoorInfo = (id) => {
