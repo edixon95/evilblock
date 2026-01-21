@@ -16,6 +16,9 @@ import {
     DOOR_03,
     DOOR_04,
     ROOM_03,
+    DOOR_05,
+    DOOR_06,
+    ROOM_04,
 } from "../../constants/floorConstants";
 import { handleCreatePrompt } from "../../tool/handleCreatePrompt";
 
@@ -37,7 +40,7 @@ import { handleCreatePrompt } from "../../tool/handleCreatePrompt";
 */
 export const DOOR_TABLE = {
     // Intro scene
-    [DOOR_00]: {
+    [DOOR_00]: { // Lower roof entrance ramp bottom
         group: "Epilogue",
         to: {
             level: FLOOR_00,
@@ -50,7 +53,7 @@ export const DOOR_TABLE = {
         },
         cutscene: null
     },
-    [DOOR_001]: {
+    [DOOR_001]: { // Lower roof entrance ramp bottom top
         group: "Epilogue",
         to: {
             level: FLOOR_00,
@@ -63,20 +66,7 @@ export const DOOR_TABLE = {
         },
         cutscene: null
     },
-    [DOOR_02]: {
-        group: "Epilogue",
-        to: {
-            level: FLOOR_00,
-            room: ROOM_000,
-            door: DOOR_002,
-        },
-        lock: {
-            type: 0,
-            isLocked: false
-        },
-        cutscene: null
-    },
-    [DOOR_002]: {
+    [DOOR_002]: { // lower roof building entrance
         group: "Floor 2",
         to: {
             level: FLOOR_02,
@@ -94,7 +84,20 @@ export const DOOR_TABLE = {
         isSeen: false,
         cutscene: null
     },
-    [DOOR_03]: {
+    [DOOR_02]: { // floor 2 - storage exit to lower roof
+        group: "Epilogue",
+        to: {
+            level: FLOOR_00,
+            room: ROOM_000,
+            door: DOOR_002,
+        },
+        lock: {
+            type: 0,
+            isLocked: false
+        },
+        cutscene: null
+    },
+    [DOOR_03]: { // floor 2 - storage exit to floor 2 hall
         group: "Floor 2",
         to: {
             level: FLOOR_02,
@@ -106,12 +109,36 @@ export const DOOR_TABLE = {
             isLocked: false,
         },
     },
-    [DOOR_04]: {
+    [DOOR_04]: { // floor 2 - floor 2 hall, entrance to storage
         group: "Floor 2",
         to: {
             level: FLOOR_02,
             room: ROOM_02,
             door: DOOR_03,
+        },
+        lock: {
+            type: 0,
+            isLocked: false,
+        },
+    },
+    [DOOR_05]: { // floor 2 - entrance to 2D
+        group: "Floor 2",
+        to: {
+            level: FLOOR_02,
+            room: ROOM_04,
+            door: DOOR_06,
+        },
+        lock: {
+            type: 0,
+            isLocked: false,
+        },
+    },
+    [DOOR_06]: { // floor 2 - 2D exit to hall
+        group: "Floor 2",
+        to: {
+            level: FLOOR_02,
+            room: ROOM_03,
+            door: DOOR_05,
         },
         lock: {
             type: 0,
