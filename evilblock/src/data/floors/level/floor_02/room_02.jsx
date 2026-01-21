@@ -1,6 +1,6 @@
 import { DOOR, DOWN, STAIR, UP } from "../../../../constants/doorConstants";
 import { BASIC } from "../../../../constants/enemyConstants";
-import { DOOR_02 } from "../../../../constants/floorConstants";
+import { DOOR_02, DOOR_03 } from "../../../../constants/floorConstants";
 
 import { handleCreateDoor } from "../../../creators/handleCreateDoor";
 import { handleCreateEnemy } from "../../../creators/handleCreateEnemy";
@@ -24,6 +24,12 @@ export const room_02 = {
             id: DOOR_02,
             type: DOOR,
             position: [0.1, 7.5],
+            direction: 4,
+        }),
+        handleCreateDoor({
+            id: DOOR_03,
+            type: DOOR,
+            position: [-4, 3.5],
             direction: 4,
         })
     ],
